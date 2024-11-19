@@ -1,0 +1,89 @@
+
+<!--
+Л.р. №1. Создание и заполнение отношений
+1. Отношение "Поставщики" (Suppliers)
+Таблица для хранения информации о поставщиках, включая идентификатор, название и телефон.
+
+sql
+
+CREATE TABLE Suppliers (
+    supplier_id CHAR(8) PRIMARY KEY,          -- Идентификатор поставщика
+    supplier_name VARCHAR(30) NOT NULL,       -- Название поставщика
+    phone_number VARCHAR(15)                 -- Телефон поставщика
+);
+2. Отношение "Поставки" (Deliveries)
+Таблица для хранения информации о поставках, включая шифр поставки, название товара, индекс 
+поставщика (внешний ключ), единицу измерения, вес единицы товара, количество товара, номер склада, 
+номер линии и дату поставки.
+
+sql
+
+CREATE TABLE Deliveries (
+    delivery_code CHAR(6) PRIMARY KEY,        -- Шифр поставки (первичный ключ)
+    product_name VARCHAR(30),                 -- Название товара
+    supplier_id CHAR(8),                      -- Индекс поставщика (внешний ключ)
+    unit_of_measure VARCHAR(3) DEFAULT 'шт',  -- Единица измерения (по умолчанию 'шт')
+    unit_weight DECIMAL(7, 2),                 -- Вес единицы товара
+    quantity DECIMAL(7, 2) NOT NULL,          -- Количество товара
+    warehouse_number INT,                     -- Номер склада
+    line_number CHAR(1),                      -- Номер линии
+    delivery_date DATE,                       -- Дата поставки
+    FOREIGN KEY (supplier_id) REFERENCES Suppliers(supplier_id)  -- Внешний ключ на поставщика
+);
+3. Отношение "Заказы" (Orders)
+Таблица для хранения информации о заказах, включая идентификатор заказа, индекс товара (внешний ключ),
+ единицу измерения и количество товара.
+
+sql
+
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,                 -- Идентификатор заказа
+    product_code CHAR(6),                     -- Индекс товара (внешний ключ)
+    unit_of_measure VARCHAR(3),               -- Единица измерения
+    quantity DECIMAL(7, 2),                   -- Количество товара
+    FOREIGN KEY (product_code) REFERENCES Deliveries(delivery_code)  -- Внешний ключ на поставку
+);
+Л.р. №2. Выборка данных
+1. Создать упорядоченный список товаров с наименованиями и телефонами поставщиков
+Для того чтобы создать упорядоченный список товаров с наименованиями и телефонами поставщиков, нужно 
+объединить таблицы Deliveries и Suppliers:
+
+sql
+
+SELECT d.product_name, s.supplier_name, s.phone_number
+FROM Deliveries d
+JOIN Suppliers s ON d.supplier_id = s.supplier_id
+ORDER BY d.product_name;
+Этот запрос возвращает список товаров, наименования поставщиков и их телефоны, отсортированный по 
+наименованию товара.
+
+2. Для конкретного заказа выдать список местоположения заказанных товаров на складах (с учётом 
+количества товара в заказе и на складе)
+Для того чтобы получить информацию о местоположении товаров, нужно объединить таблицы Orders и 
+Deliveries, а также учитывать количество товара в заказе и на складе:
+
+sql
+
+SELECT o.order_id, d.product_name, d.warehouse_number, d.quantity AS warehouse_quantity,
+       o.quantity AS order_quantity,
+       (d.quantity - o.quantity) AS remaining_quantity
+FROM Orders o
+JOIN Deliveries d ON o.product_code = d.delivery_code
+WHERE o.order_id = ?  -- Здесь нужно подставить конкретный ID заказа
+ORDER BY d.warehouse_number;
+Этот запрос возвращает местоположение заказанных товаров на складе, включая количество товара на 
+складе, количество в заказе и остаток товара, если таковой есть.
+
+3. Посчитать общий вес конкретного заказа
+Для того чтобы посчитать общий вес заказа, нужно умножить количество товара в заказе на вес единицы 
+товара для каждой поставки, а затем суммировать результаты:
+
+sql
+
+SELECT o.order_id, SUM(o.quantity * d.unit_weight) AS total_weight
+FROM Orders o
+JOIN Deliveries d ON o.product_code = d.delivery_code
+WHERE o.order_id = ?  -- Здесь нужно подставить конкретный ID заказа
+GROUP BY o.order_id;
+Этот запрос возвращает общий вес конкретного заказа, учитывая количество каждого товара и вес 
+единицы товара.-->

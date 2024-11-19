@@ -1,0 +1,79 @@
+
+<!--Л.р. №1. Создание и заполнение отношений
+1. Отношение "Отделы" (Departments)
+Таблица для хранения информации о отделах. Каждому отделу присваивается номер и название.
+
+sql
+
+CREATE TABLE Departments (
+    department_number INT PRIMARY KEY,    -- Номер отдела
+    department_name VARCHAR(100) NOT NULL -- Название отдела
+);
+2. Отношение "Сотрудники" (Employees)
+Таблица для хранения информации о сотрудниках, включая их табельный номер, ФИО, пол, дату рождения, 
+образование, номер отдела (внешний ключ) и должность.
+
+sql
+
+CREATE TABLE Employees (
+    employee_number INT PRIMARY KEY,       -- Табельный номер
+    full_name VARCHAR(50) NOT NULL,        -- ФИО
+    gender CHAR(1) DEFAULT 'М',            -- Пол (мужской по умолчанию)
+    birth_date DATE,                       -- Дата рождения
+    education VARCHAR(20),                 -- Образование (высшее, среднее, начальное)
+    department_number INT,                 -- Номер отдела (внешний ключ)
+    position VARCHAR(30) NOT NULL,         -- Должность
+    FOREIGN KEY (department_number) REFERENCES Departments(department_number) -- Внешний ключ на
+     отдел
+);
+3. Отношение "Дети" (Children)
+Таблица для хранения информации о детях сотрудников, ссылаясь на табельный номер сотрудника. 
+Включает имя ребенка и дату его рождения.
+
+sql
+
+CREATE TABLE Children (
+    employee_number INT,                  -- Табельный номер сотрудника (внешний ключ)
+    child_name VARCHAR(50),                -- Имя ребенка
+    birth_date DATE,                       -- Дата рождения ребенка
+    FOREIGN KEY (employee_number) REFERENCES Employees(employee_number) -- Внешний ключ на 
+    сотрудника
+);
+Л.р. №2. Выборка данных
+1. Сотрудники с детьми от 3 до 12 лет включительно
+Для того чтобы создать список сотрудников с детьми, возраст которых от 3 до 12 лет, необходимо 
+вычислить возраст каждого ребенка на основе даты рождения и фильтровать по возрасту.
+
+sql
+
+SELECT e.full_name, c.child_name, c.birth_date
+FROM Employees e
+JOIN Children c ON e.employee_number = c.employee_number
+WHERE DATEDIFF(CURRENT_DATE, c.birth_date) / 365 BETWEEN 3 AND 12
+ORDER BY e.full_name;
+Этот запрос возвращает сотрудников с детьми в возрасте от 3 до 12 лет, отсортированных по фамилии 
+сотрудников.
+
+2. Отделы, в которых нет сотрудников
+Для того чтобы получить отделы, в которых нет сотрудников, используем левое соединение (LEFT JOIN):
+
+sql
+
+SELECT d.department_name
+FROM Departments d
+LEFT JOIN Employees e ON d.department_number = e.department_number
+WHERE e.employee_number IS NULL;
+Этот запрос возвращает список отделов, в которых нет сотрудников.
+
+3. Подсчет количества сотрудников с разными уровнями образования
+Для подсчета количества сотрудников с разными уровнями образования можно использовать GROUP BY для 
+группировки по уровню образования и COUNT для подсчета количества сотрудников.
+
+sql
+
+SELECT education, COUNT(*) AS count
+FROM Employees
+GROUP BY education
+ORDER BY count DESC;
+Этот запрос возвращает количество сотрудников для каждого уровня образования, отсортированных по
+ количеству.-->

@@ -1,0 +1,391 @@
+
+
+<!--Схема БД "Проектная организация"
+
+Таблицы:
+
+Отделы (Departments): id_department, name
+Сотрудники (Employees): id_employee, first_name, last_name, date_of_birth, salary, gender, id_position, id_department
+Должности (Positions): id_position, name, salary
+Проекты (Projects): id_project, name, id_manager (FK to Employees)
+Участие в проектах (Employee_Project): id_employee (FK to Employees), id_project (FK to Projects)
+Дети сотрудников (Employees_Children): id_employee (FK to Employees), child_name
+SQL-запросы для БД "Проектная организация"
+Сотрудники 2,6,7 отделов, родившиеся в 80-е годы прошлого века.
+
+sql
+
+SELECT first_name, last_name, date_of_birth
+FROM Employees
+WHERE id_department IN (2, 6, 7) 
+AND YEAR(date_of_birth) BETWEEN 1980 AND 1989;
+Программисты, у которых оклад после уплаты подоходного налога не менее 40000 рублей.
+
+sql
+
+SELECT first_name, last_name, salary
+FROM Employees
+WHERE id_position = (SELECT id_position FROM Positions WHERE name = 'Программист')
+AND salary * 0.85 >= 40000;
+Фамилия всех начальников отделов.
+
+sql
+
+SELECT last_name
+FROM Employees
+WHERE id_employee IN (SELECT id_manager FROM Departments);
+Отделы, в которых работают экономисты.
+
+sql
+
+SELECT name
+FROM Departments
+WHERE id_department IN (SELECT id_department FROM Employees WHERE id_position = (SELECT id_position FROM Positions WHERE name = 'Экономист'));
+Перечень должностей с зарплатами.
+
+sql
+
+SELECT name, salary
+FROM Positions;
+Количество сотрудниц организации.
+
+sql
+
+SELECT COUNT(*)
+FROM Employees
+WHERE gender = 'женщина';
+Минимальный и максимальный оклад в отделах 1 и 2.
+
+sql
+
+SELECT id_department, MIN(salary) AS min_salary, MAX(salary) AS max_salary
+FROM Employees
+WHERE id_department IN (1, 2)
+GROUP BY id_department;
+Количество сотрудников 6-го отдела.
+
+sql
+
+SELECT COUNT(*)
+FROM Employees
+WHERE id_department = 6;
+Минимальный и максимальный оклады по отделам и разница между ними.
+
+sql
+
+SELECT id_department, MIN(salary) AS min_salary, MAX(salary) AS max_salary, MAX(salary) - MIN(salary) AS salary_diff
+FROM Employees
+GROUP BY id_department;
+Минимальный и максимальный оклады по каждой должности.
+
+sql
+
+SELECT id_position, MIN(salary) AS min_salary, MAX(salary) AS max_salary
+FROM Employees
+GROUP BY id_position;
+Отдел, должность, средний оклад.
+
+sql
+
+SELECT d.name AS department, p.name AS position, AVG(e.salary) AS avg_salary
+FROM Employees e
+JOIN Departments d ON e.id_department = d.id_department
+JOIN Positions p ON e.id_position = p.id_position
+GROUP BY d.name, p.name;
+Отделы, в которых количество сотрудников меньше 4-х.
+
+sql
+
+SELECT name
+FROM Departments
+WHERE id_department IN (SELECT id_department FROM Employees GROUP BY id_department HAVING COUNT(*) < 4);
+Отделы, в которых минимальный возраст сотрудников меньше 20 лет.
+
+sql
+
+SELECT name
+FROM Departments
+WHERE id_department IN (SELECT id_department FROM Employees WHERE TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) < 20 GROUP BY id_department);
+Отделы, в которых средний возраст сотрудников больше сорока лет.
+
+sql
+
+SELECT name
+FROM Departments
+WHERE id_department IN (SELECT id_department FROM Employees GROUP BY id_department HAVING AVG(TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE())) > 40);
+Участники проектов с указанием названий проектов.
+
+sql
+
+SELECT e.first_name, e.last_name, p.name AS project_name
+FROM Employees e
+JOIN Employee_Project ep ON e.id_employee = ep.id_employee
+JOIN Projects p ON ep.id_project = p.id_project;
+Сотрудники с перечнем детей.
+
+sql
+
+SELECT e.first_name, e.last_name, ec.child_name
+FROM Employees e
+LEFT JOIN Employees_Children ec ON e.id_employee = ec.id_employee;
+Название отдела, ФИО и должность сотрудника, имя ребенка.
+
+sql
+
+SELECT d.name AS department, e.first_name, e.last_name, p.name AS position, ec.child_name
+FROM Employees e
+JOIN Departments d ON e.id_department = d.id_department
+JOIN Positions p ON e.id_position = p.id_position
+LEFT JOIN Employees_Children ec ON e.id_employee = ec.id_employee;
+Сотрудники, у которых есть дети.
+
+sql
+
+SELECT DISTINCT e.first_name, e.last_name
+FROM Employees e
+JOIN Employees_Children ec ON e.id_employee = ec.id_employee;
+Сотрудники 1-го и 5-го отделов, у которых есть дети.
+
+sql
+
+SELECT e.first_name, e.last_name
+FROM Employees e
+WHERE e.id_department IN (1, 5)
+AND e.id_employee IN (SELECT id_employee FROM Employees_Children);
+Сотрудники с указанием количества детей.
+
+sql
+
+SELECT e.first_name, e.last_name, COUNT(ec.child_name) AS num_children
+FROM Employees e
+LEFT JOIN Employees_Children ec ON e.id_employee = ec.id_employee
+GROUP BY e.id_employee;
+Проекты с указанием руководителей.
+
+sql
+
+SELECT p.name AS project_name, e.first_name, e.last_name
+FROM Projects p
+JOIN Employees e ON p.id_manager = e.id_employee;
+Сотрудники с указанием количества проектов, в которых они участвуют.
+
+sql
+
+SELECT e.first_name, e.last_name, COUNT(ep.id_project) AS num_projects
+FROM Employees e
+LEFT JOIN Employee_Project ep ON e.id_employee = ep.id_employee
+GROUP BY e.id_employee;
+Сотрудники, участвующие в нескольких проектах.
+
+sql
+
+SELECT e.first_name, e.last_name
+FROM Employees e
+JOIN Employee_Project ep ON e.id_employee = ep.id_employee
+GROUP BY e.id_employee
+HAVING COUNT(ep.id_project) > 1;
+Сотрудники, которые являются руководителями проектов.
+
+sql
+
+SELECT e.first_name, e.last_name
+FROM Employees e
+WHERE e.id_employee IN (SELECT id_manager FROM Projects);
+Название проекта и количество участников.
+
+sql
+
+SELECT p.name AS project_name, COUNT(ep.id_employee) AS num_participants
+FROM Projects p
+LEFT JOIN Employee_Project ep ON p.id_project = ep.id_project
+GROUP BY p.id_project;
+Проекты, в которых участвуют более 10 сотрудников.
+
+sql
+
+SELECT p.name AS project_name
+FROM Projects p
+JOIN Employee_Project ep ON p.id_project = ep.id_project
+GROUP BY p.id_project
+HAVING COUNT(ep.id_employee) > 10;
+Сотрудники, участвующие в одном проекте в разных ролях.
+
+sql
+
+SELECT e.first_name, e.last_name, p.name AS project_name
+FROM Employees e
+JOIN Employee_Project ep ON e.id_employee = ep.id_employee
+JOIN Projects p ON ep.id_project = p.id_project
+GROUP BY e.id_employee, p.id_project
+HAVING COUNT(DISTINCT ep.id_project) > 1;
+Отделы, в которых работают только мужчины или только женщины.
+
+sql
+
+SELECT d.name
+FROM Departments d
+JOIN Employees e ON e.id_department = d.id_department
+GROUP BY d.id_department
+HAVING COUNT(DISTINCT e.gender) = 1;
+Братьев, у которых есть старшие сестры.
+
+sql
+
+SELECT e1.first_name, e1.last_name
+FROM Employees e1
+JOIN Employees_Children ec1 ON e1.id_employee = ec1.id_employee
+JOIN Employees_Children ec2 ON e1.id_employee = ec2.id_employee
+WHERE e1.gender = 'мужчина'
+AND ec1.child_name IN (SELECT child_name FROM Employees_Children WHERE gender = 'женщина')
+AND ec2.child_name != ec1.child_name;
+Сотрудники, у которых есть разнополые дети.
+
+sql
+
+SELECT DISTINCT e.first_name, e.last_name
+FROM Employees e
+JOIN Employees_Children ec ON e.id_employee = ec.id_employee
+JOIN Employees_Children ec2 ON e.id_employee = ec2.id_employee
+WHERE ec.gender != ec2.gender;
+Бездетные сотрудники.
+
+sql
+
+SELECT e.first_name, e.last_name
+FROM Employees e
+LEFT JOIN Employees_Children ec ON e.id_employee = ec.id_employee
+WHERE ec.id_employee IS NULL;
+Сотрудники, у которых оклад меньше, чем средний по каждому отделу.
+
+sql
+
+SELECT e.first_name, e.last_name, e.salary, e.id_department
+FROM Employees e
+WHERE e.salary < (SELECT AVG(salary) FROM Employees WHERE id_department = e.id_department);
+Проекты, у которых нет руководителя.
+
+sql
+
+SELECT name
+FROM Projects
+WHERE id_manager IS NULL;
+Сотрудники, получающие максимальный оклад в своем отделе.
+
+sql
+
+SELECT e.first_name, e.last_name, e.salary
+FROM Employees e
+WHERE e.salary = (SELECT MAX(salary) FROM Employees WHERE id_department = e.id_department);
+Название проекта, ФИО руководителя, количество исполнителей, количество консультантов.
+
+sql
+
+SELECT p.name AS project_name,
+       e.first_name AS manager_first_name, e.last_name AS manager_last_name,
+       COUNT(ep.id_employee) AS num_employees,
+       COUNT(DISTINCT ec.id_employee) AS num_consultants
+FROM Projects p
+LEFT JOIN Employees e ON p.id_manager = e.id_employee
+LEFT JOIN Employee_Project ep ON p.id_project = ep.id_project
+LEFT JOIN Employee_Project ec ON ep.id_employee = ec.id_employee
+GROUP BY p.id_project;
+Схема БД "Каталог книг"
+Таблицы:
+
+Авторы (Authors): id_author, first_name, last_name
+Произведения (Works): id_work, title
+Авторства (Works_Authors): id_author, id_work
+SQL-запросы для БД "Каталог книг"
+Произведения, у которых нет авторов.
+
+sql
+
+SELECT title
+FROM Works
+WHERE id_work NOT IN (SELECT id_work FROM Works_Authors);
+Авторы, у которых есть соавторы.
+
+sql
+
+SELECT DISTINCT a.first_name, a.last_name
+FROM Authors a
+JOIN Works_Authors wa ON a.id_author = wa.id_author
+JOIN Works_Authors wa2 ON wa.id_work = wa2.id_work AND wa2.id_author != a.id_author;
+Произведения, у которых более одного автора.
+
+sql
+
+SELECT w.title
+FROM Works w
+JOIN Works_Authors wa ON w.id_work = wa.id_work
+GROUP BY w.id_work
+HAVING COUNT(wa.id_author) > 1;
+Авторы, которые хотя бы одно произведение написали без соавторов.
+
+sql
+
+SELECT DISTINCT a.first_name, a.last_name
+FROM Authors a
+JOIN Works_Authors wa ON a.id_author = wa.id_author
+GROUP BY a.id_author, wa.id_work
+HAVING COUNT(wa.id_author) = 1;
+Авторы, которые все произведения писали без соавторов.
+
+sql
+
+SELECT a.first_name, a.last_name
+FROM Authors a
+JOIN Works_Authors wa ON a.id_author = wa.id_author
+GROUP BY a.id_author
+HAVING COUNT(DISTINCT wa.id_work) = COUNT(wa.id_author);
+Схема БД "Больница"
+Таблицы:
+
+Пациенты (Patients): id_patient, name, gender
+Лечение (Treatment): id_patient, id_doctor, diagnosis
+Палаты (Wards): id_ward, id_department, capacity
+Врачи (Doctors): id_doctor, name, specialization, id_department
+Отделения (Departments): id_department, name
+SQL-запросы для БД "Больница"
+Список всех пациентов, которые в настоящее время лежат в больнице.
+
+sql
+
+SELECT p.name
+FROM Patients p
+JOIN Treatment t ON p.id_patient = t.id_patient
+WHERE t.diagnosis IS NOT NULL;
+Список диагнозов пациентов, лечащими врачами которых являются хирурги.
+
+sql
+
+SELECT p.name AS patient_name, t.diagnosis
+FROM Patients p
+JOIN Treatment t ON p.id_patient = t.id_patient
+JOIN Doctors d ON t.id_doctor = d.id_doctor
+WHERE d.specialization = 'Хирург';
+Список всех врачей больницы с указанием отделения и специализации:
+
+sql
+
+SELECT d.name AS doctor_name, d.specialization, dep.name AS department
+FROM Doctors d
+JOIN Departments dep ON d.id_department = dep.id_department;
+Список пациентов по отделениям.
+
+sql
+
+SELECT dep.name AS department_name, p.name AS patient_name
+FROM Patients p
+JOIN Treatment t ON p.id_patient = t.id_patient
+JOIN Doctors d ON t.id_doctor = d.id_doctor
+JOIN Departments dep ON d.id_department = dep.id_department;
+Количество пациентов по палатам.
+
+sql
+
+SELECT w.id_ward, COUNT(p.id_patient) AS num_patients
+FROM Wards w
+LEFT JOIN Treatment t ON w.id_ward = t.id_ward
+LEFT JOIN Patients p ON t.id_patient = p.id_patient
+GROUP BY w.id_ward;-->

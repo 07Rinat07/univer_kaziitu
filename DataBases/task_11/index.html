@@ -1,0 +1,90 @@
+<!--Л.р. №1. Создание и заполнение отношений
+1. Отношение "Больничные палаты" (Hospital Rooms)
+Таблица для хранения информации о больничных палатах, включая номер палаты, количество коек и 
+отделение.
+
+sql
+
+CREATE TABLE Hospital_Rooms (
+    room_number INT PRIMARY KEY,             -- Номер палаты
+    bed_count INT NOT NULL,                  -- Количество коек
+    department VARCHAR(100) NOT NULL         -- Отделение
+);
+2. Отношение "Врачи" (Doctors)
+Таблица для хранения информации о врачах, включая идентификатор, ФИО, отделение и специализацию.
+
+sql
+
+CREATE TABLE Doctors (
+    doctor_id INT PRIMARY KEY,               -- Идентификатор врача
+    doctor_name VARCHAR(50) NOT NULL,         -- ФИО врача
+    department VARCHAR(100) NOT NULL,         -- Отделение
+    specialization VARCHAR(100)              -- Специализация
+);
+3. Отношение "Пациенты" (Patients)
+Таблица для хранения информации о пациентах, включая регистрационный номер, ФИО, пол, номер полиса, 
+дату поступления, номер палаты, лечащего врача, диагноз и дату выписки.
+
+sql
+
+CREATE TABLE Patients (
+    registration_no CHAR(6) PRIMARY KEY,      -- Регистрационный номер пациента
+    patient_name VARCHAR(50) NOT NULL,        -- ФИО пациента
+    gender CHAR(1) DEFAULT 'Ж',              -- Пол пациента, по умолчанию женский
+    policy_number CHAR(15),                   -- Номер полиса
+    admission_date DATE NOT NULL,             -- Дата поступления
+    room_number INT,                          -- Номер палаты (внешний ключ)
+    doctor_id INT,                            -- Идентификатор лечащего врача (внешний ключ)
+    diagnosis VARCHAR(100),                   -- Диагноз
+    discharge_date DATE,                      -- Дата выписки (заполняется при выписке)
+    FOREIGN KEY (room_number) REFERENCES Hospital_Rooms(room_number), -- Внешний ключ на палату
+    FOREIGN KEY (doctor_id) REFERENCES Doctors(doctor_id)            -- Внешний ключ на врача
+);
+Л.р. №2. Выборка данных
+1. Проверить, что в одной палате не лежат мужчины и женщины
+Для того чтобы проверить, что в одной палате не лежат мужчины и женщины, можно использовать запрос с
+ группировкой и фильтрацией:
+
+sql
+
+SELECT room_number
+FROM Patients
+GROUP BY room_number
+HAVING COUNT(DISTINCT gender) > 1;
+Этот запрос вернёт номера палаты, где находятся пациенты обоих полов.
+
+2. Посчитать количество язвенников, поступивших в текущем году
+Для того чтобы посчитать количество пациентов с диагнозом "язва", поступивших в текущем году, можно 
+использовать запрос с фильтрацией по году поступления и диагнозу:
+
+sql
+
+SELECT COUNT(*) AS ulcer_count
+FROM Patients
+WHERE diagnosis LIKE '%язва%' AND YEAR(admission_date) = YEAR(CURRENT_DATE);
+Этот запрос вернёт количество язвенников, которые поступили в текущем году.
+
+3. Создать упорядоченные списки
+• Пациентов по палатам с указанием ФИО врача и диагноза
+Для того чтобы создать упорядоченный список пациентов по палатам с указанием ФИО врача и диагноза, 
+нужно объединить таблицы Patients и Doctors:
+
+sql
+
+SELECT p.room_number, p.patient_name, d.doctor_name, p.diagnosis
+FROM Patients p
+JOIN Doctors d ON p.doctor_id = d.doctor_id
+ORDER BY p.room_number, p.patient_name;
+Этот запрос возвращает список пациентов, сгруппированных по палатам, с указанием врача и диагноза.
+
+• Количества занятых мест в каждой палате
+Для того чтобы посчитать количество занятых мест в каждой палате, нужно выполнить группировку по 
+номерам палат:
+
+sql
+
+SELECT room_number, COUNT(*) AS occupied_beds
+FROM Patients
+GROUP BY room_number
+ORDER BY room_number;
+Этот запрос возвращает количество занятых коек для каждой палаты.-->

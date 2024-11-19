@@ -1,0 +1,93 @@
+
+<!--Л.р. №1. Создание и заполнение отношений
+1. Отношение "Журналы" (Magazines)
+Таблица для хранения информации о журналах, где указывается идентификатор журнала, название и 
+издатель.
+
+sql
+
+CREATE TABLE Magazines (
+    magazine_id CHAR(6) PRIMARY KEY,      -- Идентификатор журнала
+    name VARCHAR(100) NOT NULL,           -- Название журнала
+    publisher VARCHAR(100)               -- Издатель
+);
+2. Отношение "Рубрикаторы" (Categories)
+Таблица для хранения информации о рубриках, где указаны шифр рубрики и название рубрики.
+
+sql
+
+CREATE TABLE Categories (
+    category_code CHAR(6) PRIMARY KEY,    -- Шифр рубрики
+    category_name VARCHAR(100) NOT NULL   -- Название рубрики
+);
+3. Отношение "Публикации (статьи)" (Publications)
+Таблица для хранения информации о публикациях (статьях), где указывается индекс журнала (внешний ключ)
+, авторы, название статьи, год выпуска, номер выпуска, шифр рубрики (внешний ключ), страницы и 
+примечание.
+
+sql
+
+CREATE TABLE Publications (
+    magazine_id CHAR(6),                  -- Индекс журнала (внешний ключ)
+    author VARCHAR(40),                   -- Автор(ы) статьи
+    title VARCHAR(40),                    -- Название статьи
+    year_of_publication INT,              -- Год выпуска
+    issue_number INT,                     -- Номер выпуска
+    category_code CHAR(6),                -- Шифр рубрики (внешний ключ)
+    pages VARCHAR(7),                    -- Страницы
+    note VARCHAR(30),                     -- Примечание
+    PRIMARY KEY (magazine_id, issue_number), -- Ключевая комбинация полей (индекс журнала и номер 
+    выпуска)
+    FOREIGN KEY (magazine_id) REFERENCES Magazines(magazine_id),  -- Внешний ключ на журнал
+    FOREIGN KEY (category_code) REFERENCES Categories(category_code)  -- Внешний ключ на рубрику
+);
+Л.р. №2. Выборка данных
+1. Публикации за последние 3 года (по журналам и годам)
+Для того чтобы создать список публикаций за последние 3 года, отсортированных по журналам и годам, 
+используем запрос:
+
+sql
+
+SELECT p.title, p.year_of_publication, m.name AS magazine_name
+FROM Publications p
+JOIN Magazines m ON p.magazine_id = m.magazine_id
+WHERE p.year_of_publication >= YEAR(CURRENT_DATE) - 3
+ORDER BY m.name, p.year_of_publication;
+Этот запрос возвращает список статей за последние три года, отсортированный по журналам и годам.
+
+2. Публикации по рубрикам
+Для того чтобы создать список публикаций, сгруппированных по рубрикам, используем следующий запрос:
+
+sql
+
+SELECT c.category_name, p.title, p.year_of_publication, m.name AS magazine_name
+FROM Publications p
+JOIN Categories c ON p.category_code = c.category_code
+JOIN Magazines m ON p.magazine_id = m.magazine_id
+ORDER BY c.category_name, p.year_of_publication;
+Этот запрос позволяет сгруппировать публикации по рубрикам и отсортировать их по годам.
+
+3. Публикации по разделам "Базы данных" и "СУБД"
+Для того чтобы выбрать публикации, относящиеся к разделам "Базы данных" и "СУБД", используем запрос:
+
+sql
+
+SELECT p.title, p.year_of_publication, m.name AS magazine_name, c.category_name
+FROM Publications p
+JOIN Categories c ON p.category_code = c.category_code
+JOIN Magazines m ON p.magazine_id = m.magazine_id
+WHERE c.category_name IN ('Базы данных', 'СУБД')
+ORDER BY c.category_name, p.year_of_publication;
+Этот запрос возвращает публикации по указанным рубрикам "Базы данных" и "СУБД", отсортированные по
+ рубрике и году.
+
+4. Рубрики, по которым нет публикаций
+Для того чтобы найти рубрики, по которым нет публикаций, используем левое соединение (LEFT JOIN):
+
+sql
+
+SELECT c.category_name
+FROM Categories c
+LEFT JOIN Publications p ON c.category_code = p.category_code
+WHERE p.magazine_id IS NULL;
+Этот запрос возвращает все рубрики, в которых нет ни одной публикации.-->

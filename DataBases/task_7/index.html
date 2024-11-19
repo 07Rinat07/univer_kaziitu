@@ -1,0 +1,98 @@
+<!--Л.р. №1. Создание и заполнение отношений
+1. Таблица "Отделы" (Departments)
+Таблица для хранения информации об отделах, где каждый отдел имеет уникальный идентификатор и 
+название.
+
+sql
+
+CREATE TABLE Departments (
+    department_id CHAR(6) PRIMARY KEY,   -- Идентификатор отдела
+    department_name VARCHAR(100)         -- Название отдела
+);
+2. Таблица "Научные направления" (ScientificDirections)
+Таблица для хранения информации о научных направлениях, где каждому направлению присваивается 
+уникальный идентификатор и название.
+
+sql
+
+CREATE TABLE ScientificDirections (
+    direction_id CHAR(6) PRIMARY KEY,    -- Идентификатор научной специальности
+    direction_name VARCHAR(100)          -- Название научной специальности
+);
+3. Таблица "Сотрудники" (Employees)
+Таблица для хранения информации о сотрудниках, включая табельный номер (первичный ключ), ФИО, 
+должность, ученую степень, ученое звание, шифр специальности и научную специализацию (внешний ключ),
+ а также номер отдела (внешний ключ).
+
+sql
+
+CREATE TABLE Employees (
+    employee_id CHAR(4) PRIMARY KEY,      -- Табельный номер (первичный ключ)
+    full_name VARCHAR(50) NOT NULL,       -- ФИО сотрудника
+    position VARCHAR(25) NOT NULL,        -- Должность
+    academic_degree VARCHAR(40),          -- Ученая степень
+    academic_title VARCHAR(10),           -- Ученое звание (например, профессор, доцент)
+    specialty_code CHAR(6),               -- Шифр специальности
+    scientific_specialization CHAR(8),    -- Научная специализация (внешний ключ)
+    department_id CHAR(6),                -- Номер отдела (внешний ключ)
+    FOREIGN KEY (scientific_specialization) REFERENCES ScientificDirections(direction_id),  -- 
+    Внешний ключ на научную специализацию
+    FOREIGN KEY (department_id) REFERENCES Departments(department_id)  -- Внешний ключ на отдел
+);
+Л.р. №2. Выборка данных
+1. Научные кадры по каждой специальности (с указанием научного звания)
+Для того чтобы создать упорядоченный список научных кадров по каждой специальности с указанием 
+научного звания, используем следующий запрос:
+
+sql
+
+SELECT e.full_name, e.academic_title, e.position, e.specialty_code, s.direction_name
+FROM Employees e
+JOIN ScientificDirections s ON e.scientific_specialization = s.direction_id
+ORDER BY s.direction_name, e.academic_title;
+Этот запрос возвращает список сотрудников, отсортированный по научным направлениям и их ученым 
+званиям.
+
+2. Научные направления, по которым нет специалистов
+Для того чтобы найти научные направления, по которым нет специалистов, используем запрос с левым 
+соединением:
+
+sql
+
+SELECT s.direction_name
+FROM ScientificDirections s
+LEFT JOIN Employees e ON s.direction_id = e.scientific_specialization
+WHERE e.employee_id IS NULL;
+Этот запрос находит все научные направления, которые не имеют связанных сотрудников (то есть, в 
+которых нет специалистов).
+
+3. Сотрудники, имеющие ученую степень и не имеющие ученого звания
+Для того чтобы найти сотрудников, которые имеют ученую степень, но не имеют ученого звания, можно 
+выполнить следующий запрос:
+
+sql
+
+SELECT full_name, position, academic_degree
+FROM Employees
+WHERE academic_degree IS NOT NULL AND academic_title IS NULL;
+Этот запрос выбирает сотрудников, у которых указана ученая степень, но отсутствует ученое звание.
+
+4. Определить, в каком отделе (отделах) работает больше всего сотрудников
+Для того чтобы найти отделы с наибольшим количеством сотрудников, можно использовать следующий запрос
+ с группировкой:
+
+sql
+
+SELECT d.department_name, COUNT(e.employee_id) AS num_employees
+FROM Departments d
+JOIN Employees e ON d.department_id = e.department_id
+GROUP BY d.department_name
+ORDER BY num_employees DESC
+LIMIT 1;
+Этот запрос возвращает отдел с наибольшим количеством сотрудников. В случае необходимости, чтобы 
+получить все отделы с максимальным количеством сотрудников, можно убрать LIMIT 1.
+
+Заключение
+Эти SQL-запросы позволяют эффективно работать с базой данных института, обеспечивая возможность 
+получения нужной информации о сотрудниках, их ученых званиях, научных направлениях и подразделениях.
+-->

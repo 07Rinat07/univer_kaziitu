@@ -1,0 +1,94 @@
+
+<!--Л.р. №1. Создание и заполнение отношений
+1. Отношение "Издательства" (Publishers)
+Таблица для хранения информации об издательствах, включая их идентификатор, название и адрес.
+
+sql
+
+CREATE TABLE Publishers (
+    publisher_id CHAR(5) PRIMARY KEY,       -- Идентификатор издательства
+    publisher_name VARCHAR(100) NOT NULL,   -- Название издательства
+    address VARCHAR(255)                   -- Адрес издательства
+);
+2. Отношение "Рубрикаторы" (Categories)
+Таблица для хранения информации о рубрикаторах (категориях), включая их шифр и название.
+
+sql
+
+CREATE TABLE Categories (
+    category_code CHAR(8) PRIMARY KEY,      -- Шифр рубрики
+    category_name VARCHAR(100) NOT NULL     -- Название рубрики
+);
+3. Отношение "Каталог книг" (Books Catalog)
+Таблица для хранения информации о книгах, включая их рубрикатор, шифр, авторов, название, место 
+издания, год издания, количество страниц, примечания и ссылку на издательство (внешний ключ).
+
+sql
+
+CREATE TABLE Books (
+    category_code CHAR(8),                  -- Рубрикатор (внешний ключ)
+    book_code CHAR(6),                      -- Шифр книги
+    authors VARCHAR(50) NOT NULL,            -- Автор(ы) (обязательное поле)
+    title VARCHAR(50) NOT NULL,              -- Название книги (обязательное поле)
+    place_of_publication VARCHAR(20),        -- Место издания
+    publisher_code CHAR(5),                  -- Шифр издательства (внешний ключ)
+    year_of_publication INT,                 -- Год издания
+    page_count INT,                          -- Количество страниц
+    note VARCHAR(100) DEFAULT 'Учебник',     -- Примечание (по умолчанию - учебник)
+    PRIMARY KEY (category_code, book_code),  -- Составной первичный ключ
+    FOREIGN KEY (category_code) REFERENCES Categories(category_code), -- Внешний ключ на рубрикатор
+    FOREIGN KEY (publisher_code) REFERENCES Publishers(publisher_id)   -- Внешний ключ на 
+    издательство
+);
+Л.р. №2. Выборка данных
+1. Посчитать, сколько книг не имеют комментариев
+Для того чтобы посчитать количество книг без комментариев (которые имеют значение по умолчанию 
+'Учебник' в поле note), используем запрос с условием WHERE note = 'Учебник'.
+
+sql
+
+SELECT COUNT(*) AS books_without_comments
+FROM Books
+WHERE note = 'Учебник';
+Этот запрос возвращает количество книг, которые не имеют изменений в поле note (имеют значение по 
+умолчанию).
+
+2. Создать списки поступлений за последние 3 года (по рубрикам, авторам, годам)
+Для получения списка поступлений книг за последние 3 года, сгруппированных по рубрикам, авторам и 
+годам, используем следующий запрос:
+
+sql
+
+SELECT b.category_code, c.category_name, b.authors, b.year_of_publication, COUNT(*) AS books_count
+FROM Books b
+JOIN Categories c ON b.category_code = c.category_code
+WHERE b.year_of_publication >= YEAR(CURRENT_DATE) - 3
+GROUP BY b.category_code, c.category_name, b.authors, b.year_of_publication
+ORDER BY b.year_of_publication DESC, b.category_code;
+Этот запрос возвращает список книг, поступивших за последние 3 года, с группировкой по рубрикам, 
+авторам и годам издания.
+
+3. Рубрики, по которым нет книг
+Для того чтобы получить рубрики, по которым нет книг, используем запрос с левым соединением 
+(LEFT JOIN):
+
+sql
+
+SELECT c.category_name
+FROM Categories c
+LEFT JOIN Books b ON c.category_code = b.category_code
+WHERE b.book_code IS NULL;
+Этот запрос возвращает список рубрик, по которым нет книг.
+
+4. Автор — название издательства, в котором автор издавался
+Чтобы получить список авторов с названием издательства, в котором они издавались, используем 
+следующий запрос:
+
+sql
+
+SELECT DISTINCT b.authors, p.publisher_name
+FROM Books b
+JOIN Publishers p ON b.publisher_code = p.publisher_id;
+Этот запрос возвращает список авторов с соответствующими издательствами, в которых они 
+публиковались.
+-->
