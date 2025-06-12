@@ -1,8 +1,7 @@
-import React from "https://esm.sh/react@19?dev";
-import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
- 
-console.log("hello");
-const rootNode = document.getElementById("app");
+const rootNode = document.getElementById("app");    // элемент для рендеринга приложения React
+// получаем корневой элемент 
 const root = ReactDOM.createRoot(rootNode);
+// рендеринг в корневой элемент
 root.render(
-    <h1>Hello METANIT.COM</h1>)
+  <h1>Hello React</h1>,  // элемент, который мы хотим создать
+);
