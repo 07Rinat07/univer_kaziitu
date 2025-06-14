@@ -14,23 +14,22 @@
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
         function User() {
-            const [name, setName] = React.useState("Tom");
-            const [age, setAge] = React.useState(36);
-             
-            function handleNameChange(event) {    
-                setName(event.target.value);  
+            const [user, setUser] = React.useState({name:"Tom", age: 36});
+        
+            function handleNameChange(event) { 
+                setUser({name: event.target.value, age: user.age});   
             }
              
-            function handleAgeChange(event) {    
-                setAge(event.target.value);  
+            function handleAgeChange(event) {   
+                setUser({name: user.name, age: event.target.value});   
             }
             return (
                 <div>
                     <h3>Имя: {name}</h3>
                     <h3>Возраст: {age}</h3>
                     <div>
-                        <p>Имя: <input type="text" value={name} onChange={handleNameChange} /></p>
-                        <p>Возраст: <input type="number" min="0" max="110" value={age} onChange={handleAgeChange} /></p>
+                        <p>Имя: <input type="text" value={user.name} onChange={handleNameChange} /></p>
+                        <p>Возраст: <input type="number" min="0" max="110" value={user.age} onChange={handleAgeChange} /></p>
                     </div>
                 </div>
             );
