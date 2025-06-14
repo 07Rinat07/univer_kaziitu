@@ -13,33 +13,20 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
-        function User() {
-            const [user, setUser] = React.useState({name:"Tom", age: 36});
-        
-            function handleNameChange(event) { 
-                setUser({name: event.target.value, age: user.age});   
+        class Hello extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = {message: "Hello METANIT.COM!"};
             }
-             
-            function handleAgeChange(event) {   
-                setUser({name: user.name, age: event.target.value});   
+            render() {
+                return <h1>{this.state.message}</h1>;
             }
-            return (
-                <div>
-                    <h3>Имя: {name}</h3>
-                    <h3>Возраст: {age}</h3>
-                    <div>
-                        <p>Имя: <input type="text" value={user.name} onChange={handleNameChange} /></p>
-                        <p>Возраст: <input type="number" min="0" max="110" value={user.age} onChange={handleAgeChange} /></p>
-                    </div>
-                </div>
-            );
         }
-                 
         ReactDOM.createRoot(
             document.getElementById("app")
         )
         .render(
-            <User />
+            <Hello />
         );
     </script>
 </body>
