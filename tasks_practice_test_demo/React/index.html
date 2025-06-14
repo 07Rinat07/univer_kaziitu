@@ -14,15 +14,26 @@
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
         function User() {
-        const [name, setName] = React.useState("Tom");
-        const [age, setAge] = React.useState(36);
-         
-        return (
-            <div>
-                <h3>Имя: {name}</h3>
-                <h3>Возраст: {age}</h3>
-            </div>
-        );
+            const [name, setName] = React.useState("Tom");
+            const [age, setAge] = React.useState(36);
+             
+            function handleNameChange(event) {    
+                setName(event.target.value);  
+            }
+             
+            function handleAgeChange(event) {    
+                setAge(event.target.value);  
+            }
+            return (
+                <div>
+                    <h3>Имя: {name}</h3>
+                    <h3>Возраст: {age}</h3>
+                    <div>
+                        <p>Имя: <input type="text" value={name} onChange={handleNameChange} /></p>
+                        <p>Возраст: <input type="number" min="0" max="110" value={age} onChange={handleAgeChange} /></p>
+                    </div>
+                </div>
+            );
         }
                  
         ReactDOM.createRoot(
