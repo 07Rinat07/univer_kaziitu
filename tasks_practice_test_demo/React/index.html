@@ -13,22 +13,24 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
-        function Counter() {
-            const [count, setCount] = React.useState(0);
-            return (
-                <div>
-                    <h3>Count = {count}</h3>
-                    <button onClick={() => setCount(count + 1)}>
-                        Увеличить
-                    </button>
-                </div>
-            );
+        function User() {
+        const [name, setName] = React.useState("Tom");
+        const [age, setAge] = React.useState(36);
+         
+        return (
+            <div>
+                <h3>Имя: {name}</h3>
+                <h3>Возраст: {age}</h3>
+            </div>
+        );
         }
                  
-        ReactDOM.createRoot( document.getElementById("app"))
-        .render(
-            <Counter />
+        ReactDOM.createRoot(
+            document.getElementById("app")
         )
+        .render(
+            <User />
+        );
     </script>
 </body>
 </html>
