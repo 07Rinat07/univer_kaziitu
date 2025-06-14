@@ -17,9 +17,16 @@
             constructor(props) {
                 super(props);
                 this.state = {message: "Hello METANIT.COM!"};
+                this.messageChange = this.messageChange.bind(this);
+            }
+            messageChange(e){
+               this.setState({message: event.target.value});
             }
             render() {
-                return <h1>{this.state.message}</h1>;
+                return <div>
+                        <h2>{this.state.message}</h2>
+                        <input type="text" value={this.state.message} onChange={this.messageChange} />
+                    </div>;
             }
         }
         ReactDOM.createRoot(
