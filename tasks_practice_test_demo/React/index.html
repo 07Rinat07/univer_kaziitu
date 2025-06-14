@@ -13,27 +13,29 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
-        class Hello extends React.Component {
-            constructor(props) {
-                super(props);
-                this.state = {message: "Hello METANIT.COM!"};
-                this.messageChange = this.messageChange.bind(this);
-            }
-            messageChange(e){
-               this.setState({message: event.target.value});
-            }
-            render() {
-                return <div>
-                        <h2>{this.state.message}</h2>
-                        <input type="text" value={this.state.message} onChange={this.messageChange} />
-                    </div>;
-            }
-        }
+        class ClickButton extends React.Component {
+               
+           constructor(props) {
+               super(props);
+               this.state = {counter: 0};
+               this.press = this.press.bind(this);
+           }
+           press(){
+               this.setState({counter: this.state.counter + parseInt(this.props.increment)});
+               this.setState({counter: this.state.counter + parseInt(this.props.increment)});
+           }
+           render() {
+               return <div>
+                        <button onClick={this.press}>Count</button>
+                        <div>Counter: {this.state.counter} <br />Increment: {this.props.increment}</div>
+                    </div>
+           }
+       }
         ReactDOM.createRoot(
             document.getElementById("app")
         )
         .render(
-            <Hello />
+           <ClickButton increment="1" />
         );
     </script>
 </body>
