@@ -13,29 +13,34 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
-        class ClickButton extends React.Component {
+        function User() {
+          const [name, setName] = React.useState("Tom");
+           
+          React.useEffect(() => {    
+            // Изменяем заголовок html-страницы   
+            document.title = `Привет ${name}`;  
+          });
+           
+           
+          function changeName(event) { 
+            setName(event.target.value);  
+        }
+          return (
+            <div>
+              <h3>Имя: {name}</h3>
                
-           constructor(props) {
-               super(props);
-               this.state = {counter: 0};
-               this.press = this.press.bind(this);
-           }
-           press(){
-               this.setState({counter: this.state.counter + parseInt(this.props.increment)});
-               this.setState({counter: this.state.counter + parseInt(this.props.increment)});
-           }
-           render() {
-               return <div>
-                        <button onClick={this.press}>Count</button>
-                        <div>Counter: {this.state.counter} <br />Increment: {this.props.increment}</div>
-                    </div>
-           }
-       }
+              <div>
+                <p>Имя: <input type="text" value={name} onChange={changeName} /></p>
+              </div>
+            </div>
+          );
+        }
+                 
         ReactDOM.createRoot(
             document.getElementById("app")
         )
         .render(
-           <ClickButton increment="1" />
+            <User />
         );
     </script>
 </body>
