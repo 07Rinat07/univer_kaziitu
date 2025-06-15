@@ -6,6 +6,7 @@
 </head>
 <body>
     <div id="app"></div>
+    <button id="unmountBtn">Unmount</button>
  
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
  
@@ -13,33 +14,36 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
+        const root = ReactDOM.createRoot(
+            document.getElementById("app")
+        );
         function User() {
-          const [name, setName] = React.useState("Tom");
-           
-          React.useEffect(() => {    
-            // Изменяем заголовок html-страницы   
-            document.title = `Привет ${name}`;  
-          });
-           
-           
-          function changeName(event) { 
-            setName(event.target.value);  
-        }
-          return (
-            <div>
-              <h3>Имя: {name}</h3>
-               
-              <div>
-                <p>Имя: <input type="text" value={name} onChange={changeName} /></p>
-              </div>
-            </div>
-          );
+            const [name, setName] = React.useState("Tom");
+         
+            const unmount = () =>  root.unmount();
+            React.useEffect(() => {    
+         
+                const unmountBtn = document.getElementById("unmountBtn");
+                // подписываемся на событие onclick кнопки unmountBtn
+                unmountBtn.addEventListener("click", unmount);
+                console.log("EventListener added");
+                 
+                return()=>{
+                    // отписываемся от события
+                    unmountBtn.removeEventListener("click", unmount);
+                    console.log("EventListener removed");
+                }
+            },
+            []); // эффект срабатывает только один раз - при самом первом рендеринге
+        
+            return (<div>
+                <h3>Имя: {name}</h3>
+                <p>Имя: <input type="text" value={name} onChange={(e) => setName(e.target.value)} /></p>
+            </div>);
         }
                  
-        ReactDOM.createRoot(
-            document.getElementById("app")
-        )
-        .render(
+         
+        root.render(
             <User />
         );
     </script>
