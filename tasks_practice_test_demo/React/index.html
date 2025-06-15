@@ -3,10 +3,25 @@
 <head>
     <meta charset="utf-8" />
     <title>METANIT.COM</title>
+    <style>
+        button{
+            width: 100px;
+            height:30px;
+            border-radius: 4px;
+            margin:50px;
+        }
+        .on{
+            color:#666;
+            background-color: #ccc;
+        }
+        .off{
+            color:#888;
+            background-color: white;
+        }
+    </style>
 </head>
 <body>
     <div id="app"></div>
-    <button id="unmountBtn">Unmount</button>
  
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
  
@@ -14,38 +29,52 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
-        const root = ReactDOM.createRoot(
+        class ClickButton extends React.Component {
+               
+           constructor(props) {
+               super(props);
+               this.state = {class: "off", label: "Нажми"};
+                   
+               this.press = this.press.bind(this);
+                   
+               console.log("constructor");
+           }
+           static getDerivedStateFromProps(props, state) {
+                console.log("getDerivedStateFromProps()");
+                return null;
+           }
+           componentDidMount(){
+               console.log("componentDidMount()");
+           }
+           componentWillUnmount(){
+               console.log("componentWillUnmount()");
+           }
+           shouldComponentUpdate(){
+               console.log("shouldComponentUpdate()");
+               return true;
+           }
+           getSnapshotBeforeUpdate(prevProps, prevState) {
+              console.log("getSnapshotBeforeUpdate()");
+              return null;
+          }
+           componentDidUpdate(){
+               console.log("componentDidUpdate()");
+           }
+           press(){
+               let className = (this.state.class==="off")?"on":"off";
+               this.setState({class: className});
+           }
+           render() {
+               console.log("render()");
+               return <button onClick={this.press} className={this.state.class}>{this.state.label}</button>;
+           }
+       }
+       ReactDOM.createRoot(
             document.getElementById("app")
-        );
-        function User() {
-            const [name, setName] = React.useState("Tom");
-         
-            const unmount = () =>  root.unmount();
-            React.useEffect(() => {    
-         
-                const unmountBtn = document.getElementById("unmountBtn");
-                // подписываемся на событие onclick кнопки unmountBtn
-                unmountBtn.addEventListener("click", unmount);
-                console.log("EventListener added");
-                 
-                return()=>{
-                    // отписываемся от события
-                    unmountBtn.removeEventListener("click", unmount);
-                    console.log("EventListener removed");
-                }
-            },
-            []); // эффект срабатывает только один раз - при самом первом рендеринге
-        
-            return (<div>
-                <h3>Имя: {name}</h3>
-                <p>Имя: <input type="text" value={name} onChange={(e) => setName(e.target.value)} /></p>
-            </div>);
-        }
-                 
-         
-        root.render(
-            <User />
-        );
+        )
+        .ClickButtonrender(
+           <ClickButton />
+       );
     </script>
 </body>
 </html>
