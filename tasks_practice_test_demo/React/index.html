@@ -29,50 +29,50 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
-        class ClickButton extends React.Component {
+        function ClickButton(props) {
                
-           constructor(props) {
-               super(props);
-               this.state = {class: "off", label: "Нажми"};
-                   
-               this.press = this.press.bind(this);
-                   
-               console.log("constructor");
+            const [buttonClass, setButtonClass] = React.useState("off");
+            const [didMount, setDidMount] = React.useState(false);
+ 
+            // имитация конструктора 
+            if (!didMount) {
+                console.log("constructor");
+            } 
+ 
+            // componentDidMount | componentWillUnmount
+            React.useEffect(() => {    
+                  
+                console.log("componentDidMount");   // действия после монтирования компонента
+                setDidMount(true); // устанавливаем, чтобы избежать повторного вызова функции, которая имитирует конструктор
+ 
+                return()=>{
+                    console.log("componentWillUnmount");  // действия при удалении компонента
+                }
+            }, []);
+ 
+            // отслеживаем все изменения компонента 
+            React.useEffect(() => {    
+                  
+                console.log("componentDidUpdate"); // действия при обновлении компонента
+            });
+ 
+           function press(){
+               const className = (buttonClass==="off")?"on":"off";
+               setButtonClass({buttonClass: className});
            }
-           static getDerivedStateFromProps(props, state) {
-                console.log("getDerivedStateFromProps()");
-                return null;
-           }
-           componentDidMount(){
-               console.log("componentDidMount()");
-           }
-           componentWillUnmount(){
-               console.log("componentWillUnmount()");
-           }
-           shouldComponentUpdate(){
-               console.log("shouldComponentUpdate()");
-               return true;
-           }
-           getSnapshotBeforeUpdate(prevProps, prevState) {
-              console.log("getSnapshotBeforeUpdate()");
-              return null;
-          }
-           componentDidUpdate(){
-               console.log("componentDidUpdate()");
-           }
-           press(){
-               let className = (this.state.class==="off")?"on":"off";
-               this.setState({class: className});
-           }
-           render() {
-               console.log("render()");
-               return <button onClick={this.press} className={this.state.class}>{this.state.label}</button>;
-           }
+ 
+            // действия при рендеринге компонента
+           return (
+                <>
+                    {console.log("render()")}       
+                    <button onClick={press} className={buttonClass}>Нажми</button>
+                </>
+           );
        }
        ReactDOM.createRoot(
             document.getElementById("app")
         )
-        .ClickButtonrender(
+        .render(
            <ClickButton />
        );
     </script>
