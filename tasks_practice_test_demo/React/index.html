@@ -3,22 +3,6 @@
 <head>
     <meta charset="utf-8" />
     <title>METANIT.COM</title>
-    <style>
-        button{
-            width: 100px;
-            height:30px;
-            border-radius: 4px;
-            margin:50px;
-        }
-        .on{
-            color:#666;
-            background-color: #ccc;
-        }
-        .off{
-            color:#888;
-            background-color: white;
-        }
-    </style>
 </head>
 <body>
     <div id="app"></div>
@@ -29,51 +13,49 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
-        function ClickButton(props) {
-               
-            const [buttonClass, setButtonClass] = React.useState("off");
-            const [didMount, setDidMount] = React.useState(false);
- 
-            // имитация конструктора 
-            if (!didMount) {
-                console.log("constructor");
-            } 
- 
-            // componentDidMount | componentWillUnmount
-            React.useEffect(() => {    
-                  
-                console.log("componentDidMount");   // действия после монтирования компонента
-                setDidMount(true); // устанавливаем, чтобы избежать повторного вызова функции, которая имитирует конструктор
- 
-                return()=>{
-                    console.log("componentWillUnmount");  // действия при удалении компонента
-                }
-            }, []);
- 
-            // отслеживаем все изменения компонента 
-            React.useEffect(() => {    
-                  
-                console.log("componentDidUpdate"); // действия при обновлении компонента
-            });
- 
-           function press(){
-               const className = (buttonClass==="off")?"on":"off";
-               setButtonClass({buttonClass: className});
-           }
- 
-            // действия при рендеринге компонента
-           return (
-                <>
-                    {console.log("render()")}       
-                    <button onClick={press} className={buttonClass}>Нажми</button>
-                </>
-           );
-       }
-       ReactDOM.createRoot(
+        const root = ReactDOM.createRoot(
             document.getElementById("app")
-        )
-        .render(
-           <ClickButton />
+        );
+        class Clock extends React.Component {
+            constructor(props) {
+              super(props);
+              this.state = {date: new Date()};
+              this.unmount = this.unmount.bind(this);
+            }
+            unmount(){
+                root.unmount();
+            }
+            componentDidMount() {
+              this.timerId = setInterval(
+                ()=> this.tick(),
+                1000
+              );
+              console.log("componentDidMount()");
+            }
+       
+            componentWillUnmount() {
+              clearInterval(this.timerId);
+              console.log("componentWillUnmount()");
+            }
+       
+            tick() {
+              this.setState({
+                date: new Date()
+              });
+            }
+       
+            render() {
+              return (
+                <div>
+                  <h2>Текущее время {this.state.date.toLocaleTimeString()}.</h2>
+                  <button onClick={this.unmount}>Unmount</button>
+                </div>
+              );
+            }
+          }
+          
+        root.render(
+           <Clock />
        );
     </script>
 </body>
