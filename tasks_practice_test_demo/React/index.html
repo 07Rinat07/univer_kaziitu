@@ -16,42 +16,34 @@
         const root = ReactDOM.createRoot(
             document.getElementById("app")
         );
-        class Clock extends React.Component {
-            constructor(props) {
-              super(props);
-              this.state = {date: new Date()};
-              this.unmount = this.unmount.bind(this);
-            }
-            unmount(){
+        function Clock(){
+            const [state, setState] = React.useState({date: new Date()});
+            
+            function unmount(){
                 root.unmount();
             }
-            componentDidMount() {
-              this.timerId = setInterval(
-                ()=> this.tick(),
-                1000
-              );
-              console.log("componentDidMount()");
-            }
+ 
+            React.useEffect(() => {    
+             
+                // срабатывает один раз при монтировании компонента
+                const timerId = setInterval(()=> setState({date: new Date()}), 1000);
+                console.log("componentDidMount()");
+                 
+                return()=>{
+                    // срабатывает при удалении компонента
+                    clearInterval(timerId);
+                    console.log("componentWillUnmount()");
+                }
+            },
+            []); // эффект срабатывает только один раз
+        
        
-            componentWillUnmount() {
-              clearInterval(this.timerId);
-              console.log("componentWillUnmount()");
-            }
-       
-            tick() {
-              this.setState({
-                date: new Date()
-              });
-            }
-       
-            render() {
-              return (
+            return (
                 <div>
-                  <h2>Текущее время {this.state.date.toLocaleTimeString()}.</h2>
-                  <button onClick={this.unmount}>Unmount</button>
+                  <h2>Текущее время {state.date.toLocaleTimeString()}.</h2>
+                  <button onClick={unmount}>Unmount</button>
                 </div>
               );
-            }
           }
           
         root.render(
