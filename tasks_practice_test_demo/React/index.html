@@ -13,57 +13,38 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
-        class User extends React.Component {
-               
-           constructor(props) {
-               super(props);
-               this.state = {name: "Tom"};
-               this.setSharedState = this.setSharedState.bind(this);
-           }
-           setSharedState(value) {    
-                this.setState({name: value});
-           }
-           render() {
-               return <>
-                    <Message state={this.state} />
-                    <UserEdit state={this.state} setState={this.setSharedState}  />
-                </>
-           }
-       }
+        // создаем контекст для отслеживания состояния isAuthenticated
+        const AuthContext = React.createContext();
  
-        class Message extends React.Component {
-               
-           constructor(props) {
-                super(props);
-           }
-           render() {
-               return <div>
-                    <h1>Hello {this.props.state.name}</h1>
-                </div>
-           }
-       }
-       class UserEdit extends React.Component {
-               
-           constructor(props) {
-               super(props);
-                this.onStateChanged = this.onStateChanged.bind(this);
-           }
-            onStateChanged(e){
-                this.props.setState(e.target.value); // передаем введенный текст в родительский компонент
-            }
-           render() {
-               return <div>
-                        <input type="text" value={this.props.state.name} onChange={this.onStateChanged} />
-                        <h3>Current Name: {this.props.state.name}</h3>
-                    </div>
-           }
-       }
+        function App() {
+ 
+            // состояние указывает, аутентифицирован ли пользователь
+            const [isAuthenticated, setIsAuthenticated] = React.useState(false);
+ 
+            // используем Context API
+            return (
+                <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+                    <h1> {isAuthenticated ? "Authenticated" : "No Access"}</h1>
+                    <Login />
+                </AuthContext.Provider>
+            );
+        }
+ 
+        function Login() {
+            const { isAuthenticated, setIsAuthenticated } = React.useContext(AuthContext);
+ 
+            return (
+                <button onClick={() => setIsAuthenticated(!isAuthenticated)}>
+                    {isAuthenticated ? "Logout" : "Login"}
+                </button>
+            );
+        }
         ReactDOM.createRoot(
             document.getElementById("app")
         )
         .render(
-           <User />
-        );
+           <App />
+       );
     </script>
 </body>
 </html>
