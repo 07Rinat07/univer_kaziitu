@@ -13,42 +13,40 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
-        const root = ReactDOM.createRoot(
-            document.getElementById("app")
-        );
-        function Clock(){
-            const [state, setState] = React.useState({date: new Date()});
-            
-            function unmount(){
-                root.unmount();
-            }
- 
-            React.useEffect(() => {    
-             
-                // срабатывает один раз при монтировании компонента
-                const timerId = setInterval(()=> setState({date: new Date()}), 1000);
-                console.log("componentDidMount()");
-                 
-                return()=>{
-                    // срабатывает при удалении компонента
-                    clearInterval(timerId);
-                    console.log("componentWillUnmount()");
-                }
-            },
-            []); // эффект срабатывает только один раз
+        function User(props) {
+               
+           const [name, setName] = React.useState("Tom");
         
-       
-            return (
+            return(
+                <>
+                    <Message name={name} />
+                    <UserEdit name={name} setName={setName}  />
+                </>
+           )
+        }
+ 
+        function Message(props){
+               
+            return <div>
+                <h1>Hello {props.name}</h1>
+            </div>
+        }
+ 
+        function UserEdit(props) {
+             
+          return (
                 <div>
-                  <h2>Текущее время {state.date.toLocaleTimeString()}.</h2>
-                  <button onClick={unmount}>Unmount</button>
+                    <input type="text" value={props.name} onChange={(e)=> props.setName(e.target.value)} />
+                    <h3>Current Name: {props.name}</h3>
                 </div>
-              );
-          }
-          
-        root.render(
-           <Clock />
-       );
+            );
+       }
+        ReactDOM.createRoot(
+            document.getElementById("app")
+        )
+        .render(
+           <User />
+        );
     </script>
 </body>
 </html>
