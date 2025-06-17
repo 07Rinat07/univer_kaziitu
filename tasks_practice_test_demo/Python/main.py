@@ -1,33 +1,43 @@
-class Employee:
+class Person:
 
     def __init__(self, name):
-        self.__name = name
+        self.__name = name  # имя человека
 
     @property
     def name(self):
         return self.__name
+
+    def do_nothing(self):
+        print(f"{self.name} does nothing")
+
+
+#  класс работника
+class Employee(Person):
 
     def work(self):
         print(f"{self.name} works")
 
 
-class Student:
-
-    def __init__(self, name):
-        self.__name = name
-
-    @property
-    def name(self):
-        return self.__name
+#  класс студента
+class Student(Person):
 
     def study(self):
         print(f"{self.name} studies")
 
 
-class WorkingStudent(Employee, Student):
-    pass
+def act(person):
+    if isinstance(person, Student):
+        person.study()
+    elif isinstance(person, Employee):
+        person.work()
+    elif isinstance(person, Person):
+        person.do_nothing()
 
 
-tom = WorkingStudent("Tom")
-tom.work()  # Tom works
-tom.study()  # Tom studies
+tom = Employee("Tom")
+bob = Student("Bob")
+sam = Person("Sam")
+
+act(tom)  # Tom works
+act(bob)  # Bob studies
+act(sam)  # Sam does nothing
