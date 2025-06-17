@@ -1,32 +1,33 @@
-class Person:
-    def __init__(self, name, age):
-        self.__name = name  # устанавливаем имя
-        self.__age = age  # устанавливаем возраст
+class Employee:
 
-    # свойство-геттер
-    @property
-    def age(self):
-        return self.__age
-
-    # свойство-сеттер
-    @age.setter
-    def age(self, age):
-        if 0 < age < 110:
-            self.__age = age
-        else:
-            print("Недопустимый возраст")
+    def __init__(self, name):
+        self.__name = name
 
     @property
     def name(self):
         return self.__name
 
-    def print_person(self):
-        print(f"Имя: {self.__name}\tВозраст: {self.__age}")
+    def work(self):
+        print(f"{self.name} works")
 
 
-tom = Person("Tom", 39)
-tom.print_person()  # Имя: Tom  Возраст: 39
-tom.age = -3486  # Недопустимый возраст  (Обращение к сеттеру)
-print(tom.age)  # 39 (Обращение к геттеру)
-tom.age = 25  # (Обращение к сеттеру)
-tom.print_person()  # Имя: Tom  Возраст: 25
+class Student:
+
+    def __init__(self, name):
+        self.__name = name
+
+    @property
+    def name(self):
+        return self.__name
+
+    def study(self):
+        print(f"{self.name} studies")
+
+
+class WorkingStudent(Employee, Student):
+    pass
+
+
+tom = WorkingStudent("Tom")
+tom.work()  # Tom works
+tom.study()  # Tom studies
