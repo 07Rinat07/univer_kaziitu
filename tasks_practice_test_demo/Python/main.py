@@ -1,16 +1,25 @@
-class Person:
-    def __init__(self, name, age):
-        self.name = name  # устанавливаем имя
-        self.age = age  # устанавливаем возраст
+class Counter:
+    def __init__(self, value):
+        self.value = value
 
-    def display_info(self):
-        print(self)
-        # print(self.__str__())     # или так
+    def __eq__(self, other): return self.value == other.value
 
-    def __str__(self):
-        return f"Name: {self.name}  Age: {self.age}"
+    def __ne__(self, other): return not (self == other)
+
+    def __gt__(self, other): return self.value > other.value
+
+    def __le__(self, other): return not (self > other)
+
+    def __lt__(self, other): return self.value < other.value
+
+    def __ge__(self, other): return not (self < other)
 
 
-tom = Person("Tom", 23)
-print(tom)  # Name: Tom  Age: 23
-tom.display_info()  # Name: Tom  Age: 23
+c1 = Counter(1)
+c2 = Counter(2)
+
+print(c1 == c2)  # False
+print(c1 != c2)  # True
+
+print(c1 < c2)  # True
+print(c1 >= c2)  # False
