@@ -1,15 +1,12 @@
 class Person:
-    name = "Undefined"
+    __type = "Person"
 
-    def print_name(self):
-        print(self.name)
+    @staticmethod
+    def print_type():
+        print(Person.__type)
 
+
+Person.print_type()  # Person - обращение к статическому методу через имя класса
 
 tom = Person()
-bob = Person()
-tom.print_name()  # Undefined
-bob.print_name()  # Undefined
-
-bob.name = "Bob"
-bob.print_name()  # Bob
-tom.print_name()  # Undefined
+tom.print_type()  # Person - обращение к статическому методу через имя объекта
