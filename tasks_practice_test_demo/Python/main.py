@@ -1,8 +1,6 @@
 try:
     number = int(input("Введите число: "))
     print("Введенное число:", number)
-except:
-    print("Преобразование прошло неудачно")
-finally:
-    print("Блок try завершил выполнение")
+except ValueError as e:
+    print("Сведения об исключении", e)
 print("Завершение программы")
