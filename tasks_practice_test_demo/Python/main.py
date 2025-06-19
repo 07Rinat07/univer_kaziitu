@@ -1,25 +1,27 @@
-class Counter:
-    def __init__(self, value):
-        self.value = value
-
-    def __eq__(self, other): return self.value == other.value
-
-    def __ne__(self, other): return not (self == other)
-
-    def __gt__(self, other): return self.value > other.value
-
-    def __le__(self, other): return not (self > other)
-
-    def __lt__(self, other): return self.value < other.value
-
-    def __ge__(self, other): return not (self < other)
+import abc
 
 
-c1 = Counter(1)
-c2 = Counter(2)
+class Shape(abc.ABC):
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
-print(c1 == c2)  # False
-print(c1 != c2)  # True
+    @abc.abstractmethod
+    def area(self): pass  # абстрактны метод
 
-print(c1 < c2)  # True
-print(c1 >= c2)  # False
+    def print_point(self):  # неабстрактный метод
+        print("X:", self.x, "\tY:", self.y)
+
+
+# класс прямоугольника
+class Rectangle(Shape):
+    def __init__(self, x, y, width, height):
+        super().__init__(x, y)
+        self.width = width
+        self.height = height
+
+    def area(self): return self.width * self.height
+
+
+rect = Rectangle(10, 20, 100, 100)
+rect.print_point()  # X: 10   Y: 20
