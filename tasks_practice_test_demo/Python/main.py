@@ -1,6 +1,8 @@
-users = {"Tom", "Bob", "Alice"}
-users2 = {"Sam", "Kate", "Bob"}
+people = [
+    ("Tom", 38, "Google"),
+    ("Bob", 42, "Microsoft"),
+    ("Sam", 29, "JetBrains")
+]
 
-users3 = users.difference(users2)
-print(users3)  # {"Tom", "Alice"}
-print(users - users2)  # {"Tom", "Alice"}
+for name, age, company in people:
+    print(f"Name: {name}, Age: {age}, Company: {company}")
