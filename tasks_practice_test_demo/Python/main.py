@@ -1,32 +1,30 @@
-class PersonAgeException(Exception):
-    def __init__(self, age, minage, maxage):
-        self.age = age
-        self.minage = minage
-        self.maxage = maxage
+people = [
+    ["Tom", 29],
+    ["Alice", 33],
+    ["Bob", 27]
+]
 
-    def __str__(self):
-        return f"Недопустимое значение: {self.age}. " \
-               f"Возраст должен быть в диапазоне от {self.minage} до {self.maxage}"
+# создание вложенного списка
+person = list()
+person.append("Bill")
+person.append(41)
+# добавление вложенного списка
+people.append(person)
 
+print(people[-1])  # ["Bill", 41]
 
-class Person:
-    def __init__(self, name, age):
-        self.__name = name  # устанавливаем имя
-        minage, maxage = 1, 110
-        if minage < age < maxage:  # устанавливаем возраст, если передано корректное значение
-            self.__age = age
-        else:  # иначе генерируем исключение
-            raise PersonAgeException(age, minage, maxage)
+# добавление во вложенный список
+people[-1].append("+79876543210")
 
-    def display_info(self):
-        print(f"Имя: {self.__name}  Возраст: {self.__age}")
+print(people[-1])  # ["Bill", 41, "+79876543210"]
 
+# удаление последнего элемента из вложенного списка
+people[-1].pop()
+print(people[-1])  # ["Bill", 41]
 
-try:
-    tom = Person("Tom", 37)
-    tom.display_info()  # Имя: Tom  Возраст: 37
+# удаление всего последнего вложенного списка
+people.pop(-1)
 
-    bob = Person("Bob", -23)
-    bob.display_info()
-except PersonAgeException as e:
-    print(e)  # Недопустимое значение: -23. Возраст должен быть в диапазоне от 1 до 110
+# изменение первого элемента
+people[0] = ["Sam", 18]
+print(people)  # [ ["Sam", 18], ["Alice", 33], ["Bob", 27]]
