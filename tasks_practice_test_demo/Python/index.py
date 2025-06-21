@@ -1,17 +1,17 @@
 import secrets
-import string
 
+# генерацию случайной строки байтов, содержащей nbytes количество байтов.
+token = secrets.token_bytes()
+print(token)
 
-def generate_password(length=8):
-    characters = string.ascii_letters + string.digits + string.punctuation
-    while True:
-        password = "".join(secrets.choice(characters) for _ in range(length))
-        # Гарантируем наличие разных типов символов
-        if (any(c.islower() for c in password)
-                and any(c.isupper() for c in password)
-                and any(c.isdigit() for c in password)
-                and any(c in string.punctuation for c in password)):
-            return password
+# Если значение не указано, используется разумное значение по умолчанию
+token = secrets.token_bytes(10)
+print(token)
 
+# Создание 16-байтового токена в шестнадцатеричном формате
+token = secrets.token_hex(16)
+print(token)
 
-print(generate_password())
+# Создание URL-безопасного токена
+url_token = secrets.token_urlsafe(16)
+print(url_token)
