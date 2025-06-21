@@ -1,7 +1,6 @@
-def print_person(name, age, company):
-    print(f"Name:{name}, Age: {age}, Company: {company}")
+import message as mes  # модуль message проецируется на псевдоним mes
 
-
-tom = {"name": "Tom", "age": 38, "company": "Google"}
-# выполняем распаковку словаря tom
-print_person(**tom)  # Name:Tom, Age: 38, Company: Google
+# выводим значение переменной hello
+print(mes.hello)  # Hello all
+# обращаемся к функии print_message
+mes.print_message("Hello work")  # Message: Hello work
