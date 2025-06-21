@@ -1,17 +1,33 @@
-import secrets
+import math
 
-# генерацию случайной строки байтов, содержащей nbytes количество байтов.
-token = secrets.token_bytes()
-print(token)
+# возведение числа 2 в степень 3
+n1 = math.pow(2, 3)
+print(n1)  # 8
 
-# Если значение не указано, используется разумное значение по умолчанию
-token = secrets.token_bytes(10)
-print(token)
+# ту же самую операцию можно выполнить так
+n2 = 2 ** 3
+print(n2)
 
-# Создание 16-байтового токена в шестнадцатеричном формате
-token = secrets.token_hex(16)
-print(token)
+# квадратный корень числа
+print(math.sqrt(9))  # 3
 
-# Создание URL-безопасного токена
-url_token = secrets.token_urlsafe(16)
-print(url_token)
+# ближайшее наибольшее целое число
+print(math.ceil(4.56))  # 5
+
+# ближайшее наименьшее целое число
+print(math.floor(4.56))  # 4
+
+# перевод из радиан в градусы
+print(math.degrees(3.14159))  # 180
+
+# перевод из градусов в радианы
+print(math.radians(180))  # 3.1415.....
+# косинус
+print(math.cos(math.radians(60)))  # 0.5
+# cинус
+print(math.sin(math.radians(90)))  # 1.0
+# тангенс
+print(math.tan(math.radians(0)))  # 0.0
+
+print(math.log(8, 2))  # 3.0
+print(math.log10(100))  # 2.0
