@@ -1,8 +1,17 @@
-import random
+import secrets
+import string
 
-number = random.randrange(10)  # значение от 0 до 10 не включая
-print(number)
-number = random.randrange(2, 10)  # значение в диапазоне 2, 3, 4, 5, 6, 7, 8, 9
-print(number)
-number = random.randrange(2, 10, 2)  # значение в диапазоне 2, 4, 6, 8
-print(number)
+
+def generate_password(length=8):
+    characters = string.ascii_letters + string.digits + string.punctuation
+    while True:
+        password = "".join(secrets.choice(characters) for _ in range(length))
+        # Гарантируем наличие разных типов символов
+        if (any(c.islower() for c in password)
+                and any(c.isupper() for c in password)
+                and any(c.isdigit() for c in password)
+                and any(c in string.punctuation for c in password)):
+            return password
+
+
+print(generate_password())
