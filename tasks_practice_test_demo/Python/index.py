@@ -1,15 +1,8 @@
-text = "Это был огромный, в два обхвата дуб, с обломанными ветвями и с обломанной корой"
-# разделение по пробелам
-splitted_text = text.split()
-print(splitted_text)
-print(splitted_text[6])  # дуб,
+first_name = "Tom"
+text = f"Hello, {first_name}."
+print(text)  # Hello, Tom.
 
-# разбиение по запятым
-splitted_text = text.split(",")
-print(splitted_text)
-print(splitted_text[1])  # в два обхвата дуб
-
-# разбиение по первым пяти пробелам
-splitted_text = text.split(" ", 5)
-print(splitted_text)
-print(splitted_text[5])  # обхвата дуб, с обломанными ветвями и с обломанной корой
+name = "Bob"
+age = 23
+info = f"Name: {name}\t Age: {age}"
+print(info)  # Name: Bob  Age: 23
