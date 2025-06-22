@@ -1,23 +1,15 @@
-import locale
+text = "Это был огромный, в два обхвата дуб, с обломанными ветвями и с обломанной корой"
+# разделение по пробелам
+splitted_text = text.split()
+print(splitted_text)
+print(splitted_text[6])  # дуб,
 
-locale.setlocale(locale.LC_ALL, "de")  # для  Windows
-# locale.setlocale(locale.LC_ALL, "de_DE")   # для MacOS
+# разбиение по запятым
+splitted_text = text.split(",")
+print(splitted_text)
+print(splitted_text[1])  # в два обхвата дуб
 
-number = 12345.6789
-formatted = locale.format_string("%f", number)
-print(formatted)  # 12345,678900
-
-formatted = locale.format_string("%.2f", number)
-print(formatted)  # 12345,68
-
-formatted = locale.format_string("%d", number)
-print(formatted)  # 12345
-
-formatted = locale.format_string("%e", number)
-print(formatted)  # 1,234568e+04
-
-money = 234.678
-formatted = locale.currency(money)
-print(formatted)  # 234,68 €
-
-# Применим локализацию чисел и валют в немецкой культуре:
+# разбиение по первым пяти пробелам
+splitted_text = text.split(" ", 5)
+print(splitted_text)
+print(splitted_text[5])  # обхвата дуб, с обломанными ветвями и с обломанной корой
