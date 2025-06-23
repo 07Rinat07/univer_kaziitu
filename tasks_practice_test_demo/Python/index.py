@@ -1,19 +1,22 @@
-def look(words):
-    match words:
-        case {"red": "красный", "blue": "синий"}:  # если в словаре words слова red и blue
-            print("Слова red и blue есть в словаре")
-        case {"red": "красный"}:  # если в словаре words есть слово red
-            print("Слово red есть в словаре, а слово blue отсутствует")
-        case {"blue": "синий"}:  # если в словаре words есть слово blue
-            print("Слово blue есть в словаре, а слово red отсутствует")
-        case {}:
-            print("Слова red и blue в словаре отсутствует")
-        case _:
-            print("Это не словарь")
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
 
 
-look({"red": "красный", "blue": "синий", "green": "зеленый"})  # Слова red и blue есть в словаре
-look({"red": "красный", "green": "зеленый"})  # Слово red есть в словаре, а слово blue отсутствует
-look({"blue": "синий", "green": "зеленый"})  # Слово blue есть в словаре, а слово red отсутствует
-look({"green": "зеленый"})  # Слова red и blue в словаре отсутствует
-look("yelllow")  # Это не словарь
+def print_person(person):
+    match person:
+        case Person(name="Tom", age=37):
+            print("Default Person")
+        case Person(name=name, age=37):
+            print(f"Name: {name}")
+        case Person(name="Tom", age=age):
+            print(f"Age: {age}")
+        case Person(name=name, age=age):
+            print(f"Name: {name}  Age: {age}")
+# Python позволяет использовать в pattern matching в качестве шаблонов объекты классов.
+
+print_person(Person("Tom", 37))  # Default person
+print_person(Person("Tom", 22))  # Age: 22
+print_person(Person("Sam", 37))  # Name: Sam
+print_person(Person("Bob", 41))  # Name: Bob  Age: 41
