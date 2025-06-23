@@ -1,32 +1,26 @@
-# имя файла
-FILENAME = "messages.txt"
+import csv
 
+FILENAME = "users2.csv"
 
-# запись строки в файл
-def write():
-    message = input("Введите строку: ")
-    with open(FILENAME, "a") as file:
-        file.write(message + "\n")
+users = [
+    {"name": "Tom", "age": 28},
+    {"name": "Alice", "age": 23},
+    {"name": "Bob", "age": 34}
+]
 
+with open(FILENAME, "w", newline="") as file:
+    columns = ["name", "age"]
+    writer = csv.DictWriter(file, fieldnames=columns)
+    writer.writeheader()
 
-# чтение файла файл
-def read():
-    with open(FILENAME, "r") as file:
-        for message in file:
-            print(message, end="")
-    print()  # перевод строки для разделения меню и вывода
+    # запись нескольких строк
+    writer.writerows(users)
 
+    user = {"name": "Sam", "age": 41}
+    # запись одной строки
+    writer.writerow(user)
 
-while (True):
-    selection = int(input("1.Запись в файл\t\t2.Чтение файла\t\t3.Выход\nВыберите действие: "))
-    match selection:
-        case 1:
-            write()
-        case 2:
-            read()
-        case 3:
-            break
-        case _:
-            print("Некорректный ввод")
-
-print("Программа завершена")
+with open(FILENAME, "r", newline="") as file:
+    reader = csv.DictReader(file)
+    for row in reader:
+        print(row["name"], "-", row["age"])
