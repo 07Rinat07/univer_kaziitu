@@ -1,24 +1,32 @@
-class Person:
-    __match_args__ = ("name", "age")
-
-    def __init__(self, name, age):
-        self.name = name
-        self.age = age
+# имя файла
+FILENAME = "messages.txt"
 
 
-def print_family(family):
-    match family:
-        case (Person() as husband, Person() as wife):
-            print(f"Husband. Name: {husband.name}  Age: {husband.age}")
-            print(f"Wife. Name: {wife.name}  Age: {wife.age}")
+# запись строки в файл
+def write():
+    message = input("Введите строку: ")
+    with open(FILENAME, "a") as file:
+        file.write(message + "\n")
+
+
+# чтение файла файл
+def read():
+    with open(FILENAME, "r") as file:
+        for message in file:
+            print(message, end="")
+    print()  # перевод строки для разделения меню и вывода
+
+
+while (True):
+    selection = int(input("1.Запись в файл\t\t2.Чтение файла\t\t3.Выход\nВыберите действие: "))
+    match selection:
+        case 1:
+            write()
+        case 2:
+            read()
+        case 3:
+            break
         case _:
-            print("Undefined")
+            print("Некорректный ввод")
 
-
-print_family((Person("Tom", 37), Person("Alice", 33)))
-# Husband. Name: Tom  Age: 37
-# Wife. Name: Alice  Age: 33
-
-print_family((Person("Sam", 28), Person("Kate", 25)))
-# Husband. Name: Sam  Age: 28
-# Wife. Name: Kate  Age: 25
+print("Программа завершена")
