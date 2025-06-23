@@ -1,17 +1,19 @@
-def print_data(user):
-    match user:
-        case ("Tom", 37):
-            print("default user")
-        case ("Tom", age):
-            print(f"Age: {age}")
-        case (name, 22):
-            print(f"Name: {name}")
-        case (name, age):
-            print(f"Name: {name}  Age: {age}")
+def look(words):
+    match words:
+        case {"red": "красный", "blue": "синий"}:  # если в словаре words слова red и blue
+            print("Слова red и blue есть в словаре")
+        case {"red": "красный"}:  # если в словаре words есть слово red
+            print("Слово red есть в словаре, а слово blue отсутствует")
+        case {"blue": "синий"}:  # если в словаре words есть слово blue
+            print("Слово blue есть в словаре, а слово red отсутствует")
+        case {}:
+            print("Слова red и blue в словаре отсутствует")
+        case _:
+            print("Это не словарь")
 
 
-print_data(("Tom", 37))  # default user
-print_data(("Tom", 28))  # Age: 28
-print_data(("Sam", 22))  # Name: Sam
-print_data(("Bob", 41))  # Name: Bob  Age: 41
-print_data(("Tom", 33, "Google"))  # не соответствует ни одному из шаблонов
+look({"red": "красный", "blue": "синий", "green": "зеленый"})  # Слова red и blue есть в словаре
+look({"red": "красный", "green": "зеленый"})  # Слово red есть в словаре, а слово blue отсутствует
+look({"blue": "синий", "green": "зеленый"})  # Слово blue есть в словаре, а слово red отсутствует
+look({"green": "зеленый"})  # Слова red и blue в словаре отсутствует
+look("yelllow")  # Это не словарь
