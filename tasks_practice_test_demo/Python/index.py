@@ -1,17 +1,24 @@
 class Person:
+    __match_args__ = ("name", "age")
+
     def __init__(self, name, age):
         self.name = name
         self.age = age
 
 
-def enter(person):
-    match person:
-        case Person(name=name, age=age) if age < 18:
-            print(f"{name}, доступ запрещен")
-        case Person(name=name):
-            print(f"{name}, добро пожаловать!")
-# Guard или ограничения шаблонов позволяют установить дополнительные условия, которым должно соответсвовать выражение.
-# Ограничение задается сразу после шаблона с помощью ключевого слова if, после которого идет условие ограничения:
+def print_family(family):
+    match family:
+        case (Person() as husband, Person() as wife):
+            print(f"Husband. Name: {husband.name}  Age: {husband.age}")
+            print(f"Wife. Name: {wife.name}  Age: {wife.age}")
+        case _:
+            print("Undefined")
 
-enter(Person("Tom", 37))  # Tom, добро пожаловать!
-enter(Person("Sam", 12))  # Sam, доступ запрещен
+
+print_family((Person("Tom", 37), Person("Alice", 33)))
+# Husband. Name: Tom  Age: 37
+# Wife. Name: Alice  Age: 33
+
+print_family((Person("Sam", 28), Person("Kate", 25)))
+# Husband. Name: Sam  Age: 28
+# Wife. Name: Kate  Age: 25
