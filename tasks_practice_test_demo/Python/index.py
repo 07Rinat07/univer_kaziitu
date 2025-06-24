@@ -1,13 +1,7 @@
 from datetime import datetime
-
-deadline = datetime.strptime("22/05/2017", "%d/%m/%Y")
-print(deadline)  # 2017-05-22 00:00:00
-
-deadline = datetime.strptime("22/05/2017 12:30", "%d/%m/%Y %H:%M")
-print(deadline)  # 2017-05-22 12:30:00
-
-deadline = datetime.strptime("05-22-2017 12:30", "%m-%d-%Y %H:%M")
-print(deadline)  # 2017-05-22 12:30:00
-
-# Работа с датами и временем
-# Модуль datetime
+now = datetime.now()
+print(now.strftime("%Y-%m-%d"))             # 2017-05-03
+print(now.strftime("%d/%m/%Y"))             # 03/05/2017
+print(now.strftime("%d/%m/%y"))             # 03/05/17
+print(now.strftime("%d %B %Y (%A)"))        # 03 May 2017 (Wednesday)
+print(now.strftime("%d/%m/%y %I:%M"))       # 03/05/17 01:36
