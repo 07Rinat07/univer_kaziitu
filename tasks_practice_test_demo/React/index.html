@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>METANIT.COM</title>
+    <style>button {margin: 5px;}</style>
 </head>
 <body>
     <div id="app"></div>
@@ -13,37 +14,34 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
-        // создаем контекст для отслеживания состояния isAuthenticated
-        const AuthContext = React.createContext();
+        function reducer(state, action) {
  
-        function App() {
+            switch (action.type) {
  
-            // состояние указывает, аутентифицирован ли пользователь
-            const [isAuthenticated, setIsAuthenticated] = React.useState(false);
- 
-            // используем Context API
-            return (
-                <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
-                    <h1> {isAuthenticated ? "Authenticated" : "No Access"}</h1>
-                    <Login />
-                </AuthContext.Provider>
-            );
+                case "increment": return { count: state.count + 1 };
+                case "decrement": return { count: state.count - 1 };
+                default: return state;
+            }
         }
  
-        function Login() {
-            const { isAuthenticated, setIsAuthenticated } = React.useContext(AuthContext);
+        function Counter() {
+ 
+            const [state, dispatch] = React.useReducer(reducer, { count: 0 });
  
             return (
-                <button onClick={() => setIsAuthenticated(!isAuthenticated)}>
-                    {isAuthenticated ? "Logout" : "Login"}
-                </button>
+                <div>
+                    <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+                    <span>{state.count}</span>
+                    <button onClick={() => dispatch({ type: "increment" })}>+</button>
+                </div>
             );
+ 
         }
         ReactDOM.createRoot(
             document.getElementById("app")
         )
         .render(
-           <App />
+           <Counter />
        );
     </script>
 </body>
