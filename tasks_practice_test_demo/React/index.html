@@ -3,7 +3,6 @@
 <head>
     <meta charset="utf-8" />
     <title>METANIT.COM</title>
-    <style>button {margin: 5px;}</style>
 </head>
 <body>
     <div id="app"></div>
@@ -13,36 +12,28 @@
     <script type="text/babel" data-type="module">
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
+         
  
-        function reducer(state, action) {
- 
-            switch (action.type) {
- 
-                case "increment": return { count: state.count + 1 };
-                case "decrement": return { count: state.count - 1 };
-                default: return state;
-            }
-        }
- 
-        function Counter() {
- 
-            const [state, dispatch] = React.useReducer(reducer, { count: 0 });
- 
+        function UserForm() {
+            const nameField = React.useRef(null);
+            const send = () => {
+                // свойство current указывает на элемент input
+                const inputElement = nameField.current;
+                console.log("Имя: " + inputElement.value);
+            };
             return (
                 <div>
-                    <button onClick={() => dispatch({ type: "decrement" })}>-</button>
-                    <span>{state.count}</span>
-                    <button onClick={() => dispatch({ type: "increment" })}>+</button>
+                    <input ref={nameField} />
+                    <button onClick={send}>Отправить</button>
                 </div>
             );
- 
         }
         ReactDOM.createRoot(
             document.getElementById("app")
         )
         .render(
-           <Counter />
-       );
+            <UserForm />
+        );
     </script>
 </body>
 </html>
