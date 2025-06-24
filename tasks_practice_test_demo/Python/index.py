@@ -1,14 +1,7 @@
-import shelve
+import os
 
-FILENAME = "states2"
-with shelve.open(FILENAME) as states:
-    states["London"] = "Great Britain"
-    states["Paris"] = "France"
-    states["Berlin"] = "Germany"
-    states["Madrid"] = "Spain"
-
-with shelve.open(FILENAME) as states:
-    states["London"] = "United Kingdom"
-    states["Brussels"] = "Belgium"
-    for key in states:
-        print(key, " - ", states[key])
+# путь относительно текущего скрипта
+os.mkdir("hello")
+# абсолютный путь
+# os.mkdir("C:\OSPanel\home\Kurs\tasks_practice_test_demo\Python")
+# os.mkdir("C:\OSPanel\home\Kurs\tasks_practice_test_demo\Python/hello")
