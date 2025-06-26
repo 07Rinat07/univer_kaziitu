@@ -21,13 +21,13 @@
  
             return (
                 <div>
-                    <input type="radio" value="JavaScript" checked={selectedOption === "JavaScript"} onChange={handleChange}/>
-                    JavaScript<br/>
-                    <input type="radio" value="TypeScript" checked={selectedOption === "TypeScript"} onChange={handleChange}/>
-                    TypeScript<br/>
-                    <input type="radio" value="Python" checked={selectedOption === "Python"} onChange={handleChange}/>
-                    Python<br/>
-                    <p>Selected Option: {selectedOption}</p>
+                    <select value={selectedOption} onChange={handleChange}>
+                        <option value="">Выберите язык</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="TypeScript">TypeScript</option>
+                        <option value="Python">Python</option>
+                    </select>
+                    <p>Выбранный язык: {selectedOption==="" ? "Не выбрано" : selectedOption}</p>
                 </div>
             );
         }
@@ -39,3 +39,4 @@
         );
     </script>
 </body>
+</html>
