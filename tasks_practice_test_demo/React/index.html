@@ -13,27 +13,27 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
          
-        function UserForm(){
-            const [name, setName] = React.useState("");  // состояние
+        function UserForm() {
+            const [formData, setFormData] = React.useState({ username: "", userage: 18 });
  
-            // обработчик события
-            function onChange(e) {
-                setName(e.target.value);  // изменяем состояние
-            }
-            // обработчик отправки формы
-            function handleSubmit(e) {
-                e.preventDefault(); // блокируем стандартную отправку формы
-                console.log("Name: ", name);
-            }
-         
+            // обработчик полей формы
+            const handleChange = (e) => {
+                const { name, value } = e.target;
+                setFormData((prevData) => ({ ...prevData, [name]: value }));
+            };
+ 
             return (
-                <form onSubmit={handleSubmit}>
+                <div>
+                    <p>Name: {formData.username} <br/> Age: {formData.userage}</p>
                     <p>
-                        <label>Имя:</label><br />
-                        <input type="text" value={name} onChange={onChange}/>
+                        <label>Name</label><br/>
+                        <input type="text" name="username" value={formData.username} onChange={handleChange} />
                     </p>
-                    <input type="submit" value="Отправить" />
-                </form>
+                    <p>
+                        <label>Age</label><br/>
+                        <input type="number" name="userage" value={formData.userage} onChange={handleChange} />
+                    </p>
+                </div>
             );
         }
         ReactDOM.createRoot(
