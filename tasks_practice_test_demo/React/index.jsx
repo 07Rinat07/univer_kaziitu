@@ -1,1 +1,1 @@
-<input type="radio" value="JavaScript" checked={selectedOption === "JavaScript"} onChange={handleChange}/>
+<input type="email" value={email} onChange={handleChange} placeholder="Email" />

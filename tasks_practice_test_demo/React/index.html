@@ -13,29 +13,59 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
          
-        function Language() {
  
-            const [selectedOption, setSelectedOption] = React.useState("");
+        function UserForm(props) {
  
-            const handleChange = (e) => setSelectedOption(e.target.value);
+            const validateAge = (age) =>  age>=0;
+            const validateName = (name) => name.length>2;
+ 
+            const [name, setName] = React.useState(props.name);
+            const [age, setAge] = React.useState(props.age);
+ 
+            const [nameValid, setNameValid] = React.useState(validateName(props.name));
+            const [ageValid, setAgeValid] = React.useState(validateAge(props.age));
+ 
+ 
+            // обработчик изменения возраста
+            const onAgeChange = (e) => {
+                setAge(e.target.value);
+                setAgeValid(validateAge(e.target.value));
+            }
+            // обработчик изменения имени
+            const onNameChange = (e) => {
+                setName(e.target.value);
+                setNameValid(validateName(e.target.value));
+            }
+            // обработчик отправки формы
+            const handleSubmit = (e) =>{
+                e.preventDefault();
+                if(nameValid && ageValid){
+                    console.log(`Имя: ${name} Возраст: ${age}`);
+                }
+                else console.log("Данные не корректны")
+            }
  
             return (
-                <div>
-                    <select value={selectedOption} onChange={handleChange}>
-                        <option value="">Выберите язык</option>
-                        <option value="JavaScript">JavaScript</option>
-                        <option value="TypeScript">TypeScript</option>
-                        <option value="Python">Python</option>
-                    </select>
-                    <p>Выбранный язык: {selectedOption==="" ? "Не выбрано" : selectedOption}</p>
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <p>
+                        <label>Имя:</label><br />
+                        <input type="text" value={name} 
+                             onChange={onNameChange} style={{borderColor: nameValid?"green":"red"}} />
+                    </p>
+                    <p>
+                        <label>Возраст:</label><br />
+                        <input type="number" value={age} 
+                            onChange={onAgeChange}  style={{borderColor: ageValid?"green":"red"}} />
+                    </p>
+                    <input type="submit" value="Отправить" />
+                </form>
             );
         }
         ReactDOM.createRoot(
             document.getElementById("app")
         )
         .render(
-            <Language />
+            <UserForm name="" age="0" />
         );
     </script>
 </body>
