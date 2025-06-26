@@ -10,63 +10,87 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
  
     <script type="text/babel" data-type="module">
-        import React from "https://esm.sh/react@19?dev";
-        import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
+    import React from "https://esm.sh/react@19?dev";
+    import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
          
- 
-        function UserForm(props) {
- 
-            const validateAge = (age) =>  age>=0;
-            const validateName = (name) => name.length>2;
- 
-            const [name, setName] = React.useState(props.name);
-            const [age, setAge] = React.useState(props.age);
- 
-            const [nameValid, setNameValid] = React.useState(validateName(props.name));
-            const [ageValid, setAgeValid] = React.useState(validateAge(props.age));
- 
- 
-            // обработчик изменения возраста
-            const onAgeChange = (e) => {
-                setAge(e.target.value);
-                setAgeValid(validateAge(e.target.value));
-            }
-            // обработчик изменения имени
-            const onNameChange = (e) => {
-                setName(e.target.value);
-                setNameValid(validateName(e.target.value));
-            }
-            // обработчик отправки формы
-            const handleSubmit = (e) =>{
-                e.preventDefault();
-                if(nameValid && ageValid){
-                    console.log(`Имя: ${name} Возраст: ${age}`);
-                }
-                else console.log("Данные не корректны")
-            }
- 
-            return (
-                <form onSubmit={handleSubmit}>
-                    <p>
-                        <label>Имя:</label><br />
-                        <input type="text" value={name} 
-                             onChange={onNameChange} style={{borderColor: nameValid?"green":"red"}} />
-                    </p>
-                    <p>
-                        <label>Возраст:</label><br />
-                        <input type="number" value={age} 
-                            onChange={onAgeChange}  style={{borderColor: ageValid?"green":"red"}} />
-                    </p>
-                    <input type="submit" value="Отправить" />
-                </form>
-            );
+    class NameField extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {value: props.value, valid: this.validate(props.value)};
         }
-        ReactDOM.createRoot(
-            document.getElementById("app")
-        )
-        .render(
-            <UserForm name="" age="0" />
+        validate(val) { return val.length>2;}
+        onChange = (e)  => {
+            const val = e.target.value;
+            const isValid = this.validate(val);
+            this.setState({value: val, valid: isValid});
+        }
+        render() {
+            return <p>
+                <label>Имя:</label><br />
+                <input value={this.state.value} onChange={this.onChange} 
+                    style={{borderColor: this.state.valid?"green":"red"}} />
+            </p>;
+        }   
+    }
+    class AgeField extends React.Component {
+         
+        constructor(props) {
+            super(props);
+            this.state = {value: props.value, valid: this.validate(props.value)};
+        }
+        validate (val){ return val > 0; }
+ 
+        onChange = (e) =>{
+            const val = e.target.value;
+            const isValid = this.validate(val);
+            this.setState({value: val, valid: isValid});
+        }
+        render() {
+            return <p>
+                <label>Возраст:</label><br />
+                <input type="number" value={this.state.value} onChange={this.onChange} 
+                    style={{borderColor: this.state.valid?"green":"red"}} />
+            </p>;
+        }   
+    }
+       
+    class UserForm extends React.Component {
+        constructor(props) {
+            super(props);
+            this.nameField = React.createRef();
+            this.ageField = React.createRef();
+        }
+ 
+        handleSubmit = (e) =>{
+            e.preventDefault();
+             
+            const nameIsValid = this.nameField.current.state.valid;
+            const ageIsValid = this.ageField.current.state.valid;
+ 
+            if(nameIsValid && ageIsValid){
+                const name = this.nameField.current.state.value;
+                const age = this.ageField.current.state.value;
+                console.log(`Имя: ${name} Возраст: ${age}`);
+            }
+            else console.log("Некорректные данные");
+        }
+   
+        render() {
+            return (
+                <form onSubmit={this.handleSubmit}>
+                    <NameField value="" ref={this.nameField} />
+                    <AgeField value="1" ref={this.ageField} />
+                    <input type="submit" value="Отправить" />
+            </form>
         );
+      }
+    }
+    ReactDOM.createRoot(
+        document.getElementById("app")
+    )
+    .render(
+        <UserForm />
+    );
     </script>
 </body>
 </html>
