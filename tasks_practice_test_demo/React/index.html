@@ -13,25 +13,29 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
          
-        function Terms() {
-            const [isChecked, setIsChecked] = React.useState(false);
-            const handleChange = () => { setIsChecked((prev) => !prev); };
+        function Language() {
+ 
+            const [selectedOption, setSelectedOption] = React.useState("");
+ 
+            const handleChange = (e) => setSelectedOption(e.target.value);
  
             return (
-                <>
-                    <label>Принять условия:</label>
-                    <input type="checkbox" checked={isChecked} onChange={handleChange} />
-                    <p>{isChecked? "Условия приняты" : "Необходимо принять условия"}</p>
-                </>
+                <div>
+                    <input type="radio" value="JavaScript" checked={selectedOption === "JavaScript"} onChange={handleChange}/>
+                    JavaScript<br/>
+                    <input type="radio" value="TypeScript" checked={selectedOption === "TypeScript"} onChange={handleChange}/>
+                    TypeScript<br/>
+                    <input type="radio" value="Python" checked={selectedOption === "Python"} onChange={handleChange}/>
+                    Python<br/>
+                    <p>Selected Option: {selectedOption}</p>
+                </div>
             );
- 
-            }
+        }
         ReactDOM.createRoot(
             document.getElementById("app")
         )
         .render(
-            <Terms />
+            <Language />
         );
     </script>
 </body>
-</html>
