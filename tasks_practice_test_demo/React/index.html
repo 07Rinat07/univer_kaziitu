@@ -14,15 +14,17 @@
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
         import { BrowserRouter, Routes, Route } from "https://esm.sh/react-router-dom@7?dev";
    
-        function About(){
-            return <h2>О сайте</h2>;
-        }
-        function NotFound(){
-            return <h2>Ресурс не найден</h2>;
-        }
-             
-        function Main(){
-            return <h2>Главная</h2>;
+        function Phone(){ return <h3>Смартфоны</h3>; }
+        function Tablet(){ return <h3>Планшеты</h3>; }
+     
+        function Products(){
+            return <div>
+                <h2>Товары</h2>
+                    <Routes>
+                        <Route path="/phones" element={<Phone />} />
+                        <Route path="/tablets" element={<Tablet />} />
+                    </Routes>
+                </div>;
         }
         ReactDOM.createRoot(
             document.getElementById("app")
@@ -31,9 +33,9 @@
             <BrowserRouter>
                 <div>
                 <Routes>
-                    <Route path="/" element={<Main />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="*" element={<NotFound />} />
+                    <Route path="/" element={<h2>Главная</h2>} />
+                    <Route path="/products/*" element={<Products />} />
+                    <Route path="*" element={<h2>Ресурс не найден</h2>} />
                 </Routes>
                 </div>
             </BrowserRouter>
