@@ -10,156 +10,34 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
  
     <script type="text/babel" data-type="module">
-    import React from "https://esm.sh/react@19?dev";
-    import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
-         
-    function UserForm(props) {
-         
-        const [formData, setFormData] = React.useState(
-            {
-              currentStep: 1,
-              username: "",
-              email:  "",
-              password: "", 
-            }
-        );
-  
-        const handleChange = (e) => {
-            const {name, value} = e.target;
-            setFormData({...formData, [name]: value});   
+        import React from "https://esm.sh/react@19?dev";
+        import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
+        import { BrowserRouter, Routes, Route } from "https://esm.sh/react-router-dom@7?dev";
+   
+        function About(){
+            return <h2>О сайте</h2>;
+        }
+        function NotFound(){
+            return <h2>Ресурс не найден</h2>;
         }
              
-        const handleSubmit = (e) => {
-            e.preventDefault()
-            const { email, username, password } = formData;
-            alert(`Введенные данные: \nИмя: ${username} \nEmail: ${email} \nПароль: ${password}`);
+        function Main(){
+            return <h2>Главная</h2>;
         }
-            
-        const _next = () => {
-            let currentStep = formData.currentStep;
-            currentStep = currentStep >= 2? 3: currentStep + 1;
-            setFormData({...formData, currentStep: currentStep}); 
-        }
-              
-        const _prev = () => {
-            let currentStep = formData.currentStep
-            currentStep = currentStep <= 1? 1: currentStep - 1;
-            setFormData({...formData, currentStep: currentStep}); 
-        }
-  
-        const previousButton = () =>{
-          const currentStep = formData.currentStep;
-          if(currentStep !==1){
-            return (
-              <button type="button" onClick={_prev}>Назад</button>
-            )
-          }
-          return null;
-        }
-  
-        const nextButton = ()=>{
-          const currentStep = formData.currentStep;
-          if(currentStep <3){
-            return (
-              <button type="button" onClick={_next}>Вперед</button>        
-            )
-          }
-          return null;
-        }
-          
-        const sendButton = ()=>{
-          const currentStep = formData.currentStep;
-          if(currentStep === 3){
-            return (
-                <button>Отправить</button>      
-            )
-          }
-          return null;
-        }
-          
-        return (
-          <div>
-          <h1>Форма входа</h1>
-          <p>Шаг {formData.currentStep} </p> 
-  
-          <form onSubmit={handleSubmit}>
-            <UserNameStep
-              currentStep={formData.currentStep} 
-              handleChange={handleChange}
-              username={formData.username}
-            />
-            <EmailStep
-              currentStep={formData.currentStep} 
-              handleChange={handleChange}
-              email={formData.email}
-            />
-            <PasswordStep
-              currentStep={formData.currentStep} 
-              handleChange={handleChange}
-              password={formData.password}
-            />
-            <p>
-            {previousButton()}
-            {nextButton()}
-            {sendButton()}
-            </p>
-          </form>
-          </div>
+        ReactDOM.createRoot(
+            document.getElementById("app")
+        )
+        .render(
+            <BrowserRouter>
+                <div>
+                <Routes>
+                    <Route path="/" element={<Main />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="*" element={<NotFound />} />
+                </Routes>
+                </div>
+            </BrowserRouter>
         );
-    }
-  
-    function UserNameStep(props){
-        if (props.currentStep !== 1)  return null;
-        return(
-            <div>
-              <label>Имя</label>
-              <input
-                name="username"
-                type="text"
-                placeholder="Введите имя"
-                value={props.username}
-                onChange={props.handleChange}
-                />
-            </div>
-        );
-    }
-    function EmailStep(props){
-        if (props.currentStep !== 2) return null;
-        return(
-            <div>
-                <label>Email</label>
-                <input
-                    name="email"
-                    type="text"
-                    placeholder="Введите email"
-                    value={props.email}
-                    onChange={props.handleChange}
-                />
-            </div>
-        );
-    }
-  
-  
-    function PasswordStep(props){
-        if (props.currentStep !== 3) return null;
-        return(
-            <div>
-              <label>Пароль</label>
-              <input
-                name="password"
-                type="password"
-                placeholder="Введите пароль"
-                value={props.password}
-                onChange={props.handleChange}
-                />      
-            </div>
-        );
-    }
-  
-    ReactDOM.createRoot(
-        document.getElementById("app")
-    )
-    .render(<UserForm />);
     </script>
 </body>
 </html>
