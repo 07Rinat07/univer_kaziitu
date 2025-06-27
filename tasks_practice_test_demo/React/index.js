@@ -1,8 +1,6 @@
-handleSubmit(e) {
-    e.preventDefault();
-    var name = this.nameField.current.state.value;
-    var age = this.ageField.current.state.value;
-    if(this.nameField.current.state.valid && this.ageField.current.state.valid){
-        alert(`Имя: ${name} Возраст: ${age}`);
-    }
+const filterList = (text)=> {
+    const filteredList = props.data.items.filter((item) =>
+        item.toLowerCase().search(text.toLowerCase())!== -1
+    ); 
+    setItems(filteredList);
 }

@@ -12,84 +12,75 @@
     <script type="text/babel" data-type="module">
     import React from "https://esm.sh/react@19?dev";
     import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
-         
-    class NameField extends React.Component {
-        constructor(props) {
-            super(props);
-            this.state = {value: props.value, valid: this.validate(props.value)};
-        }
-        validate(val) { return val.length>2;}
-        onChange = (e)  => {
-            const val = e.target.value;
-            const isValid = this.validate(val);
-            this.setState({value: val, valid: isValid});
-        }
-        render() {
-            return <p>
-                <label>Имя:</label><br />
-                <input value={this.state.value} onChange={this.onChange} 
-                    style={{borderColor: this.state.valid?"green":"red"}} />
-            </p>;
-        }   
-    }
-    class AgeField extends React.Component {
-         
-        constructor(props) {
-            super(props);
-            this.state = {value: props.value, valid: this.validate(props.value)};
-        }
-        validate (val){ return val > 0; }
  
-        onChange = (e) =>{
-            const val = e.target.value;
-            const isValid = this.validate(val);
-            this.setState({value: val, valid: isValid});
-        }
+    const propsValues = {
+        title: "Языки программирования",
+        items: [
+                "JavaScript", 
+                "C++", 
+                "TypeScript", 
+                "Java", 
+                "C#", 
+                "Python"
+        ]
+    };
+                 
+    class Item extends React.Component {
         render() {
-            return <p>
-                <label>Возраст:</label><br />
-                <input type="number" value={this.state.value} onChange={this.onChange} 
-                    style={{borderColor: this.state.valid?"green":"red"}} />
-            </p>;
-        }   
-    }
-       
-    class UserForm extends React.Component {
-        constructor(props) {
-            super(props);
-            this.nameField = React.createRef();
-            this.ageField = React.createRef();
+            return <li>{this.props.name}</li>;
         }
- 
-        handleSubmit = (e) =>{
-            e.preventDefault();
+    }
              
-            const nameIsValid = this.nameField.current.state.valid;
-            const ageIsValid = this.ageField.current.state.valid;
- 
-            if(nameIsValid && ageIsValid){
-                const name = this.nameField.current.state.value;
-                const age = this.ageField.current.state.value;
-                console.log(`Имя: ${name} Возраст: ${age}`);
-            }
-            else console.log("Некорректные данные");
+    class SearchPlugin extends React.Component{
+                 
+        constructor(props){
+            super(props);
         }
-   
+                 
+        onTextChanged= (e) => {
+            const text = e.target.value.trim();   // удаляем пробелы
+            this.props.filter(text); // передаем введенный текст в родительский компонент
+        }
+                 
         render() {
-            return (
-                <form onSubmit={this.handleSubmit}>
-                    <NameField value="" ref={this.nameField} />
-                    <AgeField value="1" ref={this.ageField} />
-                    <input type="submit" value="Отправить" />
-            </form>
-        );
-      }
+            return <input placeholder="Поиск" onChange={this.onTextChanged} />;
+        }
     }
+                     
+    class ItemsList extends React.Component {
+        constructor(props){
+            super(props);
+            this.state = { items: this.props.data.items};
+        }
+                 
+        filterList = (text)=> {
+            const filteredList = this.props.data.items.filter((item) =>
+                item.toLowerCase().search(text.toLowerCase())!== -1
+            ); 
+            this.setState({items: filteredList});
+        }
+                 
+        render() {
+            return(
+                <div>         
+                    <h2>{this.props.data.title}</h2>
+                    <SearchPlugin filter={this.filterList} />
+                    <ul>
+                        {
+                            this.state.items.map(function(item){
+                                return <Item key={item} name={item} />
+                            })
+                        }
+                    </ul>
+                </div>);
+        }
+    }
+             
     ReactDOM.createRoot(
         document.getElementById("app")
     )
     .render(
-        <UserForm />
+        <ItemsList data={propsValues} />
     );
     </script>
 </body>
