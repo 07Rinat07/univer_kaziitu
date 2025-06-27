@@ -12,76 +12,154 @@
     <script type="text/babel" data-type="module">
     import React from "https://esm.sh/react@19?dev";
     import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
- 
-    const propsValues = {
-        title: "Языки программирования",
-        items: [
-                "JavaScript", 
-                "C++", 
-                "TypeScript", 
-                "Java", 
-                "C#", 
-                "Python"
-        ]
-    };
-                 
-    class Item extends React.Component {
-        render() {
-            return <li>{this.props.name}</li>;
+         
+    function UserForm(props) {
+         
+        const [formData, setFormData] = React.useState(
+            {
+              currentStep: 1,
+              username: "",
+              email:  "",
+              password: "", 
+            }
+        );
+  
+        const handleChange = (e) => {
+            const {name, value} = e.target;
+            setFormData({...formData, [name]: value});   
         }
-    }
              
-    class SearchPlugin extends React.Component{
-                 
-        constructor(props){
-            super(props);
+        const handleSubmit = (e) => {
+            e.preventDefault()
+            const { email, username, password } = formData;
+            alert(`Введенные данные: \nИмя: ${username} \nEmail: ${email} \nПароль: ${password}`);
         }
-                 
-        onTextChanged= (e) => {
-            const text = e.target.value.trim();   // удаляем пробелы
-            this.props.filter(text); // передаем введенный текст в родительский компонент
+            
+        const _next = () => {
+            let currentStep = formData.currentStep;
+            currentStep = currentStep >= 2? 3: currentStep + 1;
+            setFormData({...formData, currentStep: currentStep}); 
         }
-                 
-        render() {
-            return <input placeholder="Поиск" onChange={this.onTextChanged} />;
+              
+        const _prev = () => {
+            let currentStep = formData.currentStep
+            currentStep = currentStep <= 1? 1: currentStep - 1;
+            setFormData({...formData, currentStep: currentStep}); 
         }
+  
+        const previousButton = () =>{
+          const currentStep = formData.currentStep;
+          if(currentStep !==1){
+            return (
+              <button type="button" onClick={_prev}>Назад</button>
+            )
+          }
+          return null;
+        }
+  
+        const nextButton = ()=>{
+          const currentStep = formData.currentStep;
+          if(currentStep <3){
+            return (
+              <button type="button" onClick={_next}>Вперед</button>        
+            )
+          }
+          return null;
+        }
+          
+        const sendButton = ()=>{
+          const currentStep = formData.currentStep;
+          if(currentStep === 3){
+            return (
+                <button>Отправить</button>      
+            )
+          }
+          return null;
+        }
+          
+        return (
+          <div>
+          <h1>Форма входа</h1>
+          <p>Шаг {formData.currentStep} </p> 
+  
+          <form onSubmit={handleSubmit}>
+            <UserNameStep
+              currentStep={formData.currentStep} 
+              handleChange={handleChange}
+              username={formData.username}
+            />
+            <EmailStep
+              currentStep={formData.currentStep} 
+              handleChange={handleChange}
+              email={formData.email}
+            />
+            <PasswordStep
+              currentStep={formData.currentStep} 
+              handleChange={handleChange}
+              password={formData.password}
+            />
+            <p>
+            {previousButton()}
+            {nextButton()}
+            {sendButton()}
+            </p>
+          </form>
+          </div>
+        );
     }
-                     
-    class ItemsList extends React.Component {
-        constructor(props){
-            super(props);
-            this.state = { items: this.props.data.items};
-        }
-                 
-        filterList = (text)=> {
-            const filteredList = this.props.data.items.filter((item) =>
-                item.toLowerCase().search(text.toLowerCase())!== -1
-            ); 
-            this.setState({items: filteredList});
-        }
-                 
-        render() {
-            return(
-                <div>         
-                    <h2>{this.props.data.title}</h2>
-                    <SearchPlugin filter={this.filterList} />
-                    <ul>
-                        {
-                            this.state.items.map(function(item){
-                                return <Item key={item} name={item} />
-                            })
-                        }
-                    </ul>
-                </div>);
-        }
+  
+    function UserNameStep(props){
+        if (props.currentStep !== 1)  return null;
+        return(
+            <div>
+              <label>Имя</label>
+              <input
+                name="username"
+                type="text"
+                placeholder="Введите имя"
+                value={props.username}
+                onChange={props.handleChange}
+                />
+            </div>
+        );
     }
-             
+    function EmailStep(props){
+        if (props.currentStep !== 2) return null;
+        return(
+            <div>
+                <label>Email</label>
+                <input
+                    name="email"
+                    type="text"
+                    placeholder="Введите email"
+                    value={props.email}
+                    onChange={props.handleChange}
+                />
+            </div>
+        );
+    }
+  
+  
+    function PasswordStep(props){
+        if (props.currentStep !== 3) return null;
+        return(
+            <div>
+              <label>Пароль</label>
+              <input
+                name="password"
+                type="password"
+                placeholder="Введите пароль"
+                value={props.password}
+                onChange={props.handleChange}
+                />      
+            </div>
+        );
+    }
+  
     ReactDOM.createRoot(
         document.getElementById("app")
     )
-    .render(
-        <ItemsList data={propsValues} />
-    );
+    .render(<UserForm />);
     </script>
 </body>
 </html>
