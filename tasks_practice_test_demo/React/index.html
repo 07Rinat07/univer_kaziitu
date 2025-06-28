@@ -3,10 +3,6 @@
 <head>
     <meta charset="utf-8" />
     <title>METANIT.COM</title>
-    <style>
-        a { margin: 5px;}
-        .active{ background-color:#486ca3; color: #fff; padding:6px;}
-    </style>
 </head>
 <body>
     <div id="app"></div>
@@ -16,19 +12,40 @@
     <script type="text/babel" data-type="module">
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
-        import { BrowserRouter, Routes, Route, NavLink } from "https://esm.sh/react-router-dom@7?dev";
+        import { BrowserRouter, Routes, Route, Navigate, NavLink, useParams } from "https://esm.sh/react-router-dom@7?dev";
    
+        const users =
+        [
+            {id: 1, name: "Tom"}, 
+            {id: 2, name: "Bob"}, 
+            {id: 3, name: "Sam"} 
+        ];
+ 
         function Home(){ return <h2>Главная</h2>; }
-        function About(){ return <h2>О сайте</h2>; }
-        function NotFound(){return <h2>Ресурс не найден</h2>; }
-        function Products(){return <h2>Товары</h2>;
-        }
-        function Nav(){
-            return <nav>
-                        <NavLink to="/" className={({ isActive }) =>(isActive ? " active" : "")}>Главная</NavLink>  
-                        <NavLink to="/about" className={({ isActive }) => (isActive ? " active" : "")}>О сайте</NavLink>  
-                        <NavLink to="/products" className={({ isActive }) => (isActive ? " active" : "")}>Товары</NavLink>
-                    </nav>;
+        function Users(){
+            // получаем параметры
+            const {id} = useParams();
+            // если id передан, возвращаем конкретного пользователя
+            if(id){
+                const user = users.find(u=>u.id == id);
+                if(user===undefined) return <h2>Пользователь не найден</h2>;
+                else return <h2>Пользователь {user.name}</h2>;
+            }
+            // иначе возвращаем список пользователей
+            return (
+                <>
+                    <h2>Список пользователей</h2>
+                    <ul>
+                    {
+                        users.map(function(user){
+                            return <li key={user.id}>
+                                    <NavLink to={`/users/${user.id}`}>{user.name}</NavLink>
+                                </li>
+                        })
+                    }
+                    </ul>
+                </>
+            );
         }
         ReactDOM.createRoot(
             document.getElementById("app")
@@ -36,12 +53,10 @@
         .render(
             <BrowserRouter>
                 <div>
-                <Nav />
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/about" element={ <About />} />
-                    <Route path="/products" element={<Products />} />
-                    <Route path="*" element={<NotFound />} />
+                    <Route path="/" element={<h2>Главная</h2>} />
+                    <Route path="/users/:id?" element={<Users />} />
+                    <Route path="*" element={<h2>Ресурс не найден</h2>} />
                 </Routes>
                 </div>
             </BrowserRouter>
