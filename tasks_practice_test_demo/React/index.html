@@ -12,28 +12,25 @@
     <script type="text/babel" data-type="module">
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
-        import { BrowserRouter, Routes, Route, Navigate, NavLink, useParams } from "https://esm.sh/react-router-dom@7?dev";
+        import { BrowserRouter, Routes, Route, Outlet, useParams, NavLink } from "https://esm.sh/react-router-dom@7?dev";
    
-        const users =
-        [
-            {id: 1, name: "Tom"}, 
-            {id: 2, name: "Bob"}, 
-            {id: 3, name: "Sam"} 
-        ];
- 
-        function Home(){ return <h2>Главная</h2>; }
-        function Users(){
+        const users =[
+                    {id: 1, name: "Tom"}, 
+                    {id: 2, name: "Bob"}, 
+                    {id: 3, name: "Sam"} 
+                ];
+  
+        function User(){
             // получаем параметры
             const {id} = useParams();
-            // если id передан, возвращаем конкретного пользователя
-            if(id){
-                const user = users.find(u=>u.id == id);
-                if(user===undefined) return <h2>Пользователь не найден</h2>;
-                else return <h2>Пользователь {user.name}</h2>;
-            }
-            // иначе возвращаем список пользователей
-            return (
-                <>
+            const user = users.find(l=>l.id == id);
+            if(user===undefined) return <h2>Пользователь не найден</h2>;
+            else return <h2>Пользователь {user.name}</h2>;
+        }
+        class UserList extends React.Component{
+            render(){
+                return (
+                    <>
                     <h2>Список пользователей</h2>
                     <ul>
                     {
@@ -44,8 +41,17 @@
                         })
                     }
                     </ul>
-                </>
-            );
+                    </>
+                );
+            }
+        }
+        class Users extends React.Component{
+            render(){
+                return (<div>
+                    <h1>Пользователи</h1>
+                    <Outlet />
+                </div>)
+            }
         }
         ReactDOM.createRoot(
             document.getElementById("app")
@@ -55,7 +61,10 @@
                 <div>
                 <Routes>
                     <Route path="/" element={<h2>Главная</h2>} />
-                    <Route path="/users/:id?" element={<Users />} />
+                    <Route path="/users" element={<Users />}>
+                        <Route index element={<UserList />} />
+                        <Route path=":id" element={<User />} />
+                    </Route>
                     <Route path="*" element={<h2>Ресурс не найден</h2>} />
                 </Routes>
                 </div>
