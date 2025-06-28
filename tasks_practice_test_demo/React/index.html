@@ -5,6 +5,7 @@
     <title>METANIT.COM</title>
     <style>
         a { margin: 5px;}
+        .active{ background-color:#486ca3; color: #fff; padding:6px;}
     </style>
 </head>
 <body>
@@ -15,38 +16,19 @@
     <script type="text/babel" data-type="module">
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
-        import { BrowserRouter, Routes, Route, Link } from "https://esm.sh/react-router-dom@7?dev";
+        import { BrowserRouter, Routes, Route, NavLink } from "https://esm.sh/react-router-dom@7?dev";
    
-        class Home extends React.Component{
-            render(){
-                return <h2>Главная</h2>;
-            }
+        function Home(){ return <h2>Главная</h2>; }
+        function About(){ return <h2>О сайте</h2>; }
+        function NotFound(){return <h2>Ресурс не найден</h2>; }
+        function Products(){return <h2>Товары</h2>;
         }
-        class About extends React.Component{
-            render(){
-                return <h2>О сайте</h2>;
-            }
-        }
-        class NotFound extends React.Component{
-            render(){
-                return <h2>Ресурс не найден</h2>;
-            }
-        }
-        class Products extends React.Component{
-            render(){
-                return <div>
-                        <h2>Товары</h2>
-                    </div>;
-            }
-        }
-        class Nav extends React.Component{
-            render(){
-                return <nav>
-                        <Link to="/">Главная</Link>  
-                        <Link to="/about">О сайте</Link>  
-                        <Link to="/products">Товары</Link>
+        function Nav(){
+            return <nav>
+                        <NavLink to="/" className={({ isActive }) =>(isActive ? " active" : "")}>Главная</NavLink>  
+                        <NavLink to="/about" className={({ isActive }) => (isActive ? " active" : "")}>О сайте</NavLink>  
+                        <NavLink to="/products" className={({ isActive }) => (isActive ? " active" : "")}>Товары</NavLink>
                     </nav>;
-            }
         }
         ReactDOM.createRoot(
             document.getElementById("app")
