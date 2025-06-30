@@ -13,23 +13,23 @@
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
  
-        function User() {
-            const [user, setUser] = React.useState(null);
+        const Message = React.lazy(() => import("./message.js"));
  
-            React.useEffect(() => {
-                fetch("http://localhost:3000/api/user")
-                    .then((res) => res.json())
-                    .then((data) => setUser(data));
-            }, []);
+        function App() {
  
-            return user ? <div><h2>{user.name}</h2></div> : <div>Loading...</div>;
+            return (
+                <React.Suspense fallback={<div>Loading...</div>}>
+                    <Message />
+                </React.Suspense>
+            );
         }
+ 
         ReactDOM.createRoot(
             document.getElementById("app")
         )
         .render(
-           <User />
-       );
+           <App />
+        );
     </script>
 </body>
 </html>

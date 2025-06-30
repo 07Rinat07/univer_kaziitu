@@ -1,17 +1,29 @@
 const http = require("http");
 const fs = require("fs");
-    
+   
 http.createServer(function(request, response){
-        
-    // если запрос по адресу "/api/user", отдаем объект в формате json
-    if(request.url === "/api/user"){
-        response.setHeader("Content-Type", "application/json; charset=utf-8");
-        response.end(JSON.stringify({name: "Tom", age: 40}));
+       
+    let filePath = "index.html";
+    if(request.url !== "/"){
+        // получаем путь после слеша
+        filePath = request.url.substring(1);
     }
-    else{
-        // иначе отправляем страницу index.html
-        fs.readFile("index.html", (error, data) =>response.end(data));
-    }
+    fs.readFile(filePath, function(error, data){
+               
+        if(error){
+                   
+            response.statusCode = 404;
+            response.end("Resourse not found!");
+        }   
+        else{
+            // устанавливаем mime-тип для отправляемых модулей javascript
+            if(filePath.endsWith("js")||filePath.endsWith("jsx")){
+                response.setHeader("Content-Type", "text/javascript; charset=utf-8");
+            }
+            response.end(data);
+        }
+    });
+     
 }).listen(3000, function(){
     console.log("Server started at 3000");
 });
