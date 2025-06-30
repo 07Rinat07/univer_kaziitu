@@ -3,10 +3,6 @@
 <head>
     <meta charset="utf-8" />
     <title>METANIT.COM</title>
-    <style>
-        a { margin: 5px;}
-        .active{ background-color:#486ca3; color: #fff; padding:6px;}
-    </style>
 </head>
 <body>
     <div id="app"></div>
@@ -16,37 +12,24 @@
     <script type="text/babel" data-type="module">
         import React from "https://esm.sh/react@19?dev";
         import ReactDOM from "https://esm.sh/react-dom@19/client?dev";
-        import { BrowserRouter, Routes, Route, useSearchParams, useParams, Link } from "https://esm.sh/react-router-dom@7?dev";
-   
-        function Home(){
-            // получаем параметры маршрута
-            const params = useParams();
-            // получаем параметры строки запроса
-            const [searchParams, setSearchParams] = useSearchParams();
-            return <div>
-                    <h2>Пользователь</h2>
-                    <p>Id: {params.id}</p>
-                    <p>Name: {searchParams.get("name")}</p>
-                    <p>Age: {searchParams.get("age")}</p>
-            </div>;
+ 
+        function User() {
+            const [user, setUser] = React.useState(null);
+ 
+            React.useEffect(() => {
+                fetch("http://localhost:3000/api/user")
+                    .then((res) => res.json())
+                    .then((data) => setUser(data));
+            }, []);
+ 
+            return user ? <div><h2>{user.name}</h2></div> : <div>Loading...</div>;
         }
-         
         ReactDOM.createRoot(
             document.getElementById("app")
         )
         .render(
-            <BrowserRouter>
-                <div>
-                    <nav>
-                        <Link to="/2/?name=Bob&age=46">Bob</Link> | 
-                        <Link to="/3/?name=Tom&age=40">Tom</Link>
-                    </nav>
-                    <Routes>
-                        <Route path="/:id" element={<Home />} />
-                    </Routes>
-                </div>
-            </BrowserRouter>
-        );
+           <User />
+       );
     </script>
 </body>
 </html>
