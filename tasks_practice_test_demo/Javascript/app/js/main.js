@@ -1,2 +1,2 @@
-const sum2 = 1 + 2      // определяем константу sum2, которая равна сумме 1 + 2
-console.log(sum2)       // выводим значение константы sum2 на консоль
+var username = "Tom";
+let userage = 37;
