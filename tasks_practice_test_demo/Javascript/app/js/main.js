@@ -1,10 +1,7 @@
-function goodMorning(){
-    console.log("Доброе утро");
+{
+    var a = 5;
+    let b = 8;
+    const c = 9;
 }
-function goodEvening(){
-    console.log("Добрый вечер");
-}
-let message = goodMorning;      // присваиваем переменной message функцию goodMorning
-message();      // Доброе утро
-message = goodEvening;          // меняем функцию в переменной message
-message();      // Добрый вечер
+
+/**Определение локальной области видимости */

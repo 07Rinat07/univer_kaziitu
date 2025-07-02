@@ -6,13 +6,15 @@
 </head>
 <body>
 <script>
-// определение функции
-function hello(){
-    console.log("Hello from Metanit.com");
+var a = 5;
+let b = 8;
+const c = 9;
+function displaySum(){
+  
+    var d = a + b + c;
+    console.log(d);
 }
-// передача константе message ссылки на функцию hello
-const message = hello;
-message();  // вызываем функцию, ссылка на которую хранится в константе message
+displaySum(); // 22
 </script>
 </body>
 </html>
