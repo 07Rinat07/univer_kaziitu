@@ -5,10 +5,14 @@
     <title>METANIT.COM</title>
 </head>
 <body>
-    <script>
-        let username;           // Определение переменной username
-        username = "Tom";       // Присвоение переменной значения
-        console.log(username);  // Вывод значения переменной username на консоль
-    </script>
+<script>
+// определение функции
+function hello(){
+    console.log("Hello from Metanit.com");
+}
+// передача константе message ссылки на функцию hello
+const message = hello;
+message();  // вызываем функцию, ссылка на которую хранится в константе message
+</script>
 </body>
 </html>
