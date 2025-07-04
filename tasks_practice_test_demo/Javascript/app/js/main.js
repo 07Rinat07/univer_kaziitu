@@ -1,11 +1,28 @@
-function fibonachi(n)
-{
-    if (n === 0 || n === 1){
-        return n;
-    }
-    else{
-        return fibonachi(n - 1) + fibonachi(n - 2);
-    }
+const country = {
+ 
+    name: "Швейцария",
+    languages: ["немецкий", "французский", "итальянский"],
+    capital:{
+     
+        name: "Берн",
+        population: 126598
+    },
+    cities: [
+        { name: "Цюрих", population: 378884},
+        { name: "Женева", population: 188634},
+        { name: "Базель", population: 164937}
+    ]
+};
+ 
+// вывод всех элементов из country.languages
+console.log("Официальные языки Швейцарии");
+for(const lang of country.languages){
+  console.log(lang);
 }
-const result = fibonachi(8); //21 
-console.log(result); // 21
+console.log("\n");  // для разделения языков от городов
+ 
+// вывод всех элементов из country.cities
+console.log("Города Швейцарии");
+for(const city of country.cities){
+  console.log(city.name);
+}
