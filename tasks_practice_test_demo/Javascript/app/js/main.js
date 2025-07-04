@@ -1,10 +1,11 @@
-const tom = {
-    name: "Tom",
-    age: 24,
-    phone: "+367438787",
-    email: "tom@gmail.com"
-};
-const {name, age, ...contacts} = tom;
-console.log(name);      // Tom
-console.log(age);       // 24
-console.log(contacts);  // {phone: "+367438787", email: "tom@gmail.com"}
+const users = ["Tom", "Sam", "Bob"];
+const [a, b, c, d] = users;
+  
+console.log(a);     // Tom
+console.log(b);     // Sam
+console.log(c);     // Bob
+console.log(d);     // undefined
+
+
+//*Если переменных/констант больше, чем элементов массива, 
+// то несопоставленные переменные/константы получают значение undefined: */
