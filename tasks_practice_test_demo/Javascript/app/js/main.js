@@ -1,16 +1,17 @@
-const people = [
-    {name: "Tom", age: 34},
-    {name: "Bob", age: 23},
-    {name: "Sam", age: 32}
-];
-const [,{name}] = people;
-for(let {name: username, age: userage} of people){
-    console.log(`Name: ${username}  Age: ${userage}`);
-
-
-    //**деструктуризация объектов при переборе массива объектов: */
+function display({name:userName, age:userAge}){
+    console.log(userName, userAge);
 }
-// консольный вывод
-// Name: Tom  Age: 34
-// Name: Bob  Age: 23
-// Name: Sam  Age: 32
+function sum([a, b, c]){
+    const result = a + b + c;
+    console.log(result);
+}
+const user = {name:"Alice", age:33, email: "alice@gmail.com"};
+ 
+const numbers = [3, 5, 7, 8];
+
+
+//**Если в функцию в качестве параметра передается массив или объект,
+//  то его также можно подобным образом разложить на отдельные значения: */
+ 
+display(user);  // Alice 33
+sum(numbers);   // 15
