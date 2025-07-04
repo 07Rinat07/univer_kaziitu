@@ -1,21 +1,12 @@
-const sam = {name: "Sam"};
-const tom = { 
-    name: "Tom", 
-    company: { title: "Google"}
-};
-const bob = {
-    name: "Bob", 
-    company: {
-        title: "Microsoft",
-        print(){
-            console.log(`Компания ${this.title}`)
-        }
+class Person{
+    name;
+    age;
+    constructor(){
+        console.log("Вызов конструктора");
     }
-};
-
-
-//**С помощью оператора ?. можно создавать цепочки проверок,
-//  последовательно проверяя, представляет ли значение null/undefined: */
-sam?.company?.print?.();    // не вызывается - нет свойства company
-tom?.company?.print?.();    // не вызывается - нет метода print
-bob?.company?.print?.();    // Компания Microsoft
+    print(){
+        console.log(`Name: ${this.name}  Age: ${this.age}`);
+    }
+}
+const tom = new Person();   // Вызов конструктора
+const bob = new Person();   // Вызов конструктора
