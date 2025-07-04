@@ -1,11 +1,16 @@
-const users = ["Tom", "Sam", "Bob"];
-const [a, b, c, d] = users;
-  
-console.log(a);     // Tom
-console.log(b);     // Sam
-console.log(c);     // Bob
-console.log(d);     // undefined
+const people = [
+    {name: "Tom", age: 34},
+    {name: "Bob", age: 23},
+    {name: "Sam", age: 32}
+];
+const [,{name}] = people;
+for(let {name: username, age: userage} of people){
+    console.log(`Name: ${username}  Age: ${userage}`);
 
 
-//*Если переменных/констант больше, чем элементов массива, 
-// то несопоставленные переменные/константы получают значение undefined: */
+    //**деструктуризация объектов при переборе массива объектов: */
+}
+// консольный вывод
+// Name: Tom  Age: 34
+// Name: Bob  Age: 23
+// Name: Sam  Age: 32
