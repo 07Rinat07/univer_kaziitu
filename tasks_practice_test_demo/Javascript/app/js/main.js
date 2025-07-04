@@ -1,28 +1,22 @@
-const country = {
- 
-    name: "Швейцария",
-    languages: ["немецкий", "французский", "итальянский"],
-    capital:{
-     
-        name: "Берн",
-        population: 126598
-    },
-    cities: [
-        { name: "Цюрих", population: 378884},
-        { name: "Женева", population: 188634},
-        { name: "Базель", population: 164937}
-    ]
-};
- 
-// вывод всех элементов из country.languages
-console.log("Официальные языки Швейцарии");
-for(const lang of country.languages){
-  console.log(lang);
+// определение конструктора объектов типа Person
+function Person(pName, pAge) {
+    this.name = pName;
+    this.age = pAge;
+    this.print = function(){
+        console.log(`Name: ${this.name}  Age: ${this.age}`);
+    };
 }
-console.log("\n");  // для разделения языков от городов
- 
-// вывод всех элементов из country.cities
-console.log("Города Швейцарии");
-for(const city of country.cities){
-  console.log(city.name);
+// определение конструктора объектов типа Employee
+function Employee(eName, eCompany) {
+    this.name = eName;
+    this.company = eCompany;
+    this.print = function(){
+        console.log(`Name: ${this.name}  Company: ${this.company}`);
+    };
 }
+const tom = new Person("Tom", 39); 
+const bob = new Employee("Bob", "Google");
+ 
+console.log(tom instanceof Person);       // true - tom является объектом типа Person
+console.log(bob instanceof Employee);   // true - bob является объектом типа Employee
+console.log(tom instanceof Employee);   // false - tom НЕ является объектом типа Employee
