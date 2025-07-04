@@ -1,17 +1,8 @@
-function display({name:userName, age:userAge}){
-    console.log(userName, userAge);
-}
-function sum([a, b, c]){
-    const result = a + b + c;
-    console.log(result);
-}
-const user = {name:"Alice", age:33, email: "alice@gmail.com"};
- 
-const numbers = [3, 5, 7, 8];
+let nums = [9, 3, 5, 2, 1, 4, 8, 6];
+for(let i = 0; i < nums.length; i++)
+    for(let j = 0; j < nums.length; j++)
+        if (nums[i] < nums[j]) [nums[j], nums[i]] = [nums[i], nums[j]];
 
-
-//**Если в функцию в качестве параметра передается массив или объект,
-//  то его также можно подобным образом разложить на отдельные значения: */
- 
-display(user);  // Alice 33
-sum(numbers);   // 15
+//**используем деструктуризацию для простейшей сортировки массива: */
+         
+console.log(nums);  // [1, 2, 3, 4, 5, 6, 8, 9]
