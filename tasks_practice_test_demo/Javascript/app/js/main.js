@@ -13,18 +13,26 @@ class Employee extends Person{
         super(name, age);
         this.company = company;
     }
-    work(){
-        console.log(`${this.name} works in ${this.company}`);
+    print(){
+        super.print();
+        console.log(`Works in ${this.company}`);
     }
 }
-  
-const tom = new Person("Tom", 34);
-tom.print();    // Name: Tom  Age: 34
+class Manager extends Person{
  
+    constructor(name, age, company){
+        super(name, age);
+        this.company = company;
+    }
+    print(){
+        super.print();
+        console.log(`Manager in ${this.company}`);
+    }
+}
 
-/**Производный класс также может определить свой конструктор. Если производный класс определяет конструктор, то в нем должен быть вызван конструктор базового класса. Для обращения производном классе к функциональности базового класса, 
- * в том числе для обращения к конструктору базового класса, применяется ключевое слово super */
-
+/**класс-наследник унаследован от некоторого базового класса говорит о том, что объект класса-наследника также является объектом базового класса. 
+ * Объектом какого класса является объект, можно проверить с помощью оператора instanceof: */
 const sam = new Employee("Sam", 25, "Google");
-sam.print();    // Name: Sam  Age: 25
-sam.work();     // Sam works in Google
+console.log(sam instanceof Person); // true
+console.log(sam instanceof Employee); // true
+console.log(sam instanceof Manager); // false
