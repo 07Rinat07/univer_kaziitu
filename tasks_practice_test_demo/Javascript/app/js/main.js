@@ -1,22 +1,29 @@
 class Person{
-    static #retirementAge = 65;
-    constructor(name, age){
-        this.name = name;
-        this.age = age;
-    }
-    print(){ 
-        console.log(`Имя: ${this.name}  Возраст: ${this.age}`);
-    }
-    static calculateRestAges(person){
-        if(this.#retirementAge > person.age){
-            const restAges = this.#retirementAge - person.age;
-            console.log(`До пенсии осталось ${restAges} лет`);
-        }
-        else console.log("Вы уже на пенсии");
+    name;
+    age;
+    print(){
+        console.log(`Name: ${this.name}  Age: ${this.age}`);
     }
 }
-// console.log(Person.#retirementAge);  // ! Ошибка: поле retirementAge -приватное
-const tom = new Person("Tom", 37);
-Person.calculateRestAges(tom);      // До пенсии осталось 28 лет
-const bob = new Person("Bob", 71);
-Person.calculateRestAges(bob);      // Вы уже на пенсии
+class Employee extends Person{
+    company;
+    work(){
+        console.log(`${this.name} works in ${this.company}`);
+    }
+}
+  
+//** После названия класса-наследника ставится ключевое слово extends, после которого идет имя класса, 
+// от которого мы хотим унаследовать функционал.*/
+
+/*Так, изменим классы Person и Employee, применив наследование: */
+
+const tom = new Person();
+tom.name = "Tom"; 
+tom.age= 34;
+const bob = new Employee();
+bob.name = "Bob"; 
+bob.age = 36; 
+bob.company = "Google";
+tom.print();    // Name: Tom  Age: 34
+bob.print();    // Name: Bob  Age: 36
+bob.work();     // Bob works in Google
