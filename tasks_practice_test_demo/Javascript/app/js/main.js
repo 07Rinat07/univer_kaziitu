@@ -1,22 +1,18 @@
 class Person{
-    #name = "undefined";
-    #age = 1;
+    #ageValue = 1;
     constructor(name, age){
-        this.#name = this.#checkName(name);
-        this.setAge(age);
+        this.name = name;
+        this.age = age;
     }
-    #checkName(name){
-        if(name!=="admin") return name;
+    set age(value){
+        console.log(`Передано ${value}`);
+        if(value>0 && value < 110) this.#ageValue = value;
     }
-    setAge(age){
-        if (age > 0 && age < 110) this.#age = age;
-    }
-    print(){
-        console.log(`Name: ${this.#name}  Age: ${this.#age}`);
+    get age(){
+        return this.#ageValue;
     }
 }
 const tom = new Person("Tom", 37);
-tom.print();    // Name: Tom  Age: 37
-const bob = new Person("admin", 41);
-bob.print();    // Name: Undefined  Age 41
-//let personName = bob.#checkName("admin"); // ! Ошибка - нельзя обратится к приватному методу
+console.log(tom.age);
+tom.age = -15;
+console.log(tom.age);
