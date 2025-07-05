@@ -1,18 +1,22 @@
 class Person{
-    #ageValue = 1;
+    static #retirementAge = 65;
     constructor(name, age){
         this.name = name;
         this.age = age;
     }
-    set age(value){
-        console.log(`Передано ${value}`);
-        if(value>0 && value < 110) this.#ageValue = value;
+    print(){ 
+        console.log(`Имя: ${this.name}  Возраст: ${this.age}`);
     }
-    get age(){
-        return this.#ageValue;
+    static calculateRestAges(person){
+        if(this.#retirementAge > person.age){
+            const restAges = this.#retirementAge - person.age;
+            console.log(`До пенсии осталось ${restAges} лет`);
+        }
+        else console.log("Вы уже на пенсии");
     }
 }
+// console.log(Person.#retirementAge);  // ! Ошибка: поле retirementAge -приватное
 const tom = new Person("Tom", 37);
-console.log(tom.age);
-tom.age = -15;
-console.log(tom.age);
+Person.calculateRestAges(tom);      // До пенсии осталось 28 лет
+const bob = new Person("Bob", 71);
+Person.calculateRestAges(bob);      // Вы уже на пенсии
