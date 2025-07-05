@@ -1,17 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>METANIT.COM</title>
-</head>
-<body>
-<script>
-const people = [{name: "Tom", age: 37}, {name:"Sam", age: 41}, {name: "Bob", age: 21}];
-const markup = `<ul>
-    ${people.map(person => `<li>${person.name}</li>`)}
-</ul>`;
+const exp = /@(yandex|mail).ru/;    // соответствует либо "@yandex.ru" либо "@mail.ru"
  
-document.body.innerHTML = markup;
-</script>
-</body>
-</html>
+const email1 = "tom@mail.ru";
+const email2 = "tom@gmail.ru";
+const email3 = "tom@yandex.ru";
+console.log(exp.test(email1));   // true
+console.log(exp.test(email2));   // false
+console.log(exp.test(email3));   // true
