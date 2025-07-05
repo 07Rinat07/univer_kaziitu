@@ -6,15 +6,13 @@
 </head>
 <body>
 <script>
-var a = 5;
-let b = 8;
-const c = 9;
-function displaySum(){
-  
-    var d = a + b + c;
-    console.log(d);
-}
-displaySum(); // 22
+const tom = {name: "Tom", age: 37};
+const markup = `<div>
+    <p><b>Name</b>: ${tom.name}</p>
+    <p><b>Age</b>: ${tom.age}</p>
+</div>`;
+ 
+document.body.innerHTML = markup;
 </script>
 </body>
 </html>
