@@ -1,8 +1,9 @@
-const exp = /@(yandex|mail).ru/;    // соответствует либо "@yandex.ru" либо "@mail.ru"
- 
-const email1 = "tom@mail.ru";
-const email2 = "tom@gmail.ru";
-const email3 = "tom@yandex.ru";
-console.log(exp.test(email1));   // true
-console.log(exp.test(email2));   // false
-console.log(exp.test(email3));   // true
+const exp = /\+\d-\d\d\d-\d\d\d-\d\d\d\d/;
+const contact1 = "Email: mycomp@gmail.com";
+const contact2 = "Phone: +1-234-567-8901";
+console.log(exp.test(contact1));    // false
+console.log(exp.test(contact2));    // true
+
+//**Допустим, нам надо найти строки, где определен номер телефона. внимание на слеш перед плюсом (\+). Поскольку плюс + имеет специальное значение, то, чтобы указать, 
+// что мы имеет ввиду именно плюс как символ строки, перед ним ставится слеш.
+// Причем, номер телефона в формате +х-ххх-ххх-хххх: */
