@@ -1,35 +1,52 @@
-class PersonError extends Error {
-  constructor(value, ...params) {
-    // остальные параметры передаем в конструктор базового класса
-    super(...params)
-    this.name = "PersonError"
-    this.argument = value;
-  }
-}
- 
-class Person{
-  
-    constructor(pName, pAge){
-         
-        const age = parseInt(pAge);
-        if(isNaN(age))  throw new PersonError(pAge, "Возраст должен представлять число");
-        if(age < 0 || age > 120) throw new PersonError(pAge, "Возраст должен быть больше 0 и меньше 120");
-        this.name = pName;
-        this.age = age;
+// класс условной базы данных
+class Database{
+    constructor(){
+        this.data = ["Tom", "Sam", "Bob"];
     }
-    print(){ console.log(`Name: ${this.name}  Age: ${this.age}`);}
-}
-     
-try{
-    //const tom = new Person("Tom", -45);
-    const bob = new Person("Bob", "bla bla");
-}
-catch(error){   
-    if (error instanceof PersonError) {
-        console.log("Ошибка типа Person. Некорректное значение:", error.argument);
+    // получение данных
+    getItem(index){ 
+        if(index > 0 && index < this.data.length)
+            return this.data[index];
+        else    // если некорректный индекс - генерируем ошибку
+            throw new RangeError("Invalid index");
     }
-    console.log(error.message);
+    // открытие бд
+    open(){
+        console.log("Database has opened");
+    }
+    // закрытие бд
+    close(){
+        console.log("Database has closed");
+    }
 }
+// функция-обертка для получения объекта из базы данных по индексу
+function get(index) {
+   
+    const db = new Database();
+    db.open();  // условно открываем бд
+    try {
+        return db.getItem(index);   // возвращаем полученный элемент
+    } catch(err) {
+        console.error(err); // если произошла ошибка обрабатываем ее 
+    }
+    db.close(); // условно закрываем бд
+}
+// вывод результата
+function printResult(){
+    const item = get(5);    // пытаемся получить элемент с индексом 5
+    console.log("Got from database:",item); // выводим полученный элемент на консоль
+}
+printResult();
 
-//**Мы не ограничены встроенными только встроенными типами ошибок и при необходимости можем
-//  создавать свои типы ошибок, предназначеные для каких-то конкретных ситуаций. */
+//Проброс ошибки вверх по стеку вызова функций
+//Иногда ошибки обрабатываются где-то во вложенных вызовах других функций
+//**Здесь определен условный класс базы данных Database. Для взаимодействия с данными в нем 
+// определены три функции. Функции условного открытия и закрытия базы данных - функции open и
+//  close соответственно и функция getItem, которая возвращает элемент по определенному индексу 
+// из массива data. Однако если переданный индекс некорректен - меньше 0 или больше допустимого
+// Стоит отметить отметить, что это не единственный подход к реализации подобного функционала. 
+// Частно применяется другой подход, когда, если некорректный индекс/id, то функция возвращает 
+// null, что в определенных ситуациях может быть более предпочтительным. Но в данном случае 
+// для демонстрации остановимся на генерации исключения, если передан некорректный индекс.  
+// индекса, то генерируем ошибку RangeError.
+
