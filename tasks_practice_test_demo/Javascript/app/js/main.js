@@ -1,12 +1,11 @@
-const contacts = "Email: mycomp@gmail.com  Phones: +1-234-567-8901 and +1-234-567-8902";
-const phonePattern = /\+\d-\d{3}-\d{3}-\d{4}/;
-const result = phonePattern.exec(contacts);
-console.log(result);     
-// Консольный вывод
-// ['+1-234-567-8901', index: 32, input: 'Email: mycomp@gmail.com  Phones: +1-234-567-8901 and +1-234-567-8902', groups: undefined]
+const contacts = "Email: mycomp@gmail.com Phones: +1-234-567-8901 and +1-234-567-8902";
+const phonePattern = /\+\d-\d{3}-\d{3}-\d{4}/g;
+let result;
+while ((result = phonePattern.exec(contacts)) !== null){
+    console.log("Phone number:", result[0]);
+    console.log("Index: ", result.index);
+}
 
 
-//**Для поиска в строке подстроки, которая соответствовует регулярному выражению, применяется метод 
-// exec() объекта RegExp. Этот метод принимает строку для поиска и возвращает результат в виде 
-// массива. */
-
+//**в строке у нас два телефонных номера (может быть и больше). И мы хотим извлечь все эти номера,
+//  а не только первый номер. В этом случае нам надо воспользоваться флагом g */
