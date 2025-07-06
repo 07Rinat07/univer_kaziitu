@@ -1,7 +1,6 @@
-const initialText = "Сегодня была прекрасная погода";
-const exp = /\s/;
-const result = initialText.split(exp);
-result.forEach(value => console.log(value));
+const initialText = "hello world";
+const exp = /wor/;
+const result = initialText.search(exp);
+console.log(result); // 6
 
-//**Метод split может использовать регулярные выражения для разделения строк. 
-// Например, разделим приложение по словам (а точнее по пробелам) с помощью метасимвола "\s": */
+//*Метод search находит индекс первого включения соответствия в строке: */
