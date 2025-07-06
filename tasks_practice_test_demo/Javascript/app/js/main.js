@@ -1,32 +1,29 @@
-class Database{
-    constructor(){
-        this.data = ["Tom", "Sam", "Bob"];
+class Person{
+  
+    constructor(pName, pAge){
+         
+        const age = parseInt(pAge);
+        if(isNaN(age))  throw new TypeError("Возраст должен представлять число");
+        if(age < 0 || age > 120) throw new RangeError("Возраст должен быть больше 0 и меньше 120");
+        this.name = pName;
+        this.age = age;
     }
-    // получение данных
-    getItem(index){ 
-        this.open();
-        try{
-             if(index > 0 && index < this.data.length)
-                return this.data[index];
-            else
-                throw "Некорректный индекс";
-        }
-        finally{    // даже если сгенерирована ошибка, то этот блок выполняется
-            this.close();   // при генерации исключения эта строка также будет выполняться
-        }
-    }
-    // открытие бд
-    open(){ console.log("Подключение к базе данных установлено"); }
-    // закрытие бд
-    close(){ console.log("Подключение к базе данных закрыто"); }
+    print(){ console.log(`Name: ${this.name}  Age: ${this.age}`);}
 }
- 
-const db = new Database();
-try {
-    db.getItem(5);   // возвращаем полученный элемент
-} catch(err) {
-    console.error(err); // если произошла ошибка обрабатываем ее 
+     
+try{
+    const tom = new Person("Tom", -45);
+    const bob = new Person("Bob", "bla bla");
+}
+catch(error){   
+    if (error instanceof TypeError) {
+        console.log("Некорректный тип данных.");
+    } else if (error instanceof RangeError) {
+        console.log("Недопустимое значение");
+    }
+    console.log(error.message);
 }
 
-
-//**если нам все таки надо вызвать метод close? Мы можем поместить его вызов в блок finally: */
+//**При выполнении одного и то же кода могут генерироваться ошибки разных типов. 
+// И иногда бывает необходимо разграничить обработку разных типов. В этом случае мы можем 
+// проверять тип возникшей ошибки. */
