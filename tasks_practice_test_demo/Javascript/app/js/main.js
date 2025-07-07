@@ -1,7 +1,14 @@
-// пустой WeakSet
-const weakSet1 = new WeakSet();
-// инициализация начальными значениями
-const weakSet2 = new WeakSet([{name:"Tom", age: 37}, {name:"Alice", age: 34}]);
+const weakSet = new WeakSet([
+    {lang: "JavaScript"}, 
+    {lang: "TypeScript"}, 
+    {lang: "Java"}
+]);
+ 
+ 
+for(item of weakSet){
+    console.log(item);
+}
 
-//Объект WeakSet во многом похож на обычное множество. Он также может хранить только уникальные значения,
-//  но каждый его элемент должен представлять объект.
+
+//WeakSet не поддерживает перебор ни с помощью метода ForEach, которого у WeakSet нет, 
+// ни с помощью цикла for.
