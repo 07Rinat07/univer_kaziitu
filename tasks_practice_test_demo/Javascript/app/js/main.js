@@ -1,10 +1,14 @@
-function* getNumber(){
-    yield 5;
-    yield 25;
-    yield 125;
+function* getNumber(start, end, step){
+    for(let n = start; n <= end; n +=step){
+        yield n;
+    }
 }
-const numberGenerator = getNumber();
+const numberGenerator = getNumber(0, 8, 2);
  
-for(const num of numberGenerator){
+for(num of numberGenerator){
     console.log(num);
 }
+
+//Инициализация генератора
+//**Функция генератора, как и любая другая функция, может принимать параметры. 
+// Соответственно через параметры мы можем передать в генератор некоторые данные.  */
