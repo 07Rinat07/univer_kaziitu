@@ -1,27 +1,11 @@
-const people = ["Tom", "Bob", "Sam"];
- 
-function reverseArrayIterator() { 
-    const array = this;
-    let count = array.length; 
-    return {    
-        next: function(){      
-            if (count > 0) {   
-                return {          
-                    value: array[--count],          
-                    done: false       
-                };     
-            } 
-            else {       
-                return {          
-                    value: undefined,           
-                    done: true       
-                };           
-            }    
-        }  
-    }
-};
-// меняем итератор для массива people
-people[Symbol.iterator]=reverseArrayIterator;
-for(person of people){
-    console.log(person);
+function* getNumber(){
+    yield 5;
 }
+const numberGenerator = getNumber();
+const result = numberGenerator.next();
+console.log(result);    // {value: 5, done: false}
+
+
+//**Генераторы представляют особый тип функции, которые используются для генерации значений. 
+// Для определения генераторов применяется символ звездочки *, который ставится после ключевого 
+// слова function. */
