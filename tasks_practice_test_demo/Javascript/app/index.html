@@ -5,24 +5,19 @@
     <title>METANIT.COM</title>
 </head>
 <body>
-    <form>
-        <p>Language:</p>
-        <input type="radio" name="lang" value="Java">
-        <label>Java</label>
-        <br>
-        <input type="radio" name="lang" value="JavaScript" checked>
-        <label>JavaScript</label>
-        <br>
-        <input type="radio" name="lang" value="PHP">
-        <label>PHP</label>
-        <br>
-    </form>
+    <div class="annotation">
+        <p>Аннотация статьи</p>
+    </div>
+    <div class="text">
+        <p>Первый абзац</p>
+        <p>Второй абзац</p>
+    </div>
+    
     <script>
-    // выбираем все элементы с атрибутом name="lang"
-    const langs = document.getElementsByName("lang");
-    for (lang of langs) {
-        console.log(lang.value);    // получаем значение атрибута value
-    }
+        const elem = document.querySelector(".annotation p");
+        console.log(elem.innerText);    // Аннотация статьи
     </script>
 </body>
+
+
 </html>
