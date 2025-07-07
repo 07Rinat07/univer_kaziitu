@@ -1,14 +1,16 @@
-const weakSet = new WeakSet([
-    {lang: "JavaScript"}, 
-    {lang: "TypeScript"}, 
-    {lang: "Java"}
-]);
+let js = {lang: "JavaScript"};
+let ts = {lang: "TypeScript"};
+const weakSet = new WeakSet([js, ts]);
  
+js = null;
  
-for(item of weakSet){
-    console.log(item);
-}
+console.log(weakSet);   // {{lang: "JavaScript"}, {lang: "TypeScript"}}
+console.log("Некоторая работа");
+const timerId = setTimeout(function(){
+    console.log(weakSet);   // {{lang: "TypeScript"}}
+    clearTimeout(timerId);
+}, 20000);
 
 
-//WeakSet не поддерживает перебор ни с помощью метода ForEach, которого у WeakSet нет, 
-// ни с помощью цикла for.
+//**Объекты передаются в WeakSet по ссылке. И отличительной особенностью WeakSet является то, 
+// что когда объект перестает существовать в силу различных причин, он удаляется из WeakSet. */
