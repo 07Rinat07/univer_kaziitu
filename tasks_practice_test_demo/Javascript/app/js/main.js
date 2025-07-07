@@ -1,12 +1,27 @@
-const target = {name: "Tom", age: 37};
-const handler = {
-  set: function(target, prop, value) {
-        console.log(value);
-        target[prop] = value;
-  }
+const people = ["Tom", "Bob", "Sam"];
+ 
+function reverseArrayIterator() { 
+    const array = this;
+    let count = array.length; 
+    return {    
+        next: function(){      
+            if (count > 0) {   
+                return {          
+                    value: array[--count],          
+                    done: false       
+                };     
+            } 
+            else {       
+                return {          
+                    value: undefined,           
+                    done: true       
+                };           
+            }    
+        }  
+    }
 };
-const proxy = new Proxy(target, handler);
-proxy.name = "Tomas";
-console.log(proxy.name);    // Tomas
-proxy.age = 22;             
-console.log(proxy.age);     // 22
+// меняем итератор для массива people
+people[Symbol.iterator]=reverseArrayIterator;
+for(person of people){
+    console.log(person);
+}
