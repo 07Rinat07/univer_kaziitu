@@ -1,16 +1,15 @@
-let js = {lang: "JavaScript"};
-let ts = {lang: "TypeScript"};
-const weakSet = new WeakSet([js, ts]);
+// пустой WeakMap
+const weakMap1 = new WeakMap();
  
-js = null;
+// WeakMap с инициализацией данными
+let key1 = {key:1};
+let key2 = {key:2};
+let value1 = {name: "Tom"};
+let value2 = {name: "Sam"};
  
-console.log(weakSet);   // {{lang: "JavaScript"}, {lang: "TypeScript"}}
-console.log("Некоторая работа");
-const timerId = setTimeout(function(){
-    console.log(weakSet);   // {{lang: "TypeScript"}}
-    clearTimeout(timerId);
-}, 20000);
+const weakMap2 = new WeakMap([[key1, value1], [key2, value2]]);
+// или так
+// const weakMap2 = new WeakMap([[{key:1}, {name: "Tom"}], [{key:2}, {name: "Sam"}]]);
 
-
-//**Объекты передаются в WeakSet по ссылке. И отличительной особенностью WeakSet является то, 
-// что когда объект перестает существовать в силу различных причин, он удаляется из WeakSet. */
+//**WeakMap представляет развитие коллекции Map. Особенностью WeakMap является то, что все 
+// ее элементы должны представлять объекты. При этом ключи должны представлять объекты. */
