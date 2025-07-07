@@ -5,14 +5,19 @@
     <title>METANIT.COM</title>
 </head>
 <body>
-<script>
-const tom = {name: "Tom", age: 37};
-const markup = `<div>
-    <p><b>Name</b>: ${tom.name}</p>
-    <p><b>Age</b>: ${tom.age}</p>
-</div>`;
- 
-document.body.innerHTML = markup;
-</script>
+    <a href="article1.html">Статья 1</a>
+    <a href="article2.html">Статья 2</a>
+    <a href="article3.html">Статья 3</a>
+    <script>
+        const links = document.links;
+        // перебираем все ссылки
+        for(link of links){
+            console.log(`Href: "${link.href}" Text: "${link.innerText}"`);
+        }
+
+        
+    </script>
 </body>
+
 </html>
+
