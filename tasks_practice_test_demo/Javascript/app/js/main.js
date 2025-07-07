@@ -1,20 +1,7 @@
-function* generateData(){
-    try {
-        yield "Tom";
-        yield "Bob";
-        yield "Hello Work";
-    }
-    catch(error) {
-        console.log("Error:", error);
-    }
-} 
-const personGenerator = generateData();
-console.log(personGenerator.next());        // {value: "Tom", done: false}
-personGenerator.throw("Something wrong");   // Error: Something wrong
-console.log(personGenerator.next());        // {value: undefined, done: true}
+// пустой WeakSet
+const weakSet1 = new WeakSet();
+// инициализация начальными значениями
+const weakSet2 = new WeakSet([{name:"Tom", age: 37}, {name:"Alice", age: 34}]);
 
-//Обработка ошибок генератора
-
-//**С помощью функции throw() мы можем сгенерировать в генераторе исключение. 
-// В качестве параметра в эту функцию передается произвольное значение, которое представляет
-//  информацию об ошибке: */
+//Объект WeakSet во многом похож на обычное множество. Он также может хранить только уникальные значения,
+//  но каждый его элемент должен представлять объект.
