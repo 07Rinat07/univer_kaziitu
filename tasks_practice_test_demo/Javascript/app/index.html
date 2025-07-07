@@ -5,19 +5,24 @@
     <title>METANIT.COM</title>
 </head>
 <body>
-    <a href="article1.html">Статья 1</a>
-    <a href="article2.html">Статья 2</a>
-    <a href="article3.html">Статья 3</a>
+    <form>
+        <p>Language:</p>
+        <input type="radio" name="lang" value="Java">
+        <label>Java</label>
+        <br>
+        <input type="radio" name="lang" value="JavaScript" checked>
+        <label>JavaScript</label>
+        <br>
+        <input type="radio" name="lang" value="PHP">
+        <label>PHP</label>
+        <br>
+    </form>
     <script>
-        const links = document.links;
-        // перебираем все ссылки
-        for(link of links){
-            console.log(`Href: "${link.href}" Text: "${link.innerText}"`);
-        }
-
-        
+    // выбираем все элементы с атрибутом name="lang"
+    const langs = document.getElementsByName("lang");
+    for (lang of langs) {
+        console.log(lang.value);    // получаем значение атрибута value
+    }
     </script>
 </body>
-
 </html>
-
