@@ -1,11 +1,12 @@
-const date1 = new Date("27 March 2008");
-console.log(date1); // Thu Mar 27 2008 00:00:00 GMT+0300 (Москва, стандартное время)
-// или так
-const date2 = new Date("3/27/2008");
-console.log(date2); // Thu Mar 27 2008 00:00:00 GMT+0300 (Москва, стандартное время)
-// или так
-const date3 = new Date("3 27 2008");
-console.log(date3); // Thu Mar 27 2008 00:00:00 GMT+0300 (Москва, стандартное время)
-
-//**С помошью пустого конструктора Date без параметров. В этом случае созданный объект хранит 
-// текущие дату и время */
+const target = {name: "Tom", age: 37};
+const handler = {
+  set: function(target, prop, value) {
+        console.log(value);
+        target[prop] = value;
+  }
+};
+const proxy = new Proxy(target, handler);
+proxy.name = "Tomas";
+console.log(proxy.name);    // Tomas
+proxy.age = 22;             
+console.log(proxy.age);     // 22
