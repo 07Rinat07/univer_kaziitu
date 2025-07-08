@@ -5,17 +5,10 @@
     <title>METANIT.COM</title>
 </head>
 <body>
-    <div id="article">
-        <h1 id="header">Home Page</h1>
-        <p id="text">Page Text</p>
-    </div>
+    <h1 id="header">Home Page</h1>
     <script>
-    // получаем элемент с id="text"
-    const pageText = document.getElementById("text");
-    console.log(pageText.nodeValue);    // null 
-    for(textNode of pageText.childNodes){
-        console.log(textNode.nodeValue);
-    }
+    const header = document.getElementById("header");
+    console.log(Object.getPrototypeOf(header)); // HTMLHeadingElement
     </script>
 </body>
 </html>
