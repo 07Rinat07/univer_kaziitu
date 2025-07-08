@@ -20,21 +20,18 @@ class HelloMetanit extends HTMLElement {
         } else if (hour > 12) {
             welcome = "Добрый день";
         }
-        this.style="cursor:pointer;"
+        this.style.cursor="pointer"
         this.innerText= welcome;
     }
-     
+    connectedCallback() {
+      this.style.color = "red";
+    }
     showTime(){
         console.log(new Date().toTimeString());
     }
 }
  
 customElements.define("hello-metanit", HelloMetanit);
- 
-// получаем элемент
-const hello = document.getElementById("hello");
-// по нажатию вызываем его метод showTime
-hello.addEventListener("click", ()=> hello.showTime());
 </script>
 </body>
 </html>
