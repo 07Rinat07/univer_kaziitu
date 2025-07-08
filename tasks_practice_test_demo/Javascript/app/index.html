@@ -2,14 +2,24 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>METANIT.COM</title>
+    <title>777.COM</title>
 </head>
 <body>
+    <div id="article">
+        <h1>Home Page</h1>
+        <p>Text 1</p>
+        <p>Text 2</p>
+    </div>
     <script>
-    constheader = document.createElement("h1");     // создаем заголовок <h1>
-    const headerText = document.createTextNode("Hello World");  // создаем текстовый узел
-    header.appendChild(headerText); // добавляем в элемент h1 текстовый узел
-    document.body.appendChild(header);  // // добавляем элемент h1 на страницу в элемент body
+    const article = document.getElementById("article");
+    // получаем последний параграф
+    const lastP = article.lastElementChild;
+    // клонируем элемент lastP
+    const newLastP = lastP.cloneNode(true);
+    // изменяем текст
+    newLastP.textContent = "Publication Date: 08/07/2025";
+    // добавляем в конец элемента article
+    article.appendChild(newLastP);
     </script>
 </body>
 </html>
