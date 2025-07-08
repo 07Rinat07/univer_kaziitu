@@ -9,10 +9,15 @@
         <h1 id="header">Home Page</h1>
         <p>Page Text</p>
     </div>
-<script>
-const article = document.getElementById("article");
-console.log(article.nodeName);  // DIV
-console.log(article.nodeType);  // 1
-</script>
+    <script>
+    // выбираем все элемент c id="header"
+    const header = document.getElementById("header");
+    // получаем родительский элемента
+    const headerParent = header?.parentElement;
+    // можно так
+    // const headerParent = header?.parentNode;
+    //Для получения родительского элемента применяются свойства parentNode и parentElement
+    console.log(headerParent);    // выводим родительский элемент на консоль
+    </script>
 </body>
 </html>
