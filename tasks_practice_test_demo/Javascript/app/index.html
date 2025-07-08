@@ -2,24 +2,25 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>777.COM</title>
+    <title>METANIT.COM</title>
 </head>
 <body>
     <div id="article">
-        <h1>Home Page</h1>
+        <p>Home Page</p>
         <p>Text 1</p>
         <p>Text 2</p>
     </div>
     <script>
     const article = document.getElementById("article");
-    // получаем последний параграф
-    const lastP = article.lastElementChild;
-    // клонируем элемент lastP
-    const newLastP = lastP.cloneNode(true);
-    // изменяем текст
-    newLastP.textContent = "Publication Date: 08/07/2025";
-    // добавляем в конец элемента article
-    article.appendChild(newLastP);
+    // находим узел, который будем заменять
+    // пусть это будет первый элемент
+    const oldNode = article.firstElementChild;
+    // создаем новый элемент
+    const newNode = document.createElement("h2");
+    // определяем для него текст
+    newNode.textContent = "Hello World";
+    // заменяем старый узел новым
+    article.replaceChild(newNode, oldNode);
     </script>
 </body>
 </html>
