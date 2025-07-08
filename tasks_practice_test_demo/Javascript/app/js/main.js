@@ -1,2 +1,6 @@
-const header = document.createElement("h1");        // создаем заголовок <h1>
-header.textContent = "Hello World"; // определяем текст элемента
+// получаем элемент
+const element = document.getElementById("home");
+// получаем атрибуты элемента
+console.log(element.getAttribute("id"));    // home
+console.log(element.getAttribute("class")); // link
+console.log(element.getAttribute("href"));  // index.html
