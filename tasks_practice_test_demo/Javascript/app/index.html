@@ -6,21 +6,16 @@
 </head>
 <body>
     <div id="article">
-        <p>Home Page</p>
+        <h1>Home Page</h1>
         <p>Text 1</p>
         <p>Text 2</p>
     </div>
     <script>
     const article = document.getElementById("article");
-    // находим узел, который будем заменять
-    // пусть это будет первый элемент
-    const oldNode = article.firstElementChild;
-    // создаем новый элемент
-    const newNode = document.createElement("h2");
-    // определяем для него текст
-    newNode.textContent = "Hello World";
-    // заменяем старый узел новым
-    article.replaceChild(newNode, oldNode);
+    // находим узел, который будем удалять - последний параграф
+    const lastP = article.lastElementChild;
+    // удаляем узел
+    article.removeChild(lastP);
     </script>
 </body>
 </html>
