@@ -7,17 +7,17 @@
 <body>
     <div id="article">
         <h1 id="header">Home Page</h1>
-        <p>Page Text</p>
+        <p>Page Text 1</p>
+        <p>Page Text 2</p>
+        <p>Page Text 3</p>
     </div>
     <script>
-    // выбираем все элемент c id="header"
-    const header = document.getElementById("header");
-    // получаем родительский элемента
-    const headerParent = header?.parentElement;
-    // можно так
-    // const headerParent = header?.parentNode;
-    //Для получения родительского элемента применяются свойства parentNode и parentElement
-    console.log(headerParent);    // выводим родительский элемент на консоль
+    const article = document.getElementById("article");
+    let tempNode = article.firstElementChild;
+    while(tempNode != null){
+        console.log(tempNode);
+        tempNode = tempNode.nextElementSibling
+    }
     </script>
 </body>
 </html>
