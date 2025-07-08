@@ -3,17 +3,21 @@
 <head>
     <meta charset="utf-8" />
     <title>METANIT.COM</title>
+    <style>
+        .header-color {color:navy;}
+        .header-font {font-family: Verdana;}
+    </style>
 </head>
 <body>
-    <h1 id="header">Home Page</h1>
+    <h1 id="header" class="header-font">Home Page</h1>
     <script>
     const header = document.getElementById("header");
-    // получаем значение свойства color
-    console.log(header.style.color);    // пустая строка
-    // изменяем значение свойства color
-    header.style.color = "navy";
-    // повторно получаем значение свойства color
-    console.log(header.style.color);    // navy
+    // получаем текущий класс
+    console.log(header.className);  // header-font
+    // устанавливаем класс элемента
+    header.className = "header-color";  
+    // получаем текущий класс
+    console.log(header.className);  // header-color 
     </script>
 </body>
 </html>
