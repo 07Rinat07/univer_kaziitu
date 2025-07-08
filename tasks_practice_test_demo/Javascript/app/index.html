@@ -7,22 +7,12 @@
 <body>
     <div id="article">
         <h1 id="header">Home Page</h1>
-        <p class="text">Page Text 1</p>
-        <p class="text">Page Text 2</p>
+        <p>Page Text</p>
     </div>
-    <div id="footer">
-        <p class="text">Footer Text</p>
-    </div>
-    <script>
-    // получаем элемент с id="article"
-    const article = document.getElementById("article");
-    // в этом элементе получаем все элементы с class="text"
-    //Подобным образом мы можем искать элементы не только во всем документе, 
-    // но и в отдельных элементах на веб-странице
-    const articleContent = article.getElementsByClassName("text");
-    for(p of articleContent){
-        console.log(p);
-    }
-    </script>
+<script>
+const article = document.getElementById("article");
+console.log(article.nodeName);  // DIV
+console.log(article.nodeType);  // 1
+</script>
 </body>
 </html>
