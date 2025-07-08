@@ -8,7 +8,10 @@
     <h1 id="header">Home Page</h1>
     <script>
     const header = document.getElementById("header");
-    console.log(Object.getPrototypeOf(header)); // HTMLHeadingElement
+    // получаем текст элемента
+    console.log(header.textContent);  // Home Page
+    // изменяем текст элемента
+    header.textContent = "Hello World";
     </script>
 </body>
 </html>
