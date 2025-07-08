@@ -8,10 +8,10 @@
     <h1 id="header">Home Page</h1>
     <script>
     const header = document.getElementById("header");
-    // получаем текст элемента
-    console.log(header.textContent);  // Home Page
-    // изменяем текст элемента
-    header.textContent = "Hello World";
+    // получаем html-код элемента
+    console.log(header.innerHTML);  // Home Page
+    // изменяем html-код элемента
+    header.innerHTML = "<span style='color:navy;'>Hello World</span>";
     </script>
 </body>
 </html>
