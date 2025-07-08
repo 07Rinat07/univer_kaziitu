@@ -7,16 +7,14 @@
 <body>
     <div id="article">
         <h1 id="header">Home Page</h1>
-        <p>Page Text 1</p>
-        <p>Page Text 2</p>
-        <p>Page Text 3</p>
+        <p id="text">Page Text</p>
     </div>
     <script>
-    const article = document.getElementById("article");
-    let tempNode = article.firstElementChild;
-    while(tempNode != null){
-        console.log(tempNode);
-        tempNode = tempNode.nextElementSibling
+    // получаем элемент с id="text"
+    const pageText = document.getElementById("text");
+    console.log(pageText.nodeValue);    // null 
+    for(textNode of pageText.childNodes){
+        console.log(textNode.nodeValue);
     }
     </script>
 </body>
