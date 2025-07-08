@@ -6,7 +6,9 @@
 </head>
 <body>
  
-<hello-metanit id="hello"></hello-metanit>
+<hello-metanit hellocolor="#2980b9"></hello-metanit>
+<br/>
+<hello-metanit></hello-metanit>
 <script>
 class HelloMetanit extends HTMLElement {
      
@@ -24,7 +26,10 @@ class HelloMetanit extends HTMLElement {
         this.innerText= welcome;
     }
     connectedCallback() {
-      this.style.color = "red";
+        this.style.color = "red";
+        if (this.hasAttribute("hellocolor")) {
+            this.style.color = this.getAttribute("hellocolor");
+        }
     }
     showTime(){
         console.log(new Date().toTimeString());
