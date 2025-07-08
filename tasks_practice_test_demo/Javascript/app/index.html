@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>METANIT.COM</title>
-    <style>
-        .header-color {color:navy;}
-        .header-font {font-family: Verdana;}
-        .header-size {font-size: 22px;}
-    </style>
+<title>METANIT.COM</title>
+<meta charset="utf-8">
 </head>
 <body>
-    <h1 id="header" class="header-size">Home Page</h1>
-    <script>
-    const header = document.getElementById("header");
-    header.classList.remove("header-size");     //  удаляем класс header-size
-    header.classList.add("header-font");        // добавляем класс header-font
-    header.classList.toggle("header-color");    // переключаем класс header-color
-    </script>
+ 
+<hello-metanit id="hello"></hello-metanit>
+<script>
+class HelloMetanit extends HTMLElement {
+     
+    constructor() {
+        super();
+         
+        let welcome = "Доброе утро";
+        const hour = new Date().getHours();
+        if (hour > 17) {
+            welcome = "Добрый вечер";
+        } else if (hour > 12) {
+            welcome = "Добрый день";
+        }
+        this.style="cursor:pointer;"
+        this.innerText= welcome;
+    }
+     
+    showTime(){
+        console.log(new Date().toTimeString());
+    }
+}
+ 
+customElements.define("hello-metanit", HelloMetanit);
+ 
+// получаем элемент
+const hello = document.getElementById("hello");
+// по нажатию вызываем его метод showTime
+hello.addEventListener("click", ()=> hello.showTime());
+</script>
 </body>
 </html>
