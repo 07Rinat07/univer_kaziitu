@@ -5,13 +5,11 @@
     <title>METANIT.COM</title>
 </head>
 <body>
-    <h1 id="header">Home Page</h1>
     <script>
-    const header = document.getElementById("header");
-    // получаем html-код элемента
-    console.log(header.innerHTML);  // Home Page
-    // изменяем html-код элемента
-    header.innerHTML = "<span style='color:navy;'>Hello World</span>";
+    constheader = document.createElement("h1");     // создаем заголовок <h1>
+    const headerText = document.createTextNode("Hello World");  // создаем текстовый узел
+    header.appendChild(headerText); // добавляем в элемент h1 текстовый узел
+    document.body.appendChild(header);  // // добавляем элемент h1 на страницу в элемент body
     </script>
 </body>
 </html>
