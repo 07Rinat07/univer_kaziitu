@@ -5,6 +5,14 @@
     <title>METANIT.COM</title>
 </head>
 <body>
-    <div id="rect" onclick="console.log('Clicked!')" style="width:50px;height:50px;background-color:blue;"></div>
+    <button id="btn">Click Me</div>
+    <script>
+    let clicks = 0;     // счетчик нажатий
+    function btn_click(){
+        console.log("Clicked", ++clicks);
+    }
+    // устанавливаем обработчик нажатия для элемента с id="btn"
+    document.getElementById("btn").onclick = btn_click; 
+    </script>
 </body>
 </html>
