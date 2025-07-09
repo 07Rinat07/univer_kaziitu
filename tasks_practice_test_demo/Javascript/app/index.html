@@ -1,21 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title>METANIT.COM</title>
-</head>
-<body>
-    <form id="search" name="search" action="https://google.com/search" method="get">
-        <input type="text" id="key" name="q" />
-        <input type="submit" id="send" name="send" />
-    </form>
-    <script>
-    const form = document.getElementById("search");
-    console.log(form.elements);     // HTMLFormControlsCollection(2) [input, input, q: input, send: input]
-    console.log(form.length);       // 2
-    console.log(form.name);         // search
-    console.log(form.action);       // https://google.com/search
-    console.log(form.method);       // get
-    </script>
-</body>
-</html>
+<form name="search">
+    <input type="text" name="key" value="hello world"></input>
+    <input type="submit" name="send"></input>
+</form>
+<script>
+const form = document.getElementById("search");
+// получение поля формы по имени
+const keyField = form.elements["key"];
+// получение значения поля
+console.log(keyField.value);
+// установка значения поля
+keyField.value = "Enter a string";
+</script>
