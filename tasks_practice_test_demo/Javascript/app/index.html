@@ -1,45 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>METANIT.COM</title>
-<meta charset="utf-8">
-<style>
-hello-metanit{
-    font-family: Verdana;
-    font-size:22px;
-}
-</style>
+    <meta charset="utf-8" />
+    <title>METANIT.COM</title>
 </head>
 <body>
-<hello-metanit hellocolor="#2980b9"></hello-metanit>
-<script>
-class HelloMetanit extends HTMLElement {
-     
-    constructor() {
-        super();
-         
-        let welcome = "Доброе утро";
-        const hour = new Date().getHours();
-        if (hour > 17) {
-            welcome = "Добрый вечер";
-        } else if (hour > 12) {
-            welcome = "Добрый день";
-        }
-        this.style.cursor="pointer"
-        this.innerText= welcome;
-    }
-    connectedCallback() {
-        this.style.color = "red";
-        if (this.hasAttribute("hellocolor")) {
-            this.style.color = this.getAttribute("hellocolor");
-        }
-    }
-    showTime(){
-        console.log(new Date().toTimeString());
-    }
-}
- 
-customElements.define("hello-metanit", HelloMetanit);
-</script>
+    <div id="rect" onclick="console.log('Clicked!')" style="width:50px;height:50px;background-color:blue;"></div>
 </body>
 </html>
