@@ -1,6 +1,3 @@
-// получаем элемент
-const element = document.getElementById("home");
-// получаем атрибуты элемента
-console.log(element.getAttribute("id"));    // home
-console.log(element.getAttribute("class")); // link
-console.log(element.getAttribute("href"));  // index.html
+function btn_click(e){
+    console.log(this===e.target); // true
+}
