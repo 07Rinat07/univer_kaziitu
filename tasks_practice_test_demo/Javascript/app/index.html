@@ -9,25 +9,21 @@
         height:100px;
         background-color:blue;
     }
-    #redRect{
-        width:50px;
-        height:50px;
-        background-color:red;
-    }
     </style>
 </head>
 <body>
-    <div id="blueRect">
-        <div id="redRect"></div>
-    </div>
-    <script>
-    const redRect = document.getElementById("redRect");
-    redRect.addEventListener("click", () => console.log("Событие на redRect"));
-     
-    const blueRect = document.getElementById("blueRect");
-    blueRect.addEventListener("click", ()=>console.log("Событие на blueRect"));
-     
-    document.body.addEventListener("click", () => console.log("Событие на body"));
-    </script>
+<div id="blueRect"></div>
+ 
+<script>
+function setColor(e){
+    if(e.type==="mouseover")
+        e.target.style.backgroundColor = "red";
+    else if(e.type==="mouseout")
+        e.target.style.backgroundColor = "blue";
+}
+const blueRect = document.getElementById("blueRect");
+blueRect.addEventListener("mouseover", setColor);
+blueRect.addEventListener("mouseout", setColor);
+</script>
 </body>
 </html>
