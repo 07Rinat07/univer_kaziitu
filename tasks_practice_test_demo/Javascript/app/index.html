@@ -1,16 +1,14 @@
 <form name="myForm">
-    <input type="radio" name="languages" value="Java" /><span>Java</span>
-    <input type="radio" name="languages" value="C#" /><span>C#</span>
-    <input type="radio" name="languages" value="C++" /><span>C++</span>
+    <select name="language" size="4">
+        <option value="JS" selected="selected">JavaScript</option>
+        <option value="Java">Java</option>
+        <option value="CS">C#</option>
+        <option value="CPP">C++</option>
+    </select>
 </form>
-<div id="printBlock"></div>
 <script>
-const printBlock = document.getElementById("printBlock");
-const myForm = document.myForm;
-function onclick(e){
-    printBlock.textContent = `Вы выбрали: ${language}`;
-}
-for (let i = 0; i < myForm.languages.length; i++) {
-    myForm.languages[i].addEventListener("click", onclick);
-}
+const firstLanguage = document.myForm.language.options[0];
+console.log("Index:", firstLanguage.index);
+console.log("Text:", firstLanguage.text);
+console.log("Value:", firstLanguage.value);
 </script>
