@@ -1,10 +1,16 @@
 <form name="myForm">
-    <input type="checkbox" name="enabled" checked><span>Включить</span>
+    <input type="radio" name="languages" value="Java" /><span>Java</span>
+    <input type="radio" name="languages" value="C#" /><span>C#</span>
+    <input type="radio" name="languages" value="C++" /><span>C++</span>
 </form>
 <div id="printBlock"></div>
 <script>
-const enabledBox = document.myForm.enabled;
 const printBlock = document.getElementById("printBlock");
-//  в текст printBlock передаем установленное значение
-enabledBox.addEventListener("click", (e)=> printBlock.textContent = e.target.checked);
+const myForm = document.myForm;
+function onclick(e){
+    printBlock.textContent = `Вы выбрали: ${language}`;
+}
+for (let i = 0; i < myForm.languages.length; i++) {
+    myForm.languages[i].addEventListener("click", onclick);
+}
 </script>
