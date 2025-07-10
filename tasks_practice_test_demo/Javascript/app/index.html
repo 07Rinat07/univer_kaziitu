@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-</head>
-<body>
 <form name="myForm">
     <select name="language" size="5">
         <option value="JS" selected="selected">JavaScript</option>
@@ -11,39 +5,16 @@
         <option value="CS">C#</option>
         <option value="CPP">C++</option>
     </select>
-    <p><input type="text" name="textInput" placeholder="Введите текст" /></p>
-    <p><input type="text" name="valueInput" placeholder="Введите значение" /></p>
-    <p>
-        <input type="button" name="addButton" value="Добавить" />
-        <input type="button" name="removeButton" value="Удалить" />
-    </p>
 </form>
- 
+<div id="selection"></div>
 <script>
-const myForm = document.myForm;
-const addButton = myForm.addButton, 
-    removeButton = myForm.removeButton, 
-    languagesSelect = myForm.language;
-// обработчик добавления элемента
-function addOption(){
-    // получаем текст для элемента
-    const text = myForm.textInput.value;
-    // получаем значение для элемента
-    const value = myForm.valueInput.value;
-    // создаем новый элемента
-    const newOption = new Option(text, value);
-    languagesSelect.options[languagesSelect.options.length]=newOption;
-}
-// обработчик удаления элемент
-function removeOption(){
-     
-    const selectedIndex = languagesSelect.options.selectedIndex;
-    // удаляем элемент 
-    languagesSelect.options[selectedIndex] = null;
+const languagesSelect = document.myForm.language;
+const selection = document.getElementById("selection");
+ 
+function changeOption(){
+    const selectedOption = languagesSelect.options[languagesSelect.selectedIndex];
+    selection.textContent = "Вы выбрали: " + selectedOption.text;
 }
  
-addButton.addEventListener("click", addOption);
-removeButton.addEventListener("click", removeOption);
+languagesSelect.addEventListener("change", changeOption);
 </script>
-</body>
-</html>
