@@ -1,14 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
 <form name="myForm">
-    <select name="language" size="4">
+    <select name="language" size="5">
         <option value="JS" selected="selected">JavaScript</option>
         <option value="Java">Java</option>
         <option value="CS">C#</option>
         <option value="CPP">C++</option>
     </select>
+    <p><input type="text" name="textInput" placeholder="Введите текст" /></p>
+    <p><input type="text" name="valueInput" placeholder="Введите значение" /></p>
+    <p>
+        <input type="button" name="addButton" value="Добавить" />
+        <input type="button" name="removeButton" value="Удалить" />
+    </p>
 </form>
+ 
 <script>
-const firstLanguage = document.myForm.language.options[0];
-console.log("Index:", firstLanguage.index);
-console.log("Text:", firstLanguage.text);
-console.log("Value:", firstLanguage.value);
+const myForm = document.myForm;
+const addButton = myForm.addButton, 
+    removeButton = myForm.removeButton, 
+    languagesSelect = myForm.language;
+// обработчик добавления элемента
+function addOption(){
+    // получаем текст для элемента
+    const text = myForm.textInput.value;
+    // получаем значение для элемента
+    const value = myForm.valueInput.value;
+    // создаем новый элемента
+    const newOption = new Option(text, value);
+    languagesSelect.options[languagesSelect.options.length]=newOption;
+}
+// обработчик удаления элемент
+function removeOption(){
+     
+    const selectedIndex = languagesSelect.options.selectedIndex;
+    // удаляем элемент 
+    languagesSelect.options[selectedIndex] = null;
+}
+ 
+addButton.addEventListener("click", addOption);
+removeButton.addEventListener("click", removeOption);
 </script>
+</body>
+</html>
