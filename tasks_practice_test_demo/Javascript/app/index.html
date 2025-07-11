@@ -6,19 +6,13 @@
 <button type="submit" id="submit" name="submit">Register</button>
 </form>
 <script>
-const registerForm = document.registerForm;
+const usernameField = document.registerForm.username;
 const submit = registerForm.submit;
 submit.addEventListener("click", validate);
  
 function validate(){
-    if(registerForm.username.validity.valueMissing){
-        registerForm.username.setCustomValidity("Необходимо ввести имя пользователя");
-    }
-    if(registerForm.username.validity.tooLong){
-        registerForm.username.setCustomValidity("Имя пользователя не должно превышать 20 символов");
-    }
-    if(registerForm.username.validity.tooShort){
-        registerForm.username.setCustomValidity("Имя пользователя не должно быть меньше 3 символов");
+    if(usernameField.value === "admin"){
+        usernameField.setCustomValidity("Недопустимое имя пользователя");
     }
 }
 </script>
