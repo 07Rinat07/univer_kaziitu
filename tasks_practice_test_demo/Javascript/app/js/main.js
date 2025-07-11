@@ -1,9 +1,10 @@
-// объект javascript
 const user = {
     name: "Tom",
     married: false,
     age: 39
 };
-// объект json
+// сериализация
 const serializedUser = JSON.stringify(user);
-console.log(serializedUser); // {"name":"Tom","married":false,"age":39}
+// десериализация
+const tomUser = JSON.parse(serializedUser);
+console.log(tomUser.name); // Tom
