@@ -12,10 +12,10 @@ const xmlString = `<?xml version="1.0" encoding="UTF-8" ?>
         </user>
     </users>`;
  
+// преобразуем строку в XML
 const domParser = new DOMParser();
 const xmlDOM = domParser.parseFromString(xmlString, "text/xml");
-// обратимся к первому элементу user
-const firstUser = xmlDOM.querySelector("user");
-console.log(firstUser.getAttribute("name"));                  // Tom
-console.log(firstUser.getAttribute("age"));                  // 39
-console.log(firstUser.querySelector("title").textContent);    // Microsoft
+// преобразуем обратно из XML в строку
+const xmlSerializer = new XMLSerializer();
+const xmlString2 = xmlSerializer.serializeToString(xmlDOM);
+console.log(xmlString2);
