@@ -1,21 +1,23 @@
-const xmlString = `<?xml version="1.0" encoding="UTF-8" ?> 
-    <users>
-        <user name="Tom" age="39">
-            <company>
-                <title>Microsoft</title>
-            </company>
-        </user>
-        <user name="Bob" age="43">
-            <company>
-                <title>Google</title>
-            </company>
-        </user>
-    </users>`;
+function handleResult(error, result){    
+    if(error) {     // если передана ошибка 
+        console.error(error);   
+    }  
+    else {     // если асинхронная функция завершилась успешно
+        console.log("Result:", result);    
+    }  
+}
  
-// преобразуем строку в XML
-const domParser = new DOMParser();
-const xmlDOM = domParser.parseFromString(xmlString, "text/xml");
-// преобразуем обратно из XML в строку
-const xmlSerializer = new XMLSerializer();
-const xmlString2 = xmlSerializer.serializeToString(xmlDOM);
-console.log(xmlString2);
+function asyncFunction(callback) {
+    setTimeout(()=>{
+        let result = Math.floor(Math.random() * 100) + 1;
+        if(result < 50) { 
+            // если меньше 50, устанавливаем ошибку
+            callback(new Error("Некорректное значение: " + result), null);      
+        } 
+        else{
+            // в остальных случаях устанавливаем результат
+            callback(null, result);
+        }
+    }, 1000);
+}
+asyncFunction(handleResult);
