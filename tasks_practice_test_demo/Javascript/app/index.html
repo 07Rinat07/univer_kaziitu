@@ -5,14 +5,14 @@
     <title>METANIT.COM</title>
 </head>
 <body>
-<input type="url" id="url" />
-<button id="btn">Click</button>
+<div id="timer"></div>
 <script>
-const btn = document.getElementById("btn");
-btn.addEventListener("click", () => {  
-    const url = document.getElementById("url").value;  
-    location.assign(url);
-}); 
+const timer = document.getElementById("timer");
+function updateTime() {
+    const now = new Date();
+    timer.textContent = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+}
+setInterval(updateTime, 1000);
 </script>
 </body>
 </html>
