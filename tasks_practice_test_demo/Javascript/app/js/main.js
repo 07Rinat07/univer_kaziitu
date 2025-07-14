@@ -1,22 +1,22 @@
-function sum(x, y){ 
-    return new Promise(function(resolve){
-        const result = x + y;
-        resolve(result);
-    });
+const generateNumber = {
+  [Symbol.asyncIterator]() {
+    return {
+      current: 0,
+      end: 10,
+      next() {
+        if (this.current <= this.end) {
+          return Promise.resolve({ value: this.current++, done: false });
+        }
+        return Promise.resolve({ done: true });
+      }
+    };
+  }
+};
+async function printNumbers(){
+    for await (const n of generateNumber) {
+        console.log(n);
+   }
 }
- 
-async function calculate(){
-    const value1 = await sum(5, 3);
-    console.log("Результат 1 асинхронной операции:", value1);
-    const value2 = await sum(6, 4);
-    console.log("Результат 2 асинхронной операции:", value2);
-    const value3 = await sum(7, 5);
-    console.log("Результат 3 асинхронной операции:", value3);
-}
-calculate();    
-// Результат 1 асинхронной операции: 8
-// Результат 2 асинхронной операции: 10
-// Результат 3 асинхронной операции: 12
+printNumbers();
 
-//**Асинхронная функция может содержать множество асинхронных операций, к которым применяется 
-// оператор await. В этом случае все асинхронные операции будут выполняться последовательно: */
+//простейший пример - получение чисел:
