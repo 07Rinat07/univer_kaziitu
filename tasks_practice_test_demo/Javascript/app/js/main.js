@@ -1,12 +1,15 @@
-const myPromise = new Promise(function(resolve){
+cconst myPromise = new Promise(function(resolve, reject){
     console.log("Выполнение асинхронной операции");
-    getSomeWork();      // вызов не существующей функции
-    resolve("Hello world!");
+    const parsed = parseInt("Hello");
+    if (isNaN(parsed)) { 
+        throw "Not a number";           // Генерируем ошибку
+    }
+    resolve(parsed);
 });
 myPromise.catch( function(error){
     console.log(error);
 });
-//**Поскольку функция getSomeWork() нигде не объявлена, то выполнение асинхронной задачи 
-// завершится ошибкой и не дойдет до вызова resolve("Hello world!"). Поэтому сработает функция 
-// обработки ошибок из catch(), которая через параметр error получит информацию о возникшей ошибке,
-//  и в консоли браузера мы увидим сообщение об ошибке: */
+
+//**Здесь парсится в число случайная строка. И если результат парсинга не представляет число, 
+// то с помощью оператора throw генерируем ошибку. Это придет к завершению всей функции с ошибкой. 
+// И в итоге результат будет обработан функцией catch */
