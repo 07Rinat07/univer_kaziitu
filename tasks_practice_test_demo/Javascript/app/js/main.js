@@ -1,23 +1,7 @@
-function handleResult(error, result){    
-    if(error) {     // если передана ошибка 
-        console.error(error);   
-    }  
-    else {     // если асинхронная функция завершилась успешно
-        console.log("Result:", result);    
-    }  
-}
- 
-function asyncFunction(callback) {
-    setTimeout(()=>{
-        let result = Math.floor(Math.random() * 100) + 1;
-        if(result < 50) { 
-            // если меньше 50, устанавливаем ошибку
-            callback(new Error("Некорректное значение: " + result), null);      
-        } 
-        else{
-            // в остальных случаях устанавливаем результат
-            callback(null, result);
-        }
-    }, 1000);
-}
-asyncFunction(handleResult);
+const myPromise = new Promise(function(resolve){
+    console.log("Выполнение асинхронной операции");
+    resolve("Привет мир!");
+});
+myPromise.then(function(value){
+    console.log(`Из промиса получены данные: ${value}`);
+})
