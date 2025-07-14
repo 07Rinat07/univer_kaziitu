@@ -1,17 +1,12 @@
-const promise1 = new Promise((resolve,reject) => {
-    reject("Непредвиденная ошибка");
+const promise1 = new Promise((resolve) => {
     setTimeout(resolve, 500, "Hello");
 });
-const promise2 = new Promise((resolve,reject) => {
+const promise2 = new Promise((resolve) => {
     setTimeout(resolve, 1000, "World");
 });
-  
-Promise.allSettled([promise1, promise2])
-    .then(values => {
-        const [promise1data, promise2data] = values;
-        console.log(promise1data);  // {status: "rejected", reason: "Непредвиденная ошибка"}
-        console.log(promise2data);  // {status: "fulfilled", value: "World"}
-});
+Promise.race([promise1, promise2])
+    .then(value => console.log(value))       // Hello
+    .catch(error => console.log(error));
 
-//**функция - Promise.allSettled() также как и Promise.all() принимает набор промисов и выполняет 
-// их как единое целое, но возвращает объект со статусом и результатом промиса: */
+    //**Функция Promise.race() также принимает несколько промисов, только возвращает первый
+    //  завершенный промис (вне зависимости завершился от успешно или с ошибкой): */
