@@ -1,24 +1,8 @@
-function generateNumber(str){
-    return new Promise((resolve, reject) => {
-        const parsed = parseInt(str);
-        if (isNaN(parsed)) reject("Not a number");
-        else resolve(parsed);
-    });
-};
-function printNumber(str){
-    generateNumber(str)
-    .then(value => {
-        console.log(value);
-        return "hello from then";
-    })
-    .catch(error => {
-        console.log(error);
-        return "hello from catch";
-    })
-    .finally(() => {
-        console.log("End");
-        return "hello from finally";
-    })
-    .then(message => console.log(message));
-}
-printNumber("3");
+const promise1 = new Promise((resolve,reject) => {
+    setTimeout(resolve, 1000, "Hello");
+});
+const promise2 = new Promise((resolve,reject) => {
+    setTimeout(resolve, 500, "World");
+});
+promise1.then(value => console.log(value));  // Hello
+promise2.then(value => console.log(value));  // World
