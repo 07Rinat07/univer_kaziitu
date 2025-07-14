@@ -1,8 +1,17 @@
 const promise1 = new Promise((resolve,reject) => {
-    setTimeout(resolve, 1000, "Hello");
+    reject("Непредвиденная ошибка");
+    setTimeout(resolve, 500, "Hello");
 });
 const promise2 = new Promise((resolve,reject) => {
-    setTimeout(resolve, 500, "World");
+    setTimeout(resolve, 1000, "World");
 });
-promise1.then(value => console.log(value));  // Hello
-promise2.then(value => console.log(value));  // World
+  
+Promise.allSettled([promise1, promise2])
+    .then(values => {
+        const [promise1data, promise2data] = values;
+        console.log(promise1data);  // {status: "rejected", reason: "Непредвиденная ошибка"}
+        console.log(promise2data);  // {status: "fulfilled", value: "World"}
+});
+
+//**функция - Promise.allSettled() также как и Promise.all() принимает набор промисов и выполняет 
+// их как единое целое, но возвращает объект со статусом и результатом промиса: */
