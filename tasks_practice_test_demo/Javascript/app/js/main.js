@@ -1,13 +1,10 @@
-function sum(x, y, func){ 
-    // если обработчик не установлен, то устанавливаем обработчик по умолчанию
-    if(func===undefined) func = function(value){ console.log("Результат операции:", value);};
-     
-    return new Promise(function(resolve){
-        const result = x + y;
-        resolve(result);
-    }).then(func);
-}
-sum(3, 5);
-sum(25, 4, function(value){ console.log("Сумма:", value);});
+const myPromise = new Promise(function(resolve, reject){
+    console.log("Выполнение асинхронной операции");
+    reject("Переданы некорректные данные");
+});
+myPromise.catch( function(error){
+    console.log(error);
+});
 
-//**Гибкая настройка функции */
+//**Функция catch() в качестве параметра принимает обработчик ошибки. Параметром этой функции
+// -обработчика является то значение, которое передается в reject(). */
