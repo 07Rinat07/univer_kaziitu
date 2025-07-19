@@ -5,34 +5,63 @@
     <title>METANIT.COM</title>
 </head>
 <body>
-<nav><a href="home">Home</a> | <a href="about">About</a> | <a href="contact">Contact</a></nav>
 <div id="content"></div>
 <script>
 const contentDiv = document.getElementById("content");
  
-function loadContent(fileName){
-    const xhr = new XMLHttpRequest();
-    xhr.onload = () => {
-        if (xhr.status == 200) {
-            contentDiv.innerHTML = xhr.responseText; // xhr.responseXML.body.innerHTML;
-            document.title = fileName;
-        }
-    };
-    xhr.open("GET", fileName + ".html");              // GET-запрос по адресу ссылки
-    xhr.setRequestHeader("Accept", "text/html");    // принимаем только html
-    xhr.send();     // выполняем запрос
-}
+const xhr = new XMLHttpRequest();
+xhr.onload = () => {
+    if (xhr.status == 200) {
+        const xmlDoc = xhr.responseXML;
+        const table = createTable();      
+        // выбираем все элементы user     
+        const users = xmlDoc.getElementsByTagName("user");      
+        for (let i = 0; i < users.length; i++) { 
+            const user = users[i];        
+            const userName = user.getAttribute("name"); 
+            const userAge = user.getAttribute("age"); 
+            const contact = user.querySelector("contacts email").textContent;
+            const row = createRow(userName, userAge, contact);            
+            table.appendChild(row);        
+        }      
+        contentDiv.appendChild(table);
+    }
+};
+xhr.open("GET", "/data");
+xhr.responseType = "document"; 
+xhr.setRequestHeader("Accept", "text/xml");
+xhr.send();
  
-// устанавливаем обработчик нажатия для кнопок
-const links = document.getElementsByTagName("a"); 
-for (let i = 0; i < links.length; i++) {
-    links[i].addEventListener("click", (e)=>{
-        loadContent(links[i].getAttribute("href"));
-        e.preventDefault();
-    });  
-} 
-// по умолчанию загружаем компонент home
-loadContent("home");
+// создаем таблицу
+function createTable() {  
+    const table = document.createElement("table");   
+    const headerRow = document.createElement("tr");  
+    const nameColumnHeader = document.createElement("th");  
+    const ageColumnHeader = document.createElement("th");  
+    const contactColumnHeader = document.createElement("th");
+    nameColumnHeader.appendChild(document.createTextNode("Name"));  
+    ageColumnHeader.appendChild(document.createTextNode("Age"));  
+    contactColumnHeader.appendChild(document.createTextNode("Contacts"));  
+    headerRow.appendChild(nameColumnHeader);  
+    headerRow.appendChild(ageColumnHeader);  
+    headerRow.appendChild(contactColumnHeader);
+    table.appendChild(headerRow);
+    return table;
+}
+// создаем одну строку для таблицы
+function createRow(userName, userAge, userContact) {  
+    const row = document.createElement("tr");  
+    const nameColumn = document.createElement("td");  
+    const ageColumn = document.createElement("td");  
+    const contactColumn = document.createElement("td");  
+    nameColumn.appendChild(document.createTextNode(userName));  
+    ageColumn.appendChild(document.createTextNode(userAge));  
+    contactColumn.appendChild(document.createTextNode(userContact));  
+    row.appendChild(nameColumn);  
+    row.appendChild(ageColumn);  
+    row.appendChild(contactColumn);  
+    return row;
+}
 </script>
 </body>
 </html>
