@@ -5,33 +5,17 @@
     <title>METANIT.COM</title>
 </head>
 <body>
-<form id="myForm" method="post" action="/user">
-<p>
-    <label>User Name:</label><br>
-    <input name="name" />
-</p>
-<p>
-    <label>User Age:</label><br>
-    <input name="age" />
-</p>
-<input type="submit" value="Send" />
-</form>
 <script>
-// данные для отправки
-const myForm = document.getElementById("myForm");
-myForm.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    const formData = new FormData(myForm);
- 
-    const xhr = new XMLHttpRequest();  
-    xhr.onload = () => {
-        if (xhr.status == 200) { 
-            console.log(xhr.responseText);
-        }
-    };
-    xhr.open("POST", "user", true);  
-    xhr.send(formData);
-});
+getText();
+async function getText() {
+    // получаем объект ответа
+    const response = await fetch("/hello");
+    // из объекта ответа извлекаем текст ответа
+    const responseText = await response.text();
+    console.log(responseText);
+}
+//*функция fetch() возвращает Promise, то вместо нанизывания методов then()
+// мы можем использовать операторы async/await для извлечения ответа.
 </script>
 </body>
 </html>
