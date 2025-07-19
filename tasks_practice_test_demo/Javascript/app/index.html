@@ -5,29 +5,33 @@
     <title>METANIT.COM</title>
 </head>
 <body>
+<form id="myForm" method="post" action="/user">
+<p>
+    <label>User Name:</label><br>
+    <input name="name" />
+</p>
+<p>
+    <label>User Age:</label><br>
+    <input name="age" />
+</p>
+<input type="submit" value="Send" />
+</form>
 <script>
 // данные для отправки
-const tom = {
-    name: "Tom",
-    age: 37
-};
-// кодируем объект в формат json
-const data = JSON.stringify(tom);
-const xhr = new XMLHttpRequest();
+const myForm = document.getElementById("myForm");
+myForm.addEventListener("submit", (e)=>{
+    e.preventDefault();
+    const formData = new FormData(myForm);
  
-xhr.onload = () => {
-    if (xhr.status == 200) { 
-        const user = JSON.parse(xhr.responseText)
-        console.log(user.name, "-", user.age);
-    } else {
-        console.log("Server response: ", xhr.statusText);
-    }
-};
- 
-xhr.open("POST", "/user");
-xhr.setRequestHeader("Content-Type", "application/json");
- 
-xhr.send(data);
+    const xhr = new XMLHttpRequest();  
+    xhr.onload = () => {
+        if (xhr.status == 200) { 
+            console.log(xhr.responseText);
+        }
+    };
+    xhr.open("POST", "user", true);  
+    xhr.send(formData);
+});
 </script>
 </body>
 </html>
