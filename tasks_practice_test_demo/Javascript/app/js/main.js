@@ -1,22 +1,10 @@
-const generateNumber = {
-  [Symbol.asyncIterator]() {
-    return {
-      current: 0,
-      end: 10,
-      next() {
-        if (this.current <= this.end) {
-          return Promise.resolve({ value: this.current++, done: false });
-        }
-        return Promise.resolve({ done: true });
-      }
-    };
-  }
-};
-async function printNumbers(){
-    for await (const n of generateNumber) {
-        console.log(n);
-   }
+async function* generatePersonAsync(people){
+    for(const person of people)
+        yield await new Promise(resolve => setTimeout(() => resolve(person), 2000));
 }
-printNumbers();
-
-//простейший пример - получение чисел:
+async function printPeopleAsync(people){
+    for await (const item of generatePersonAsync(people)) {
+        console.log(item); 
+    }
+}
+printPeopleAsync(["Tom", "Sam", "Bob"]);
