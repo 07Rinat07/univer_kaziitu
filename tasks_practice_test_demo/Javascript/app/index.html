@@ -12,16 +12,13 @@ const contentDiv = document.getElementById("content");
 const xhr = new XMLHttpRequest();
 xhr.onload = () => {
     if (xhr.status == 200) {
-        const xmlDoc = xhr.responseXML;
+        const json = xhr.response;
         const table = createTable();      
         // выбираем все элементы user     
-        const users = xmlDoc.getElementsByTagName("user");      
+        const users = json.users;      
         for (let i = 0; i < users.length; i++) { 
             const user = users[i];        
-            const userName = user.getAttribute("name"); 
-            const userAge = user.getAttribute("age"); 
-            const contact = user.querySelector("contacts email").textContent;
-            const row = createRow(userName, userAge, contact);            
+            const row = createRow(user.name, user.age, user.contacts.email);
             table.appendChild(row);        
         }      
         contentDiv.appendChild(table);
