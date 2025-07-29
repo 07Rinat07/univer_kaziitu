@@ -1,4 +1,6 @@
-const messages = require("./messages");
-  
-messages.getMorningMessage();
-messages.getEveningMessage();
+const greeting = require("./greeting");
+ 
+global.username = "testName";
+ 
+global.console.log(date);
+greeting.printMessage();
