@@ -1,6 +1,9 @@
-// получаем только функцию printMessage
-const User = require("./user.js");
+const greeting1 = require("./greeting.js");
+console.log(`Hello ${greeting1.name}`); //Hello Alice
  
-const eugene = new User("Rinat", 46);
-eugene.print();
-eugene.sayHi();
+const greeting2 = require("./greeting.js");
+greeting2.name= "Bob";
+ 
+console.log(`Hello ${greeting2.name}`); //Hello Bob
+// greeting1.name тоже изменилось
+console.log(`Hello ${greeting1.name}`); //Hello Bob
