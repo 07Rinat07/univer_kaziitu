@@ -1,10 +1,11 @@
-const nodePath = process.argv[0];
-const appPath = process.argv[1];
-const username = process.argv[2];
-const userage = process.argv[3];
-  
-console.log("nodePath:", nodePath);
-console.log("appPath:", appPath);
-console.log();
-console.log("name:", username);
-console.log("age:", userage);
+const express = require("express"); // получаем модуль express
+// создаем приложение express
+const app = express();
+ 
+// устанавливаем обработчик для маршрута "/"
+app.get("/", function(_, response){
+ 
+    response.end("Hello test.COM");
+});
+// начинаем прослушивание подключений на 3000 порту
+app.listen(3000, function(){ console.log("Сервер начал принимать запросы по адресу http://localhost:3000")});
