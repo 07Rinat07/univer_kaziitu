@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Vue 3</title>
+<title>Изучаем Vue 3</title>
 <meta charset="utf-8" />
 </head>
 <body>
 <div id="app">
-    <p>{{name}} - {{age}}</p>
+    <div v-text="name"></div>
+    <div v-text="age"></div>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
-Vue.createApp({
+const vueApp = Vue.createApp({
   data() {
     return { name: "Tom", age: 36 }
   }
-}).mount("#app");
+}).mount('#app');
 </script>
 </body>
 </html>
