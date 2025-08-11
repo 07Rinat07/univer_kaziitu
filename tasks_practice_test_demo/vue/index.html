@@ -1,28 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Изучаем Vue 3</title>
+<title>Vue 3</title>
 <meta charset="utf-8" />
 </head>
 <body>
 <div id="app">
-    <input type="text" v-on:input="setMessage" />
-    <p>{{message}}</p>
+    <p>{{name}} - {{age}}</p>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 Vue.createApp({
   data() {
-    return {
-      message: 'Test Vue 3!'
-    }
-  },
-  methods: {
-    setMessage(event) {
-      this.message = event.target.value;
-    }
+    return { name: "Tom", age: 36 }
   }
-}).mount('#app');
+}).mount("#app");
 </script>
 </body>
 </html>
