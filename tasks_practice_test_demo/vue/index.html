@@ -6,15 +6,23 @@
 </head>
 <body>
 <div id="app">
-    <p>Ширина: <input type="number" v-model="width" placeholder="Введите ширину" /></p>
-    <p>Высота: <input type="number" v-model="height" placeholder="Введите высоту" /></p>
-    <p>Площаль прямоугольника: {{ width * height }}</p>
+    <input type="text" v-model="name" />
+    <input type="text" v-model="age" />
+    <p>Имя: {{name}}   Возраст {{age}}</p>
+    <p>{{checkAge()}}</p>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
-const vueApp = Vue.createApp({
+Vue.createApp({
   data() {
-    return {width: 20, height: 10}
+    return {name:'Tom', age:25}
+  },
+  methods:{
+    checkAge: function(){
+        console.log("checkAge");
+        if(this.age > 18) return "доступ разрешен";
+        else return "доступ запрещен";
+    }
   }
 }).mount('#app');
 </script>
