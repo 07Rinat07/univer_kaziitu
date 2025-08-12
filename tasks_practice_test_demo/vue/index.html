@@ -10,12 +10,20 @@
     <input type="text" v-model="age" />
     <p>Имя: {{name}}   Возраст {{age}}</p>
     <p>{{checkAge()}}</p>
+    <p>{{enabled}}</p>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 Vue.createApp({
   data() {
     return {name:'Tom', age:25}
+  },
+  computed:{
+    enabled: function(){
+        console.log("computed");
+        if(this.age > 18) return "доступ разрешен";
+        else return "доступ запрещен";
+    }
   },
   methods:{
     checkAge: function(){
