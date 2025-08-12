@@ -6,15 +6,23 @@
 </head>
 <body>
 <div id="app">
-    <button v-on:click="counter++">+</button>
+    <button v-on:click="increase(4)">+</button>
     <span>{{counter}}</span>
-    <button v-on:click="if(counter>0) counter--;">-</button>
+    <button v-on:click="decrease(2)">-</button>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 const vueApp = Vue.createApp({
   data() {
     return {counter:0}
+  },
+  methods:{
+    increase(n){
+        this.counter = this.counter + n;
+    },
+    decrease(n){
+        if(this.counter>0) this.counter = this.counter - n;
+    }
   }
 }).mount('#app');
 </script>
