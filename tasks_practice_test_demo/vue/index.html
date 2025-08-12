@@ -6,9 +6,9 @@
 </head>
 <body>
 <div id="app">
-    <button v-on:click="increase(4)">+</button>
+    <button v-on:click="increase($event)">+</button>
     <span>{{counter}}</span>
-    <button v-on:click="decrease(2)">-</button>
+    <button v-on:click="decrease($event)">-</button>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
@@ -17,11 +17,13 @@ const vueApp = Vue.createApp({
     return {counter:0}
   },
   methods:{
-    increase(n){
-        this.counter = this.counter + n;
+    increase(event){
+        console.log(event);
+        this.counter++;
     },
-    decrease(n){
-        if(this.counter>0) this.counter = this.counter - n;
+    decrease(event){
+        console.log(event);
+        if(this.counter>0) this.counter--;
     }
   }
 }).mount('#app');
