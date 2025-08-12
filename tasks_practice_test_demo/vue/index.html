@@ -6,17 +6,16 @@
 </head>
 <body>
 <div id="app">
-    <p v-once>{{message}}</p>
+    <div v-html="message"></div>
+    <div>{{message}}</div>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 const vueApp = Vue.createApp({
   data() {
-    return { message:'Hello'}
+    return { message:'<h2>Hello</h2>'}
   }
 }).mount('#app');
-vueApp.message = "Good bye";
-console.log(vueApp.message); // Good bye
 </script>
 </body>
 </html>
