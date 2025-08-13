@@ -7,10 +7,10 @@
 <body>
 <div id="app">
     <ul>
-        <li v-for="user in users">
-            <p v-for="(value,key) in user">{{key}} : {{value}}</p>
-        </li>
-          
+        <template v-for="user in users">
+            <li>Name: {{user.name}}</li>
+            <li>Age: {{user.age}}</li>
+        </template>
     </ul>
 </div>
 <script src="https://unpkg.com/vue"></script>
