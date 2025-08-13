@@ -6,17 +6,22 @@
 </head>
 <body>
 <div id="app">
-    <div v-show="visible">
-        <h2>Заголовок</h2>
-        <p>Текст</p>
-    </div>
-    <button v-on:click="visible=!visible">{{visible?'Скрыть':'Отобразить'}}</button>
+    <ul>
+        <li v-for="user in users">
+            <p>Имя: {{user.name}}</p>
+            <p>Возраст: {{user.age}}</p>
+        </li>
+    </ul>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 Vue.createApp({
   data() {
-    return { visible: true}
+    return { users: [
+                    {name:'Tom', age:22}, 
+                    {name:'Bob', age:31}, 
+                    {name: 'Sam', age:28}
+            ]}
   }
 }).mount('#app');
 </script>
