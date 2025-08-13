@@ -7,10 +7,10 @@
 <body>
 <div id="app">
     <ul>
-        <template v-for="user in users">
-            <li>Name: {{user.name}}</li>
-            <li>Age: {{user.age}}</li>
-        </template>
+        <li v-for="user in users" v-if="user.age > 25">
+            <p>Name: {{user.name}}</p>
+            <p>Age: {{user.age}}</p>
+        </li>
     </ul>
 </div>
 <script src="https://unpkg.com/vue"></script>
