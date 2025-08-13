@@ -6,11 +6,14 @@
 </head>
 <body>
 <div id="app">
+    <p>
+        <input type="text" v-model="newPhone" />
+        <button v-on:click="phones.push(newPhone)">Добавить</button>
+    </p>
     <ul>
-        <li v-for="user in users" v-if="user.age > 25">
-            <p>Name: {{user.name}}</p>
-            <p>Age: {{user.age}}</p>
-        </li>
+      <li v-for="(phone, index) in phones">
+        <p>{{ phone }} <button v-on:click="phones.splice(index, 1)">Удалить</button></p>
+      </li>
     </ul>
 </div>
 <script src="https://unpkg.com/vue"></script>
@@ -18,11 +21,8 @@
 Vue.createApp({
   data() {
     return { 
-        users: [
-            {name:'Tom', age:22}, 
-            {name:'Bob', age:31}, 
-            {name: 'Sam', age:28}
-    ]}
+        newPhone: '',
+        phones: ['iPhone 12', 'Galaxy S20', 'Nokia N9', 'Xiaomi Mi10']}
   }
 }).mount('#app');
 </script>
