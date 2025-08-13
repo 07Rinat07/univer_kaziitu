@@ -3,35 +3,34 @@
 <head>
 <title>Изучаем Vue 3</title>
 <meta charset="utf-8" />
+<style>
+.region{
+    background-color: #999;
+    width: 100px;
+    height: 100px;
+    display: inline-block;
+    margin: 10px;
+}
+.active{
+    background-color:red;
+}
+.bounded{
+    border: 2px solid green;
+}
+</style>
 </head>
 <body>
 <div id="app">
-    <p>Введите возраст: <input  v-model="age"></p>
-    <p>{{ result}}</p>
+    <div class="region" v-bind:class="{active: isActive, bounded: isBounded}"></div>
+    <button @click="isActive=!isActive">Toggle color</button>
+    <button @click="isBounded=!isBounded">Toggle border</button>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 Vue.createApp({
   data() {
-    return { age: 0, result: '' }
-  },
-  watch: {
-    age: function (newAge) {
-                if(newAge > 0 && newAge < 110){
-                    this.check(newAge);
-                }
-            }
-        },
-        methods:{
-            check: function(value){
-                this.result = 'Пожалуйста, подождите. Идет проверка...';
-                const vm = this;
-                setTimeout(function(){
-                    if(value > 18) vm.result = 'Доступ открыт';
-                    else vm.result = 'Для возраста ' + value + ' доступ закрыт';
-                }, 2000);
-            }
-        }
+    return {isActive : false, isBounded: false}
+  }
 }).mount('#app');
 </script>
 </body>
