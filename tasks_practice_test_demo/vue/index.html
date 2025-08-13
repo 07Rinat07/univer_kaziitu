@@ -1,24 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>$refs в Vue 3</title>
+<title>Изучаем Vue 3</title>
 <meta charset="utf-8" />
 </head>
 <body>
+<h3>Жизненный цикл Vue 3</h3>
 <div id="app">
-    <h2 ref="header">Hello world!</h2>
-    <button v-on:click="change">Change</button>
+    <h2>{{message}}</h2>
+    <button @click="message='Updated'">Update</button>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
-Vue.createApp({
-    methods:{
-        change(){
-            this.$refs.header.innerText = "Welcome to Vue 3";
-        }
+const vueApp = Vue.createApp({
+  data() {
+    return {message: 'Welcome to Vue.js'}
+  },
+  methods:{
+      // методы-обработчики событий жизненного цикла
+      // помещаются вне параметра methods
+    },
+    beforeCreate(){
+        console.log('beforeCreate()');
+    },
+    created(){
+        console.log('created()');
+    },
+    beforeMount(){
+        console.log('beforeMount()');
+    },
+    mounted(){
+        console.log('mounted()');
+    },
+    beforeUpdate(){
+        console.log('beforeUpdate()');
+    },
+    updated(){
+        console.log('updated()');
+    },
+    beforeUnmount(){
+        console.log('beforeUnmount()');
+    },
+    unmounted(){
+        console.log('unmounted()');
     }
-})
-.mount('#app');
+});
+vueApp.mount('#app');
+setTimeout(() => vueApp.unmount('#app'), 10000)
 </script>
 </body>
 </html>
