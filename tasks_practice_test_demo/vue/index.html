@@ -1,41 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Изучаем Vue 3</title>
+<title>$refs в Vue 3</title>
 <meta charset="utf-8" />
 </head>
 <body>
 <div id="app">
-    <div class="region" v-bind:style="[colorStyle, sizeStyle]"></div>
-    <br><br>
-    <input type="text" v-model="color" />
-    <br><br>
-    <input type="number" v-model="width" />
-    <br><br>
-    <input type="number" v-model="height" />
+    <h2 ref="header">Hello world!</h2>
+    <button v-on:click="change">Change</button>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 Vue.createApp({
-  data() {
-    return {
-            color: 'red',
-            width: 75,
-            height: 75
-     }
-  },
-    computed:{
-        colorStyle(){
-            return { 'background-color': this.color }
-        },
-        sizeStyle(){
-            return {
-                height: this.height + 'px', 
-                width: this.width + 'px'
-            }
+    methods:{
+        change(){
+            this.$refs.header.innerText = "Welcome to Vue 3";
         }
     }
-}).mount('#app');
+})
+.mount('#app');
 </script>
 </body>
 </html>
