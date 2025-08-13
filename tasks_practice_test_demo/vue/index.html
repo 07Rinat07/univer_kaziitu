@@ -7,8 +7,8 @@
 <body>
 <div id="app">
     <p v-if="visible">Первый параграф</p>
-    <p>Второй параграф</p>
-    <button v-on:click="visible=!visible">{{visible?'Скрыть':'Показать'}}</button>
+    <p v-else>Второй параграф</p>
+    <button v-on:click="visible=!visible">{{visible?'К параграфу 2':'К параграфу 1'}}</button>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
