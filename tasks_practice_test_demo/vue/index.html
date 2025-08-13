@@ -7,14 +7,22 @@
 <body>
 <div id="app">
     <ul>
-        <li v-for="(user, index) in users">{{index + 1}}. {{user}}</li>
+        <li v-for="user in users">
+            <p v-for="(value,key) in user">{{key}} : {{value}}</p>
+        </li>
+          
     </ul>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 Vue.createApp({
   data() {
-    return { users: ['Tom', 'Bob', 'Sam']}
+    return { 
+        users: [
+            {name:'Tom', age:22}, 
+            {name:'Bob', age:31}, 
+            {name: 'Sam', age:28}
+    ]}
   }
 }).mount('#app');
 </script>
