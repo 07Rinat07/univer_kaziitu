@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Изучаем Vue 3</title>
+<title> for testing Vue 3</title>
 <meta charset="utf-8" />
 </head>
 <body>
 <div id="app">
-    <p>
-        <input type="text" v-model="newPhone" />
-        <button v-on:click="phones.push(newPhone)">Добавить</button>
-    </p>
+    <input v-model="start" type="number" />
+    <input v-model="end" type="number" />
     <ul>
-      <li v-for="(phone, index) in phones">
-        <p>{{ phone }} <button v-on:click="phones.splice(index, 1)">Удалить</button></p>
+      <li v-for="phone in visibleList">
+      <p>{{ phone }}</p>
       </li>
     </ul>
 </div>
@@ -21,8 +19,14 @@
 Vue.createApp({
   data() {
     return { 
-        newPhone: '',
+        start:0,
+        end:3,
         phones: ['iPhone 12', 'Galaxy S20', 'Nokia N9', 'Xiaomi Mi10']}
+  },
+  computed:{
+    visibleList(){
+        return this.phones.slice(this.start,this.end);
+    }
   }
 }).mount('#app');
 </script>
