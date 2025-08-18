@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Изучаем Vue 3</title>
-<meta charset="utf-8" />
-</head>
-<body>
 <div id="app">
-    <template v-for="user in users">
-        <input type="checkbox" v-bind:value="user" v-model="selectedUsers">
-        <label>{{user.name}}</label><br>
-    </template>
-      
+    <select v-model="selectedUsers" multiple>
+         <option v-for="user in users" v-bind:value="user">{{user.name}}</option>
+    </select>
+    <h3>Выбранные объекты</h3>
     <ul>
         <li v-for="user in selectedUsers">{{user.name}} - {{user.age}}</li>
     </ul>
@@ -31,5 +23,3 @@ Vue.createApp({
   }
 }).mount('#app');
 </script>
-</body>
-</html>
