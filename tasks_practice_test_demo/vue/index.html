@@ -3,52 +3,39 @@
 <head>
 <title>Изучаем Vue 3</title>
 <meta charset="utf-8" />
-<style>
-a:hover{cursor:pointer;}
-</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 </head>
 <body>
-<div id="app">
-    <table>
-      <tr>
-        <td><a @click="sortParam='title'">Модель</a></td>
-        <td><a @click="sortParam='company'">Компания</a></td>
-        <td><a @click="sortParam='price'">Цена</a></td>
-      </tr>
-      <tr v-for="phone in sortedList">
-        <td>{{phone.title}}</td><td>{{phone.company}}</td><td>{{phone.price}}</td>
-      </tr>
-    </table>
+<div id="app" class="col-md-4">
+    <label>Логин</label>
+    <input type="text" v-model="login" placeholder="Введите логин" class="form-control" /><br>
+    <label>Пароль</label>
+    <input type="password" v-model="password" placeholder="Введите пароль" class="form-control" /><br>
+    <label>Возраст</label>
+    <input type="number" v-model="age" min="18" placeholder="Введите возраст" class="form-control" /><br>
+    <label>Дата регистрации</label><br>
+    <input type="date" v-model="date" placeholder="Введите дату" class="form-control" />
+    <br>
+    <div>
+        <h3>Введенная информация</h3>
+        <p>Логин: {{login}}</p>
+        <p>Пароль: {{password}}</p>
+        <p>Возраст: {{age}}</p>
+        <p>Дата регистрации: {{date}}</p>
+    </div>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 Vue.createApp({
   data() {
     return { 
-        sortParam: '',
-        phones: [
-                {title:'iPhone 12', company:'Apple', price: 65000},
-                {title:'Galaxy S20', company:'Samsung', price: 63000},
-                {title:'Galaxy A10', company:'Samsung', price: 38000},
-                {title:'iPhone 10', company:'Apple', price: 45000},
-                {title:'Xiaomi Redmi 8', company:'Xiaomi', price: 42000}]
-    }
-  },
-  computed:{
-    sortedList () {
-        switch(this.sortParam){
-            case 'title': return this.phones.sort(sortByTitle);
-            case 'company': return this.phones.sort(sortByCompany);
-            case 'price': return this.phones.sort(sortByPrice);
-            default: return this.phones;
-        }
+        login:'',
+        password:'',
+        date: '',
+        age: 22
     }
   }
 }).mount('#app');
- 
-const sortByTitle = (d1, d2) => (d1.title.toLowerCase() >= d2.title.toLowerCase()) ? 1 : -1;
-const sortByCompany = (d1, d2) => (d1.company.toLowerCase() >= d2.company.toLowerCase()) ? 1 : -1;
-const sortByPrice = (d1, d2) =>(d1.price >= d2.price) ? 1 : -1;
 </script>
 </body>
 </html>
