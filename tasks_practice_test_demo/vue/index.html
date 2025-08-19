@@ -1,14 +1,2 @@
-<div id="app">
-    <input v-model.trim="message">
-    <span>Введено: {{message}}</span>
-</div>
-<script src="https://unpkg.com/vue"></script>
-<script>
-Vue.createApp({
-  data() {
-    return { 
-        message: ''
-    }
-  }
-}).mount('#app');
-</script>
+<input v-model.lazy.trim="message">
+<input v-model.lazy.number="age" type="number">
