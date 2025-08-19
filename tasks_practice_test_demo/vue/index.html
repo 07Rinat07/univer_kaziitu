@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Изучаем Vue 3</title>
+<title>Компоненты Vue 3</title>
 <meta charset="utf-8" />
 </head>
 <body>
 <div id="app">
-    <hello></hello>
-    <hello></hello>
+    <component-a></component-a>
+    <component-b></component-b>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 const app = Vue.createApp({});
  
-app.component('new comment Hey bro!', {
-    template: '<h2>Hello</h2>'
+app.component('component-a', {
+    template: '<h2>Component A</h2>'
+});
+app.component('component-b', {
+    template: '<h2>Component B</h2>'
 });
 app.mount('#app');
 </script>
