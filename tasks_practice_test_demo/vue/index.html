@@ -6,20 +6,21 @@
 </head>
 <body>
 <div id="app">
-    <input type="text" v-model="welcome" /><br><br>
-    <message-comp v-bind:message="welcome"></message-comp>
+    <input type="text" v-model="name" /><br><br>
+    <input type="number" v-model.number="age" /><br><br>
+    <user :name="name" :age="age"></user>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 const app = Vue.createApp({
     data(){
-        return {welcome: ''}
+        return { name: '', age: 18 }
     }
 });
  
-app.component('message-comp', {
-  props: ['message'],
-  template: '<h2>{{message}}</h2>'
+app.component('user', {
+  props: ['name', 'age'],
+  template: '<div><h2>User</h2><p>Name: {{name}}</p><p>Age: {{age}}</p></div>'
 });
 app.mount('#app');
 </script>
