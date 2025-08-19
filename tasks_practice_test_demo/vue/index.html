@@ -6,18 +6,18 @@
 </head>
 <body>
 <div id="app">
-    <component-a></component-a>
-    <component-b></component-b>
+    <counter></counter>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 const app = Vue.createApp({});
- 
-app.component('component-a', {
-    template: '<h2>Component A</h2>'
-});
-app.component('component-b', {
-    template: '<h2>Component B</h2>'
+app.component('counter', {
+    data(){
+        return {
+            header: 'Counter Program'
+        }
+    },
+    template:'<div><h2>{{header}}</h2></div>'
 });
 app.mount('#app');
 </script>
