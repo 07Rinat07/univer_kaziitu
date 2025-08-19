@@ -1,23 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Изучаем Vue 3</title>
-<meta charset="utf-8" />
-</head>
-<body>
 <div id="app">
-    <input v-model.lazy="name" class="form-control" />
-    <span>Введено: {{name}}</span>
+    <input v-model.number="age" type="number">
+    <span>Введено: {{age}}</span>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 Vue.createApp({
   data() {
     return { 
-        name:''
+        age: 0
     }
   }
 }).mount('#app');
 </script>
-</body>
-</html>
