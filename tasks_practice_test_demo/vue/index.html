@@ -6,33 +6,16 @@
 </head>
 <body>
 <div id="app">
-    <counter></counter>
-    <counter></counter>
+    <message-comp message="hello"></message-comp>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
-let globalData = {
-        header: 'Counter Program',
-        count:0
-};
 const app = Vue.createApp({});
-app.component('counter', {
-    data(){
-        return {
-            header: 'Counter Program',
-            count:0
-        };
-    },
-    template:`<div><h2>{{header}}</h2>
-                <button v-on:click="increase">+</button>
-                <span>{{count}}</span>
-            </div>`,
-    methods:{
-        increase:function(){
-            this.count++;
-        }
-    }
-});
+ 
+app.component('message-comp', {
+    props: ['message'],
+    template: '<h2>{{ message }}</h2>'
+})
 app.mount('#app');
 </script>
 </body>
