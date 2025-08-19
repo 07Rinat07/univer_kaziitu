@@ -14,10 +14,19 @@ const app = Vue.createApp({});
 app.component('counter', {
     data(){
         return {
-            header: 'Counter Program'
+            header: 'Counter Program',
+            count:0
         }
     },
-    template:'<div><h2>{{header}}</h2></div>'
+    template:`<div><h2>{{header}}</h2>
+                <button v-on:click="increase">+</button>
+                <span>{{count}}</span>
+            </div>`,
+    methods:{
+        increase:function(){
+            this.count++;
+        }
+    }
 });
 app.mount('#app');
 </script>
