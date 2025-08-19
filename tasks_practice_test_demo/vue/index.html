@@ -1,2 +1,22 @@
-<input v-model.lazy.trim="message">
-<input v-model.lazy.number="age" type="number">
+<!DOCTYPE html>
+<html>
+<head>
+<title>Изучаем Vue 3</title>
+<meta charset="utf-8" />
+</head>
+<body>
+<div id="app">
+    <hello></hello>
+    <hello></hello>
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+const app = Vue.createApp({});
+ 
+app.component('new comment Hey bro!', {
+    template: '<h2>Hello</h2>'
+});
+app.mount('#app');
+</script>
+</body>
+</html>
