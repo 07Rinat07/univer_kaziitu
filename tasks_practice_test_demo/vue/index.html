@@ -1,13 +1,13 @@
 <div id="app">
-    <input v-model.number="age" type="number">
-    <span>Введено: {{age}}</span>
+    <input v-model.trim="message">
+    <span>Введено: {{message}}</span>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 Vue.createApp({
   data() {
     return { 
-        age: 0
+        message: ''
     }
   }
 }).mount('#app');
