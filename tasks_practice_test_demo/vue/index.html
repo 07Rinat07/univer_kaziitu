@@ -7,13 +7,13 @@
 <body>
 <div id="app">
     <h2>Список пользователей</h2>
-    <userform :user="user"></userform>
+    <userform :addfn="add"></userform>
     <div>
         <useritem v-for="(user, index) in users"
-                    :key="index"
                     :user="user"
+                    :key="index"
                     :index="index"
-                    v-on:userchange="change">
+                    :removefn="remove">
         </useritem>
     </div>
 </div>
@@ -26,39 +26,39 @@ const app = Vue.createApp({
                 {name: 'Tom', age: 23},
                 {name: 'Bob', age: 26},
                 {name: 'Alice', age: 28}
-            ],
-            user:{}
+            ]
         }  
     },
-     
     methods:{
-        change(index){
-            this.user = this.users[index];
+        remove(index){
+            this.users.splice(index, 1);
+        },
+        add(user){
+            this.users.push(user);
         }
     }
 });
  
 app.component('userform', {
-    props: ["user"],
+    props: ["addfn"],
+    data() {
+        return {
+            user: {name:'', age:18}
+        }
+    },
     template: `<div>
                     <input type="text" v-model="user.name" />
                     <input type="number" v-model="user.age" />
-                </div>`,
+                    <button  v-on:click="addfn({name:user.name, age: user.age})">Add</button>
+                </div>`
 });
- 
 app.component('useritem', {
-    props: ["user", "index"],
+    props: ["user", "index", "removefn"],
     template: `<div>
                     <p>Name: {{user.name}} <br> Age: {{user.age}}</p>
-                    <button  v-on:click="userChange(index)">Change</button>
-                </div>`,
-    methods: {
-        userChange(index){
-            this.$emit('userchange', index);
-        }
-    }
+                    <button  v-on:click="removefn(index)">Delete</button>
+                </div>`
 });
- 
 app.mount('#app');
 </script>
 </body>
