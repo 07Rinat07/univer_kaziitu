@@ -6,38 +6,30 @@
 </head>
 <body>
 <div id="app">
-    <input type="text" v-model="name" /><br><br>
-    <input type="number" v-model.number="age" /><br><br>
-    <user :name="name" :age="age"></user>
+    <input type="text" v-model="user.name" /><br><br>
+    <input type="number" v-model.number="user.age" /><br><br>
+    <user-info v-bind:user="user"></user-info>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 const app = Vue.createApp({
     data(){
-        return { name: '', age: 18 }
+        return { 
+            user: {
+                name: 'Tom',
+                age: 18
+            }
+        }
     }
 });
   
-app.component('user', {
-  props: {
-    name: {
-        type: String,
-        required: true,
-        default: 'Tom',
-        validator: function(value){
-            return value!='admin' && value!='';
-        }
-      }, 
-      age: {
-        type: Number,
-        required: true,
-        default: 18,
-        validator: function(value){
-            return value >= 0 && value < 100;
-        }
-    }
-  },
-  template: '<div><h2>User</h2><p>Name: {{name}}</p><p>Age: {{age}}</p></div>'
+app.component('user-info', {
+  props: ["user"],  //как альтернатива  props: {user: Object}
+  template: `<div>
+                <h2>User</h2>
+                <p>Name: {{user.name}}</p>
+                <p>Age: {{user.age}}</p>
+            </div>`
 });
 app.mount('#app');
 </script>
