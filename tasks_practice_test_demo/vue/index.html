@@ -6,23 +6,35 @@
 </head>
 <body>
 <div id="app">
-    <div><h3>Vue App</h3><input type="text" v-model="name" /><p>Hello {{name}}</p></div>
-    <user-edit :user="name"></useredit>
+    <h2>Hello, {{name}}</h2>
+    <useredit :user="name" v-on:userchange="change"></useredit>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 const app = Vue.createApp({
     data(){
-        return {  name: 'Tom' }
+        return {
+            name: 'Tom'
+        }  
+    },
+    methods:{
+        change(value){
+            this.name = value;
+        }
     }
 });
-  
-app.component('user-edit', {
+ 
+app.component('useredit', {
     props: ["user"],
     data() {
       return { userName: this.user}
     },
-    template: '<div><h3>Component</h3><input type="text" v-model="userName" /><p>User name: {{userName}}</p></div>'
+    template: '<div><input type="text" v-model="userName" v-on:input="onUserChange" /><p>Name: {{userName}}</p></div>',
+    methods: {
+        onUserChange(){
+            this.$emit('userchange', this.userName);
+        }
+    }
 });
 app.mount('#app');
 </script>
