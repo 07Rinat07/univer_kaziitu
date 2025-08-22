@@ -6,58 +6,53 @@
 </head>
 <body>
 <div id="app">
-    <h2>Список пользователей</h2>
-    <userform :addfn="add"></userform>
-    <div>
-        <useritem v-for="(user, index) in users"
-                    :user="user"
-                    :key="index"
-                    :index="index"
-                    :removefn="remove">
-        </useritem>
-    </div>
+    <h2>User</h2>
+    <useredit :name="user" @userchange="change"></useredit>
+    <userinfo :name="user" @userreset="reset"></userinfo>
 </div>
 <script src="https://unpkg.com/vue"></script>
 <script>
 const app = Vue.createApp({
     data(){
         return {
-            users:[
-                {name: 'Tom', age: 23},
-                {name: 'Bob', age: 26},
-                {name: 'Alice', age: 28}
-            ]
+            user:'Tom'
         }  
     },
     methods:{
-        remove(index){
-            this.users.splice(index, 1);
+        change(name){
+            this.user = name;
         },
-        add(user){
-            this.users.push(user);
-        }
+        reset(){
+            this.user = 'Tom';
+        },
     }
 });
  
-app.component('userform', {
-    props: ["addfn"],
-    data() {
-        return {
-            user: {name:'', age:18}
+app.component('useredit', { 
+    props: ["name"],
+    template: '<div><input v-model="username" /><button @click="save">Save</button></div>',
+    data(){ 
+        return { username: this.name }
+    },
+    watch: { 
+        name(newVal) {
+          this.username = newVal;
         }
     },
-    template: `<div>
-                    <input type="text" v-model="user.name" />
-                    <input type="number" v-model="user.age" />
-                    <button  v-on:click="addfn({name:user.name, age: user.age})">Add</button>
-                </div>`
+    methods:{
+        save(){
+            this.$emit("userchange", this.username);
+        }
+    }
 });
-app.component('useritem', {
-    props: ["user", "index", "removefn"],
-    template: `<div>
-                    <p>Name: {{user.name}} <br> Age: {{user.age}}</p>
-                    <button  v-on:click="removefn(index)">Delete</button>
-                </div>`
+app.component('userinfo', { 
+    props: ["name"],
+    template: `<div><p>Имя: {{name}}</p><button @click="reset">Reset</button></div>`,
+    methods:{
+        reset(){
+            this.$emit("userreset");
+        }
+    }
 });
 app.mount('#app');
 </script>
