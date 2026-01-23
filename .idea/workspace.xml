@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f7564f86-fee4-4bc2-9d8a-4ae40a6d9924" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Справка с Универа 2026 (2).pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Справка с Универа 2026.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Справка с Универа 2026.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/справка с Универа1.pdf" beforeDir="false" />
-    </list>
+    <list default="true" id="f7564f86-fee4-4bc2-9d8a-4ae40a6d9924" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,7 +68,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1767807054970</updated>
-      <workItem from="1767807058607" duration="1446000" />
+      <workItem from="1767807058607" duration="1724000" />
     </task>
     <servers />
   </component>
