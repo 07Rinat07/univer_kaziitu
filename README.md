@@ -13,7 +13,7 @@
 - [Справка о зачислении](#справка-о-зачислении)
 
 ## Официальный сайт
-<a href="https://kazuits.edu.kz/ru/"><img src="./assets/KAZIITU.png" width="520" alt="Официальный сайт KAZIITU"></a>
+<a href="https://kazuits.edu.kz/ru/"><img src="./assets/kazuits-site.png" width="520" alt="Снимок официального сайта KAZIITU"></a>
 
 - https://kazuits.edu.kz/ru/
 
